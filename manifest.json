@@ -1,0 +1,10 @@
+{ 
+    "name": "pwa", 
+    "short_name": "pwa", 
+    "start_url": ".", 
+    "background_color": "navy",  
+    "theme_color": "blue", 
+    "display": "standalone"
+
+
+}
