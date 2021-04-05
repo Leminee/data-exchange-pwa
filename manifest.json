@@ -1,10 +1,57 @@
 { 
-    "name": "pwa", 
+    "name": "Progressive Web App", 
     "short_name": "pwa", 
-    "start_url": ".", 
+    "start_url": "/index.html", 
     "background_color": "navy",  
-    "theme_color": "blue", 
-    "display": "standalone"
+    "theme_color": "lightblue", 
+    "display": "standalone", 
+    "orientation": "portrait-primary", 
+    "icons": [ 
+
+        {
+        "src": "/src/images/icons/icon16px.png", 
+        "type":"image/png", 
+        "sizes": "16x16"
+        }, 
+
+        {
+        "src": "/src/images/icons/icon20px.png", 
+        "type":"image/png", 
+        "sizes": "20x20"
+        }, 
+
+        {
+        "src": "/src/images/icons/icon32px.png", 
+        "type":"image/png", 
+        "sizes": "32x32"
+        }, 
+
+        {
+        "src": "/src/images/icons/icon48px.png", 
+        "type":"image/png", 
+        "sizes": "48x48"
+        }, 
+
+        {
+        "src": "/src/images/icons/icon64px.png", 
+        "type":"image/png", 
+        "sizes": "64x64"
+        }, 
+
+        {
+        "src": "/src/images/icons/icon128px.png", 
+        "type":"image/png", 
+        "sizes": "128x128"
+        },  
+
+        {
+        "src": "/src/images/icons/icon256px.png", 
+        "type":"image/png", 
+        "sizes": "256x256"
+        }
+    
+    ] 
+
+    }
 
 
-}
