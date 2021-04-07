@@ -6,7 +6,7 @@
     "theme_color": "#5c5b5b", 
     "display": "standalone", 
     "orientation": "portrait-primary",  
-    "prefer_related_applications": "true",
+    "prefer_related_applications": true,
     "icons": [ 
 
         {
