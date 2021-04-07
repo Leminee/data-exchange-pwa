@@ -49,33 +49,33 @@ function register(){
     var passwordRetype = document.getElementById("rrp").value;
 
     if (email == ""){
-        alert("Email required.");
+        alert("E-Mail-Adresse erforderlich.");
         return ;
     }
     else if (password == ""){
-        alert("Password required.");
+        alert("Passwort erforderlich.");
         return ;
     }
     else if (passwordRetype == ""){
-        alert("Password required.");
+        alert("Password erforderlich.");
         return ;
     }
     else if ( password != passwordRetype ){
-        alert("Password don't match retype your Password.");
+        alert("Passwörter stimmen nicht überein.");
         return;
     }
     else if(emailArray.indexOf(email) == -1){
         emailArray.push(email);
         passwordArray.push(password);
 
-        alert(email + "  Thanks for registration. \nTry to login Now");
+        alert(email + "  Du hast Dich registriert. \nLogge Dich ein!");
 
         document.getElementById("re").value ="";
         document.getElementById("rp").value="";
         document.getElementById("rrp").value="";
     }
     else{
-        alert(email + " is already register.");
+        alert(email + " ist schon registriert.");
         return ;
     }
 }
@@ -89,22 +89,22 @@ function login(){
 
     if(emailArray.indexOf(email) == -1){
         if (email == ""){
-            alert("Email required.");
+            alert("E-Mail-Adresse erforderlich.");
             return ;
         }
-        alert("Email does not exist.");
+        alert("E-Mail-Adresse existiert nicht.");
         return ;
     }
     else if(passwordArray[i] != password){
         if (password == ""){
-            alert("Password required.");
+            alert("Passwort erforderlich.");
             return ;
         }
-        alert("Password does not match.");
+        alert("Passwörter stimmen nicht überein.");
         return ;
     }
     else {
-        alert(email + " yor are login Now \n welcome to our website.");
+        alert(email + " Du bist eingellogt \n willkommen.");
 
         document.getElementById("se").value ="";
         document.getElementById("sp").value="";
@@ -119,13 +119,13 @@ function forgot(){
 
     if(emailArray.indexOf(email) == -1){
         if (email == ""){
-            alert("Email required.");
+            alert("E-Mail-Adresse erforderlich.");
             return ;
         }
-        alert("Email does not exist.");
+        alert("E-Mail-Adresse existiert nicht.");
         return ;
     }
 
-    alert("email is send to your email check it in 24hr. \n Thanks");
+    alert("Es wurde eine E-Mail an Dich verschickt!. \n Danke");
     document.getElementById("fe").value ="";
 }
