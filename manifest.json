@@ -5,7 +5,8 @@
     "background_color": "#443636",  
     "theme_color": "#5c5b5b", 
     "display": "standalone", 
-    "orientation": "portrait-primary", 
+    "orientation": "portrait-primary",  
+    "prefer_related_applications": "true",
     "icons": [ 
 
         {
@@ -48,6 +49,12 @@
         "src": "/src/images/icons/icon256px.png", 
         "type":"image/png", 
         "sizes": "256x256"
+        }, 
+        {
+        "src": "/src/images/icons/icon512px.png", 
+        "type":"image/png", 
+        "sizes": "512x512",  
+        "purpose": "any maskable"
         }
     
     ] 
