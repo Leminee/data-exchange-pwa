@@ -45,25 +45,25 @@ function register(){
     event.preventDefault();
 
     var email = document.getElementById("re").value;
-    var password = document.getElementById("rp").value;
-    var passwordRetype = document.getElementById("rrp").value;
+    var username = document.getElementById("rp").value;
+    var password= document.getElementById("rrp").value;
 
     if (email == ""){
         alert("E-Mail-Adresse erforderlich.");
         return ;
     }
-    else if (password == ""){
-        alert("Passwort erforderlich.");
+    else if (username == ""){
+        alert("Username erforderlich.");
         return ;
     }
-    else if (passwordRetype == ""){
+    else if (password == ""){
         alert("Password erforderlich.");
         return ;
     }
-    else if ( password != passwordRetype ){
+    /*else if ( password != passwordRetype ){
         alert("Passwörter stimmen nicht überein.");
         return;
-    }
+    }*/
     else if(emailArray.indexOf(email) == -1){
         emailArray.push(email);
         passwordArray.push(password);

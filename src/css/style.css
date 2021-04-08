@@ -2,7 +2,9 @@
     padding: 0;
     margin: 0;
 
-}
+} 
+
+
 body {
     background: rgba(196, 190, 192, 0.4);
 }
@@ -10,7 +12,8 @@ body {
     width: 300px;
     margin: 0 auto;
     margin-top: 150px;
-}
+} 
+
 .tabs {
     display: table-cell;
     width: 40%;
@@ -31,7 +34,8 @@ body {
 
 #lt {
     background-color: rgba(2, 95, 135, 0.82);
-}
+} 
+
 #cont {
     width: 100%;
     height: 300px;
