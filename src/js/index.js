@@ -15,14 +15,23 @@ database: "app",
 
 });  
 
-app.post('/index.html', (req, res) => { 
+/*app.post('/index.html', (req, res) => { 
   db.query("INSERT INTO user (id_user, username, e_mail, password, profile_pic_url, token, registered_on) VALUES (NULL, ?, ?, ?, NULL, NULL, CURRENT_TIMESTAMP)", 
   [username, password], 
   (err, result) => { 
     console.log(err)
   } 
   );
-});
+});*/
+
+app.get('/person', (req, res) => {
+res.status(200).send({
+  name: "Lem",
+  age: 30
+})
+
+}); 
+
 
 app.listen(8080, ()=> { 
 console.log("Server läuft! ");
