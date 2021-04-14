@@ -1,1 +1,15 @@
-//Datei zum Notieren
+//Datei zum Notieren  
+
+Folgende Verbesserungen sollen noch für Registrierung&Login durchgeführt werden:  
+
+ - Die Möglichkeit, das Passwort erneut einzugeben bei der Registrierung. 
+ - Username darf nicht zu lang oder zu klein sein (minimal 3 Zeichen und maximal 20)
+ - Passwort darf nicht zu klein sein (minimal 8 Zeichen)
+ - Statt "alert"/pop-up-Fenster soll bei falschen bzw. nicht zulässigen Angaben Rückmeldungen wie bei Instagram  
+ angezeigt werden (ganz oben oder ganzen unten). 
+
+
+ Idee(n) für die zu erweiternden Funktionen, um 100% erreichen zu können: 
+
+ - Dem User soll angezeigt werden, wie viele Dateien einen Ordner enthält  
+ (und eventuell wie groß der Ordner ist - in Kilobyte oder Megabyte.)

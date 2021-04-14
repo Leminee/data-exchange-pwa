@@ -55,11 +55,23 @@ function register(){
     else if (username == ""){
         alert("Username erforderlich.");
         return ;
+    } 
+
+    else if (username.length < 3){  
+        alert("Username zu kurz"); 
+        return ;
+
     }
     else if (password == ""){
-        alert("Password erforderlich.");
+        alert("Passwort erforderlich.");
         return ;
-    }
+    } 
+ 
+    else if (password.length < 8){
+        alert("Passwort zu kurz");
+        return ;
+    } 
+
     /*else if ( password != passwordRetype ){
         alert("Passwörter stimmen nicht überein.");
         return;
@@ -68,7 +80,7 @@ function register(){
         emailArray.push(email);
         passwordArray.push(password);
 
-        alert(email + "  Du hast Dich registriert. \nLogge Dich ein!");
+        alert(username + "  Du hast Dich registriert. \nLogge Dich ein!");
 
         document.getElementById("re").value ="";
         document.getElementById("rp").value="";
@@ -104,7 +116,7 @@ function login(){
         return ;
     }
     else {
-        alert(email + " Du bist eingellogt \n willkommen.");
+        alert(email + " Du bist eingeloggt \n willkommen.");
 
         document.getElementById("se").value ="";
         document.getElementById("sp").value="";
