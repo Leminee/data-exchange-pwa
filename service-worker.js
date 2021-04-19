@@ -26,7 +26,7 @@ self.addEventListener('fetch', event => {
             return cacheResponse || fetch (event.request)
             .then(fetchResponse => { 
                 return caches.open(dCacheName) 
-                .then (cache => { 
+                .then(cache => { 
                     cache.put(event.request.url,fetchResponse.clone()); 
                     return fetchResponse;
                 })
