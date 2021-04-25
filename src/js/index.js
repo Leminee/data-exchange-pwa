@@ -5,34 +5,36 @@ const app = express();
 
 
 app.use(express.json());  
-app.use(cors());
+app.use(cors()); 
+
 
 const db = mysql.createConnection({
-user: "root", 
 host: "localhost", 
-password: "admin",
+user: "mel", 
+password: "36177436",
 database: "app",
 
 });  
+ 
+db.connect(function(error) { 
+    if (!!error) { 
+      console.log('Fehler');
+    } 
+    else { 
+      console.log('Verbunden')
+    }
 
-/*app.post('/index.html', (req, res) => { 
-  db.query("INSERT INTO user (id_user, e_mail, username, password, profile_pic_url, token, registered_on) VALUES (NULL, ?, ?, ?, NULL, NULL, CURRENT_TIMESTAMP)", 
-  [username, password], 
-  (err, result) => { 
-    console.log(err)
-  } 
-  );
-});*/
-
-app.get('/person', (req, res) => {
-res.status(200).send({
-  name: "Lem",
-  age: 30
 })
 
-}); 
+
+app.get('/index.html', (req, res) => {   
+   
+  db.query("INSERT INTO test (id, username) VALUES (1, 'Lem')") 
+  if (error) throw error; 
+  
+}) 
 
 
 app.listen(8080, ()=> { 
-console.log("Server läuft! ");
+
 });
