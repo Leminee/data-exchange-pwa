@@ -11,4 +11,7 @@ Folgende Verbesserungen sollen noch für Registrierung&Login durchgeführt werde
  Idee(n) für die zu erweiternden Funktionen, um 100% erreichen zu können: 
 
  - Dem User soll angezeigt werden, wie viele Dateien einen Ordner enthält  
- (und eventuell wie groß der Ordner ist - in Kilobyte oder Megabyte.)
+ (und eventuell wie groß der Ordner ist - in Kilobyte oder Megabyte.) 
+
+ - Service Worker soll so bearbeitet werden, dass beim Aufruf einer Seite im Offline-Modus Folgendes anzegezeigt wird: 
+ "Cannot be accessed Offline"
