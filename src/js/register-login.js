@@ -137,3 +137,17 @@ function forgot(){
     alert("Es wurde eine E-Mail an Dich verschickt!. \n Danke");
     document.getElementById("fe").value ="";
 }
+
+function faq(){
+    event.preventDefault();
+
+    window.open("faq.html");
+    return ;
+}
+
+function backToLogin(){
+    event.preventDefault();
+
+    window.open("index.html");
+    return ;
+}
