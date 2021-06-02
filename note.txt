@@ -5,11 +5,13 @@ Folgende Verbesserungen sollen noch für Registrierung&Login durchgeführt werde
  - Die Möglichkeit, das Passwort erneut einzugeben bei der Registrierung. 
  - Username darf nicht zu lang oder zu klein sein (minimal 3 Zeichen und maximal 20)
  - Passwort darf nicht zu klein sein (minimal 8 Zeichen)
- - Statt "alert"/pop-up-Fenster soll bei falschen bzw. nicht zulässigen Angaben Rückmeldungen wie bei Instagram  
- angezeigt werden (ganz oben oder ganzen unten). 
+ - Statt "alert"/pop-up-Fenster soll bei falschen bzw. nicht zulässigen Angaben Rückmeldungen synchron zeigen (Ajax)
 
 
  Idee(n) für die zu erweiternden Funktionen, um 100% erreichen zu können: 
 
  - Dem User soll angezeigt werden, wie viele Dateien einen Ordner enthält  
- (und eventuell wie groß der Ordner ist - in Kilobyte oder Megabyte.)
+ (und eventuell wie groß der Ordner ist - in Kilobyte oder Megabyte.) 
+
+ - Service Worker soll so bearbeitet werden, dass beim Aufruf einer Seite im Offline-Modus Folgendes anzegezeigt wird: 
+ "Cannot be accessed Offline"

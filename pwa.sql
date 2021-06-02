@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Erstellungszeit: 15. Apr 2021 um 02:51
+-- Erstellungszeit: 28. Apr 2021 um 05:28
 -- Server-Version: 10.3.27-MariaDB-0+deb10u1
 -- PHP-Version: 7.4.16
 
@@ -33,8 +33,8 @@ CREATE TABLE `file` (
   `id_file` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
   `id_folder` int(11) DEFAULT NULL,
+  `id_format` int(11) NOT NULL,
   `file_name` varchar(20) NOT NULL,
-  `type` enum('pdf','video','Audio','image','zip','png','jpg') NOT NULL,
   `file_size` varchar(10) NOT NULL,
   `uploaded_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -43,10 +43,10 @@ CREATE TABLE `file` (
 -- Daten für Tabelle `file`
 --
 
-INSERT INTO `file` (`id_file`, `id_user`, `id_folder`, `file_name`, `type`, `file_size`, `uploaded_on`) VALUES
-(1, 1, 1, 'Mietwagen', 'image', '23 KB', '2021-04-14 23:48:39'),
-(2, 1, 1, 'Hotel', 'image', '25 KB', '2021-04-14 23:48:39'),
-(3, 1, NULL, 'Rechnung', 'pdf', '13 KB', '2021-04-14 23:49:08');
+INSERT INTO `file` (`id_file`, `id_user`, `id_folder`, `id_format`, `file_name`, `file_size`, `uploaded_on`) VALUES
+(4, 1, 3, 1, 'Mietwagen', '23 KB', '2021-04-15 04:33:57'),
+(5, 1, 3, 1, 'Hotel', '26 KB', '2021-04-15 04:33:57'),
+(6, 1, NULL, 4, 'Rechnung', '3 KB', '2021-04-15 04:34:30');
 
 -- --------------------------------------------------------
 
@@ -60,12 +60,29 @@ CREATE TABLE `file_comment` (
   `comment` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
 --
--- Daten für Tabelle `file_comment`
+-- Tabellenstruktur für Tabelle `file_format`
 --
 
-INSERT INTO `file_comment` (`id_file_comment`, `id_file`, `comment`) VALUES
-(1, 2, 'Ich war zufrieden ');
+CREATE TABLE `file_format` (
+  `id_format` int(11) NOT NULL,
+  `format` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Daten für Tabelle `file_format`
+--
+
+INSERT INTO `file_format` (`id_format`, `format`) VALUES
+(1, 'image'),
+(2, 'video'),
+(3, 'audio'),
+(4, 'pdf'),
+(5, 'zip'),
+(6, 'png'),
+(7, 'jpg');
 
 -- --------------------------------------------------------
 
@@ -84,10 +101,10 @@ CREATE TABLE `file_keyword` (
 --
 
 INSERT INTO `file_keyword` (`id_file_keyword`, `id_file`, `keyword`) VALUES
-(1, 1, 'BMW'),
-(2, 1, 'SVG'),
-(3, 2, 'B&B'),
-(4, 2, 'Nähe Hauptbahnhof ');
+(5, 4, 'BMW'),
+(6, 4, 'Auto'),
+(7, 5, 'B&B'),
+(8, 5, 'Nähe Hauptbahnhof');
 
 -- --------------------------------------------------------
 
@@ -109,8 +126,8 @@ CREATE TABLE `folder` (
 --
 
 INSERT INTO `folder` (`id_folder`, `id_user`, `folder_name`, `number_file`, `folder_size`, `created_on`) VALUES
-(1, 1, 'Urlaub', 2, '0', '2021-04-15 00:27:10'),
-(2, 1, 'Neuer Ordner', 0, '0', '2021-04-14 23:47:20');
+(3, 1, 'Urlaub', 2, '49 KB', '2021-04-19 16:38:05'),
+(4, 1, 'Neuer Ordner', 0, '0', '2021-04-15 04:33:06');
 
 -- --------------------------------------------------------
 
@@ -123,13 +140,6 @@ CREATE TABLE `folder_comment` (
   `id_folder` int(11) NOT NULL,
   `comment` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Daten für Tabelle `folder_comment`
---
-
-INSERT INTO `folder_comment` (`id_folder_comment`, `id_folder`, `comment`) VALUES
-(1, 1, 'Enthält alle meine Bilder/Videos, die ich während meines Urlaubs in Paris gemacht habe ');
 
 -- --------------------------------------------------------
 
@@ -154,6 +164,7 @@ CREATE TABLE `user` (
   `e_mail` varchar(50) NOT NULL,
   `username` varchar(20) NOT NULL,
   `password_hash` varchar(100) NOT NULL,
+  `profil_pic_url` blob DEFAULT NULL,
   `token` longtext DEFAULT NULL,
   `registered_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -162,8 +173,8 @@ CREATE TABLE `user` (
 -- Daten für Tabelle `user`
 --
 
-INSERT INTO `user` (`id_user`, `e_mail`, `username`, `password_hash`, `token`, `registered_on`) VALUES
-(1, 'admin@gmail.com', 'admin', 'admin', '', '2021-04-14 22:30:59');
+INSERT INTO `user` (`id_user`, `e_mail`, `username`, `password_hash`, `profil_pic_url`, `token`, `registered_on`) VALUES
+(1, 'admin@gmail.com', 'admin', '', NULL, '', '2021-04-15 05:11:19');
 
 --
 -- Indizes der exportierten Tabellen
@@ -174,8 +185,10 @@ INSERT INTO `user` (`id_user`, `e_mail`, `username`, `password_hash`, `token`, `
 --
 ALTER TABLE `file`
   ADD PRIMARY KEY (`id_file`),
+  ADD UNIQUE KEY `file_name` (`file_name`),
   ADD KEY `id_user` (`id_user`),
-  ADD KEY `id_folder` (`id_folder`);
+  ADD KEY `id_folder` (`id_folder`),
+  ADD KEY `id_file_format` (`id_format`);
 
 --
 -- Indizes für die Tabelle `file_comment`
@@ -183,6 +196,12 @@ ALTER TABLE `file`
 ALTER TABLE `file_comment`
   ADD PRIMARY KEY (`id_file_comment`),
   ADD KEY `id_file` (`id_file`);
+
+--
+-- Indizes für die Tabelle `file_format`
+--
+ALTER TABLE `file_format`
+  ADD PRIMARY KEY (`id_format`);
 
 --
 -- Indizes für die Tabelle `file_keyword`
@@ -196,6 +215,7 @@ ALTER TABLE `file_keyword`
 --
 ALTER TABLE `folder`
   ADD PRIMARY KEY (`id_folder`),
+  ADD UNIQUE KEY `folder_name` (`folder_name`),
   ADD KEY `id_user` (`id_user`);
 
 --
@@ -227,7 +247,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT für Tabelle `file`
 --
 ALTER TABLE `file`
-  MODIFY `id_file` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_file` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT für Tabelle `file_comment`
@@ -236,16 +256,22 @@ ALTER TABLE `file_comment`
   MODIFY `id_file_comment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT für Tabelle `file_format`
+--
+ALTER TABLE `file_format`
+  MODIFY `id_format` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- AUTO_INCREMENT für Tabelle `file_keyword`
 --
 ALTER TABLE `file_keyword`
-  MODIFY `id_file_keyword` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_file_keyword` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT für Tabelle `folder`
 --
 ALTER TABLE `folder`
-  MODIFY `id_folder` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_folder` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT für Tabelle `folder_comment`
@@ -274,7 +300,8 @@ ALTER TABLE `user`
 --
 ALTER TABLE `file`
   ADD CONSTRAINT `file_ibfk_1` FOREIGN KEY (`id_folder`) REFERENCES `folder` (`id_folder`),
-  ADD CONSTRAINT `file_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`);
+  ADD CONSTRAINT `file_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`),
+  ADD CONSTRAINT `file_ibfk_3` FOREIGN KEY (`id_format`) REFERENCES `file_format` (`id_format`);
 
 --
 -- Constraints der Tabelle `file_comment`

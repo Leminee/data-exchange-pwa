@@ -44,9 +44,9 @@ function forTabFun(){
 function register(){
     event.preventDefault();
 
-    var email = document.getElementById("re").value;
-    var username = document.getElementById("rp").value;
-    var password= document.getElementById("rrp").value;
+    var email = document.getElementById("email-reg").value;
+    var username = document.getElementById("username-reg").value;
+    var password= document.getElementById("password-reg").value;
 
     if (email == ""){
         alert("E-Mail-Adresse erforderlich.");
@@ -72,10 +72,6 @@ function register(){
         return ;
     } 
 
-    /*else if ( password != passwordRetype ){
-        alert("Passwörter stimmen nicht überein.");
-        return;
-    }*/
     else if(emailArray.indexOf(email) == -1){
         emailArray.push(email);
         passwordArray.push(password);
