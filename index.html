@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="de"> 
-
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <meta name ="description" content="Tauschen Sie unkompliziert Dateien aus!"> 
     <meta keywords="Dateien austauschen, Dateien hochladen, Dateien herunterladen"> 
     <meta name="robots" content="index"/> 
@@ -12,68 +11,71 @@
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico"/>
 
     <meta name="theme-color" content="#5c5b5b"/> 
+    <link rel="manifest" href="/manifest.json">
     <link rel="icon" href="/src/images/icons/icon256px.png">
-    <link rel ="stylesheet" type="text/css" href ="src/css/style.css">
-    <link rel="manifest" href="/manifest.json">   
     <link rel="apple-touch-icon" href="/src/images/icons/icon256px.png"> 
+    <link rel="stylesheet" href="src/css/style.css">
+  
+    <title>Project G6</title>
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <h4>Project G6</h4>
+        </div>
+        <ul class="nav-links">
+            <li> 
+                <a href="/src/html/login.html">Login</a>
+            </li>
+            <li> 
+                <a href="src/html/faq.html">FAQ</a>
+            </li>
+            <li> 
+                <a href="https://www.hshl.de/">HSHL</a>
+            </li>
+            <li> 
+                <a href="https://www.youtube.com/channel/UCvQU-DwUf5D8R8va9c-TBwQ">About us</a>
+            </li>
+        </ul>
+        <div class="burger">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
+        </div>
+    </nav>
 
-    <title>Project G6</title>  
-
-    
-</head> 
-
-<body> 
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-     
-
-    <div id="container">
-        <div id="tabs">
-            <p id="lt" class="tabs" onclick="loginTabFun()">Anmelden</p>
-            <p id="rt" class="tabs" onclick="regTabFun()">Registrieren</p>
-
-            <div id="clear"></div>
+    <div class="websiteHeadline">
+        <h2>Teilen und Speichern von Dateien</h2>
+        <div class="innerTextHeadline">
+            <h5>Registieren Sie sich jetzt Kostenlos!</h5>
+        </div>
+        <div class="innerText">
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
         </div>
 
-        <div id="cont">
-            <div id="login" class="comm">
-                <h3>Anmelden</h3>
-
-                <input id="se" type="email" placeholder="E-Mail-Adresse" required/>
-                <input id="sp" type="password" placeholder="Passwort" required/>
-                <input type="submit" onclick="login()" value="Anmelden"/>
-
-                <p onclick="forTabFun()">Passwort vergessen?</p>
-<<<<<<< HEAD
-                <p onclick="faq()">F.A.Q</p>
-            </div>
-            <div id="register" class="comm">
-=======
-            </div> 
-            <form action="" method="POST">
-            <div id="register" class="comm"> 
-            
->>>>>>> 335058f34e16d2f8e8b83d58d1577149e7199c48
-                <h3>Registrieren</h3>
-
-                <input id="email-reg" type="email" placeholder="E-Mail-Adresse" required/>
-                <input id="username-reg" type="username" placeholder="Username" required/>
-                <input id="password-reg" type="password" placeholder="Passwort" required/>  
-                <!--<input id="rrp" type="password" placeholder="Passwort erneut" required/> -->
-                <input id ="register" type="submit" onclick="register()" value="Registrieren"/>
-
-            </div > 
-            </form>
-            <div id="forgot" class="comm">
-            <h3>Passwort zurücksetzen</h3>
-            <div>
-                <input id="fe" type="email" placeholder="E-Mail-Adresse" required/>
-                <input type="submit" onclick="forgot()" value="Abschicken"/>
-            </div>
-            </div>
+        <div class="innerTextHeadline">
+            <h5>Zuverlässiger Speicher und schnelle Datenübertragung</h5>
         </div>
-    </div> 
-    
-    <script type="text/javascript" src="/src/js/register-login.js"></script>  
+        <div class="innerText">
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+        </div>
+
+        <div class="innerTextHeadline">
+            <h5>Mithilfe von Links teilen</h5>
+        </div>
+        <div class="innerText">
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+        </div>
+
+        <div class="innerTextHeadline">
+            <h5>Accounts sicher verschlüsselt</h5>
+        </div>
+        <div class="innerText">
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+        </div>
+
+    <script type="text/javascript" src="/src/js/index.js"></script>
+    <script src="src/js/landingPage.js"></script>
     <script type="text/javascript" src="/src/js/app.js"></script> 
 </body>
 </html>

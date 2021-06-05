@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="de"> 
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <!--
+    <meta name ="description" content="Tauschen Sie unkompliziert Dateien aus!"> 
+    <meta keywords="Dateien austauschen, Dateien hochladen, Dateien herunterladen"> 
+    <meta name="robots" content="index"/> 
+    <meta name="robots" content="follow"/>    
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico"/>
+
+    <meta name="theme-color" content="#5c5b5b"/> 
+    -->
+    <link rel="icon" href="/src/images/icons/icon256px.png">
+    <link rel="stylesheet" href="/src/css/login.css"> 
+    <!--
+    <link rel="manifest" href="/manifest.json">   
+   
+    <link rel="apple-touch-icon" href="/src/images/icons/icon256px.png"> 
+    -->
+    <title>Project G6</title>  
+
+    
+</head> 
+
+<body> 
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+     
+
+    <div id="container">
+        <div id="tabs">
+            <p id="lt" class="tabs" onclick="loginTabFun()">Anmelden</p>
+            <p id="rt" class="tabs" onclick="regTabFun()">Registrieren</p>
+
+            <div id="clear"></div>
+        </div>
+
+        <div id="cont">
+            <div id="login" class="comm">
+                <h3>Anmelden</h3>
+
+                <input id="se" type="email" placeholder="E-Mail-Adresse" required/>
+                <input id="sp" type="password" placeholder="Passwort" required/>
+                <input type="submit" onclick="login()" value="Anmelden"/>
+
+                <p onclick="forTabFun()">Passwort vergessen?</p>
+                <p onclick="faq()">F.A.Q</p>
+            </div>
+            <div id="register" class="comm">
+                <h3>Registrieren</h3>
+
+                <input id="email-reg" type="email" placeholder="E-Mail-Adresse" required/>
+                <input id="username-reg" type="username" placeholder="Username" required/>
+                <input id="password-reg" type="password" placeholder="Passwort" required/>  
+                <!--<input id="rrp" type="password" placeholder="Passwort erneut" required/> -->
+                <input id ="register" type="submit" onclick="register()" value="Registrieren"/>
+
+            </div > 
+            </form>
+            <div id="forgot" class="comm">
+            <h3>Passwort zurücksetzen</h3>
+            <div>
+                <input id="fe" type="email" placeholder="E-Mail-Adresse" required/>
+                <input type="submit" onclick="forgot()" value="Abschicken"/>
+            </div>
+            </div>
+        </div>
+    </div> 
+    
+    <script type="text/javascript" src="/src/js/app.js"></script>
+    <script type="text/javascript" src="/src/js/register-login.js"></script>  
+</body>
+</html>

@@ -145,9 +145,3 @@ function faq(){
     return ;
 }
 
-function backToLogin(){
-    event.preventDefault();
-
-    window.open("index.html");
-    return ;
-}

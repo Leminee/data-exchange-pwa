@@ -1,94 +1,137 @@
-* {
-    padding: 0;
-    margin: 0;
-
-} 
-
-
-body {
-    background: rgba(196, 190, 192, 0.4);
+body{
+    background-color: rgb(243, 227, 250);
 }
-#container {
-    width: 300px;
-    margin: 0 auto;
-    margin-top: 150px;
-} 
 
-.tabs {
-    display: table-cell;
-    width: 40%;
-    background-color: rgba(2, 95, 135, 0.82);
-    padding: 10px;
-    float: left;
-    text-align: center;
-    vertical-align: middle;
-    border: 2px solid #ffffff;
-    border-bottom: 0px;
-    position: relative;
-    font-size: 1.3em;
-    color: #000000;
+/*remove maring padding*/
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
 }
-.tabs:hover, p{
+
+/*Navigation bar*/
+nav{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    min-height: 8vh;
+    background-color: aqua;
+}
+/*top left text*/
+.logo{
+    color: rgb(65, 1, 1);
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    font-size: 20px;
+}
+/*links*/
+.nav-links{
+    display: flex;
+    width: 30%;
+    justify-content: space-around;
+}
+/*remove bullet point*/
+.nav-links li{
+    list-style: none;
+}
+/*Clean up links*/
+.nav-links a{
+    color: rgb(65, 1, 1);
+    text-decoration: none;
+    letter-spacing: 3px;
+    font-weight: bold;
+    font-size: 13px;
+}
+/*Menu icon*/
+.burger{
+    display: none;
     cursor: pointer;
 }
+/*clean up Icon*/
+.burger div{
+    width: 25px;
+    height: 3px;
+    background-color: rgb(65, 1, 1);
+    margin: 5px;
+    transition: all 0.3s ease;
+    
 
-#lt {
-    background-color: rgba(2, 95, 135, 0.82);
-} 
-
-#cont {
-    width: 100%;
-    height: 300px;
-    background-color: rgba(2, 95, 135, 0.82);
-    border: 2px solid #ffffff;
 }
 
-input{
-    display: block;
-    width: 250px;
-    margin: 10px 13px;
-    padding: 10px;
-    font-size: 1.3em;
-    color: rgba(2, 95, 135, 0.82);
-    outline: 2px solid #ffffff;
-}
-
-input[type="submit"] {
-    width: 272px;
-    color: #2d2c2c;
-}
-
-#clear {
-    clear: both;
-}
-
-.comm {
-    position: absolute;
-    visibility: hidden;
-}
-#login {
-    visibility: visible;
-}
-
-h3 {
-    display: table-cell;
-    vertical-align: middle;
-    padding: 10px 15px;
-    font-size: 1.5em;
-    color: #ffffff;
-}
-
-#forgot h3 {
-    display: block;
-    margin-top: 30px;
+.websiteHeadline h2{
+    font-size: 30px;
     text-align: center;
+    letter-spacing: 3px;
+    margin: 50px;
+    padding: 0px;
 }
 
-#forgot div {
-    margin-top: 30px;
+.innerTextHeadline{
+    font-size: 25px;
+    text-align: center;
+    letter-spacing: 2px;
+    margin: 10px;
+    padding: 0px;
 }
-p {
-    padding: 10px 15px;
-    font-size: 1.3em;
-    color: #060404;
+
+.innerText{
+    font-size: 15px;
+    margin: 20px;
+    padding: 0px;
+}
+
+
+/*for Mobile screen 768px or less*/
+@media screen and (max-width:768px){
+    /*hides links*/
+    body{
+       overflow-x: hidden; 
+    }
+    /*container for links*/
+    .nav-links{
+        position: absolute;
+        right: 0px;
+        height: 92vh;
+        top: 8vh;
+        background-color: aqua;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 30%;
+        transform: translateX(100%);
+        transition: transform 0.5s ease-in;
+    }
+    /*shows menu Icon*/
+    .burger{
+        display: block;
+    }
+    /*show navigation*/
+    .nav-active{
+        transform: translateX(0%);
+    }
+    /*Animation for Links*/
+    @keyframes navLinkFade{
+        from{
+            opacity: 0;
+            transform: translateX(50px);
+        }
+        to{
+            opacity: 1;
+            transform: translateX(0px);
+        }
+    }
+    /*Animation Burger to "X"*/
+    .toggle .line1{
+        transform: rotate(-45deg) translate(-5px, 6px);
+    }
+
+    .toggle .line2{
+        opacity: 0;
+    }
+
+    .toggle .line3{
+        transform: rotate(45deg) translate(-5px, -6px);
+    }
+
+
 }

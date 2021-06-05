@@ -15,3 +15,21 @@ Folgende Verbesserungen sollen noch für Registrierung&Login durchgeführt werde
 
  - Service Worker soll so bearbeitet werden, dass beim Aufruf einer Seite im Offline-Modus Folgendes anzegezeigt wird: 
  "Cannot be accessed Offline"
+
+
+
+Patchnotes 05.06.2021   17:22
+
+adminIndex.html -> adminLogin.html & moved to html
+
+faq.html -> moved to html
+
+index.html -> login.html & moved to html
+
+style.css -> login.css
+
+new style.css for index (landingPage)
+
+
+
+
