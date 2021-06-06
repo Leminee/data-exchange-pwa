@@ -15,7 +15,7 @@ nav{
     justify-content: space-around;
     align-items: center;
     min-height: 8vh;
-    background-color: aqua;
+    background-color: #3e789c;
 }
 /*top left text*/
 .logo{
@@ -93,7 +93,7 @@ nav{
         right: 0px;
         height: 92vh;
         top: 8vh;
-        background-color: aqua;
+        background-color: #3e789c;
         display: flex;
         flex-direction: column;
         align-items: center;

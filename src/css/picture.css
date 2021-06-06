@@ -1,5 +1,10 @@
+body { 
+  background-color: #f2e4f9;
+}
+
+
 .button {
-    background-color: #4CAF50;
+    background-color: #3e789c;
     color: white;
  
     text-align: center;

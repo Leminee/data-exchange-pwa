@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Erstellungszeit: 28. Apr 2021 um 05:28
+-- Erstellungszeit: 07. Jun 2021 um 00:53
 -- Server-Version: 10.3.27-MariaDB-0+deb10u1
 -- PHP-Version: 7.4.16
 
@@ -20,8 +20,20 @@ SET time_zone = "+00:00";
 --
 -- Datenbank: `pwa`
 --
-CREATE DATABASE IF NOT EXISTS `pwa` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `pwa`;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `admin`
+--
+
+CREATE TABLE `admin` (
+  `id_admin` int(11) NOT NULL,
+  `e_mail_admin` varchar(50) NOT NULL,
+  `username_admin` varchar(20) NOT NULL,
+  `password_hash_admin` varchar(100) NOT NULL,
+  `profil_pic_url_admin` blob DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -35,7 +47,8 @@ CREATE TABLE `file` (
   `id_folder` int(11) DEFAULT NULL,
   `id_format` int(11) NOT NULL,
   `file_name` varchar(20) NOT NULL,
-  `file_size` varchar(10) NOT NULL,
+  `file_size` int(10) NOT NULL,
+  `file_path` varchar(100) NOT NULL,
   `uploaded_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -43,10 +56,10 @@ CREATE TABLE `file` (
 -- Daten für Tabelle `file`
 --
 
-INSERT INTO `file` (`id_file`, `id_user`, `id_folder`, `id_format`, `file_name`, `file_size`, `uploaded_on`) VALUES
-(4, 1, 3, 1, 'Mietwagen', '23 KB', '2021-04-15 04:33:57'),
-(5, 1, 3, 1, 'Hotel', '26 KB', '2021-04-15 04:33:57'),
-(6, 1, NULL, 4, 'Rechnung', '3 KB', '2021-04-15 04:34:30');
+INSERT INTO `file` (`id_file`, `id_user`, `id_folder`, `id_format`, `file_name`, `file_size`, `file_path`, `uploaded_on`) VALUES
+(4, 1, 3, 1, 'Mietwagen', 23, '', '2021-06-06 22:20:01'),
+(5, 1, 3, 1, 'Hotel', 26, '', '2021-06-06 22:20:05'),
+(6, 1, NULL, 4, 'Rechnung', 3, '', '2021-06-06 22:20:08');
 
 -- --------------------------------------------------------
 
@@ -59,6 +72,13 @@ CREATE TABLE `file_comment` (
   `id_file` int(11) NOT NULL,
   `comment` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Daten für Tabelle `file_comment`
+--
+
+INSERT INTO `file_comment` (`id_file_comment`, `id_file`, `comment`) VALUES
+(2, 4, 'Schönes Auto');
 
 -- --------------------------------------------------------
 
@@ -117,7 +137,7 @@ CREATE TABLE `folder` (
   `id_user` int(11) NOT NULL,
   `folder_name` varchar(20) DEFAULT 'Neuer Ordner',
   `number_file` int(11) NOT NULL DEFAULT 0,
-  `folder_size` varchar(10) NOT NULL DEFAULT '0',
+  `folder_size` int(11) NOT NULL DEFAULT 0,
   `created_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -126,8 +146,8 @@ CREATE TABLE `folder` (
 --
 
 INSERT INTO `folder` (`id_folder`, `id_user`, `folder_name`, `number_file`, `folder_size`, `created_on`) VALUES
-(3, 1, 'Urlaub', 2, '49 KB', '2021-04-19 16:38:05'),
-(4, 1, 'Neuer Ordner', 0, '0', '2021-04-15 04:33:06');
+(3, 1, 'Urlaub', 2, 49, '2021-06-06 22:20:14'),
+(4, 1, 'Neuer Ordner', 0, 0, '2021-04-15 04:33:06');
 
 -- --------------------------------------------------------
 
@@ -164,8 +184,9 @@ CREATE TABLE `user` (
   `e_mail` varchar(50) NOT NULL,
   `username` varchar(20) NOT NULL,
   `password_hash` varchar(100) NOT NULL,
-  `profil_pic_url` blob DEFAULT NULL,
+  `profil_pic_path` varchar(100) DEFAULT NULL,
   `token` longtext DEFAULT NULL,
+  `upload_limit` varchar(10) DEFAULT NULL,
   `registered_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -173,12 +194,18 @@ CREATE TABLE `user` (
 -- Daten für Tabelle `user`
 --
 
-INSERT INTO `user` (`id_user`, `e_mail`, `username`, `password_hash`, `profil_pic_url`, `token`, `registered_on`) VALUES
-(1, 'admin@gmail.com', 'admin', '', NULL, '', '2021-04-15 05:11:19');
+INSERT INTO `user` (`id_user`, `e_mail`, `username`, `password_hash`, `profil_pic_path`, `token`, `upload_limit`, `registered_on`) VALUES
+(1, 'admin@gmail.com', 'admin', '', NULL, NULL, NULL, '2021-05-14 03:23:02');
 
 --
 -- Indizes der exportierten Tabellen
 --
+
+--
+-- Indizes für die Tabelle `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id_admin`);
 
 --
 -- Indizes für die Tabelle `file`
@@ -244,6 +271,12 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT für Tabelle `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT für Tabelle `file`
 --
 ALTER TABLE `file`
@@ -253,7 +286,7 @@ ALTER TABLE `file`
 -- AUTO_INCREMENT für Tabelle `file_comment`
 --
 ALTER TABLE `file_comment`
-  MODIFY `id_file_comment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_file_comment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT für Tabelle `file_format`
