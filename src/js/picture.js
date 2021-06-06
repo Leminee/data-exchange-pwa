@@ -17,3 +17,5 @@ document.getElementById('snap').addEventListener('click', ()=>{
 document.getElementById('send').addEventListener('click', ()=>{
     context.drawImage(video, 0,0,640,480);
 });
+
+
