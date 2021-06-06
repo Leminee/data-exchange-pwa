@@ -17,8 +17,14 @@ record.onclick = () =>{
             audio_url = URL.createObjectURL(blob)
             audio = new Audio(audio_url)
             audio.setAttribute("controls",1)
+
+            if (mp3.firstChild) {
+                mp3.removeChild(mp3.firstChild);
+              }
+
             mp3.appendChild(audio)
-            
+            audio.load();
+        
         })
 
     })

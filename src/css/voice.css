@@ -31,8 +31,9 @@
 }
   
 .center{
-  display: block;
-  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
   
 
