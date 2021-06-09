@@ -2,7 +2,8 @@ const cacheName = 'pwa';
 const dCacheName = 'd_pwa';
 const urls = [ 
         '/',
-        'index.html', 
+        'index.html',  
+        'src/html/login.html',
         '/src/js/register-login.js', 
         '/src/css/style.css', 
         '/src/js/app.js'
