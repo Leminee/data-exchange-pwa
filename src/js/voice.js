@@ -6,14 +6,15 @@ record.onclick = () =>{
 
         mediaRecorder = new MediaRecorder(stream)
         mediaRecorder.start()
-        chuck = []
+        chuck = [] 
+
 
         mediaRecorder.addEventListener("dataavailable", e =>{
             chuck.push(e.data)
         })
 
         mediaRecorder.addEventListener("stop", e =>{
-            blob = new Blob(chuck)
+            blob = new Blob(chuck, {type : 'audio/mp3'})
             audio_url = URL.createObjectURL(blob)
             audio = new Audio(audio_url)
             audio.setAttribute("controls",1)
@@ -22,8 +23,10 @@ record.onclick = () =>{
                 mp3.removeChild(mp3.firstChild);
               }
 
-            mp3.appendChild(audio)
+            mp3.appendChild(audio);
             audio.load();
+            
+            
         
         })
 
