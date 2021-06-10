@@ -4,7 +4,7 @@
   "description": "",
   "main": "service-worker.js",
   "scripts": {
-    "autoStart": "nodemon src/js/admin-controller-server.js"
+    "autoStart": "nodemon src/js/index.js"
   },
   "repository": {
     "type": "git",
