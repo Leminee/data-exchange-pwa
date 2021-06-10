@@ -2,13 +2,10 @@ const express = require('express');
 const mysql = require('mysql'); 
 const cors = require('cors');
 const app = express();   
-const path = require('path');  
-/*var parser = require("body-parser"); */
-/*var urlParser = parser.urlencoded({extended:false}); */
+const path = require('path');   
 
 const bcrypt = require("bcrypt"); 
 const saltRounds = 10; 
-
 
 app.use(express.json());  
 app.use(cors());   
@@ -19,8 +16,8 @@ app.use(express.urlencoded({ extended: false }))
 
 var db = mysql.createConnection({
   host     : 'localhost',
-  user     : 'hkoyun',
-  password : '12345',
+  user     : 'mel',
+  password : '36177436',
   database : 'pwa'
 });
 
@@ -78,29 +75,6 @@ app.get("/user-profil", (req, res) => {
 app.get("/voice-maker", (req, res) => { 
   res.sendFile(path.join(__dirname, "/../html/voice-maker.html"));  
 }); 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 app.post("/src/html/login.html", async (req, res) => {   
