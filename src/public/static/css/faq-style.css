@@ -33,7 +33,7 @@ body{
     margin: 0 10px 0 -4px;
     width: 35px;
     height: 30px;
-    background: url(/src/images/icons/faqDropDown20x20.png) no-repeat 8px 7px #3e789c;
+    background: url(/images/icons/faqDropDown20x20.png) no-repeat 8px 7px #3e789c;
     border-radius: 50%;
     float: left;
     transition: all .5s ease-in;
