@@ -17,13 +17,13 @@ app.use(express.static(__dirname + '/static'));
 app.use(express.urlencoded({ extended: false }))
 
 
-const db = mysql.createConnection({
-host: "localhost", 
-user: "root", 
-password: "",
-database: "pwa",
-});  
- 
+var db = mysql.createConnection({
+  host     : 'localhost',
+  user     : 'hkoyun',
+  password : '12345',
+  database : 'pwa'
+});
+
 db.connect(function(error) { 
     if (!!error) { 
       console.log('Verbindungsfehler');
@@ -116,7 +116,8 @@ app.post("/src/html/login.html", async (req, res) => {
       }
     );
   }); 
-  res.sendFile("/Users/lem/Documents/Projekte/pwa/src/html/login.html");
+  res.sendFile("/Users/lem/Documents/Projekte/pwa/src/html/login.html"); 
+  res.send
 }); 
 
 app.post("/src/html/login.html", async (req, res) => {   
