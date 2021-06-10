@@ -23,7 +23,7 @@ body {
     line-height: 1.5;
     margin: 0;
     text-align: left;
-    color: #3e789c;
+    color: rgb(243, 227, 250);
     background-color: rgb(243, 227, 250);
 }
 
@@ -256,14 +256,14 @@ textarea.form-control {
 
 .btn-primary {
     color: #fff;
-    border-color: #3e789c;
+    border-color: black;
     background-color: #3e789c;
     box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08);
 }
 
 .btn-primary:hover {
     color: #fff;
-    border-color: #3e789c;
+    border-color: black;
     background-color: #3e789c;
 }
 
@@ -286,7 +286,7 @@ textarea.form-control {
     word-wrap: break-word;
     border: 1px solid rgba(0, 0, 0, .05);
     border-radius: .375rem;
-    background-color: #fff;
+    background-color: rgba(2, 95, 135, 0.82);
     background-clip: border-box;
 }
 
@@ -328,7 +328,7 @@ textarea.form-control {
 
 
 .bg-gradient-default {
-    background: linear-gradient(87deg, #172b4d 0, #1a174d 100%) !important;
+    background: linear-gradient(87deg, rgb(243, 227, 250) 0, rgb(243, 227, 250) 100%) !important;
 }
 
 .btn:hover {
