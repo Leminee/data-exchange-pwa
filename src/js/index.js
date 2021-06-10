@@ -55,7 +55,8 @@ app.post("/src/html/login.html", async (req, res) => {
       }
     );
   }); 
-  res.sendFile("/Users/lem/Documents/Projekte/pwa/src/html/login.html");
+  res.sendFile("/Users/lem/Documents/Projekte/pwa/src/html/login.html"); 
+  res.send
 }); 
 
 app.post("/src/html/login.html", async (req, res) => {   
