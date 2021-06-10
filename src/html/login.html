@@ -15,7 +15,7 @@
     <meta name="theme-color" content="#5c5b5b"/> 
     
     
-    <link rel="stylesheet" href="/src/css/login.css"> 
+    <link rel="stylesheet" href="/css/login.css"> 
   
     
     <title>Login&Registration</title>  
@@ -34,29 +34,35 @@
 
             <div id="clear"></div>
         </div>
-
+ 
+        <form action="/src/html/login.html" method="POST"> 
         <div id="cont">
             <div id="login" class="comm">
                 <h3>Anmelden</h3>
 
-                <input id="se" type="email" placeholder="E-Mail-Adresse" required/>
-                <input id="sp" type="password" placeholder="Passwort" required/>
-                <input type="submit" onclick="login()" value="Anmelden"/>
+                <input name="email-login" type="email" placeholder="E-Mail-Adresse" required/>
+                <input name="password-login" type="password" placeholder="Passwort" required/>
+                <input name="login" type="submit" onclick="login()" value="Anmelden"/>
 
                 <p onclick="forTabFun()">Passwort vergessen?</p>
                 <p onclick="faq()">F.A.Q</p>
-            </div>
+            </div>  
+            </div> 
+            </form>
+
+            <form action="/src/html/login.html" method="POST"> 
             <div id="register" class="comm">
                 <h3>Registrieren</h3>
 
-                <input id="email-reg" type="email" placeholder="E-Mail-Adresse" required/>
-                <input id="username-reg" type="username" placeholder="Username" required/>
-                <input id="password-reg" type="password" placeholder="Passwort" required/>  
-                <!--<input id="rrp" type="password" placeholder="Passwort erneut" required/> -->
-                <input id ="register" type="submit" onclick="register()" value="Registrieren"/>
+                <input name="email" type="email" placeholder="E-Mail-Adresse" required/>
+                <input name="username" type="username" placeholder="Username" required/>
+                <input name="password" type="password" placeholder="Passwort" required/>  
+                <input name ="register" type="submit" onclick="register()" value="Registrieren"/>
 
             </div > 
-            </form>
+            </form> 
+
+
             <div id="forgot" class="comm">
             <h3>Passwort zurücksetzen</h3>
             <div>
@@ -68,6 +74,6 @@
     </div> 
     
     <script type="text/javascript" src="/src/js/app.js"></script>
-    <script type="text/javascript" src="/src/js/register-login.js"></script>  
+    <script type="text/javascript" src="/css/register-login.js"></script>  
 </body>
 </html>
