@@ -141,7 +141,7 @@ function forgot(){
 function faq(){
     event.preventDefault();
 
-    window.open("faq.html");
+    window.open("/faq");
     return ;
 }
 

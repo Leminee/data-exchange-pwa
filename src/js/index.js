@@ -1,7 +1,8 @@
 const express = require('express');  
 const mysql = require('mysql'); 
 const cors = require('cors');
-const app = express();     
+const app = express();   
+const path = require('path');  
 /*var parser = require("body-parser"); */
 /*var urlParser = parser.urlencoded({extended:false}); */
 
@@ -30,13 +31,73 @@ db.connect(function(error) {
 })
  
 app.get("/", (req, res) => { 
-res.sendFile("/Users/lem/Documents/Projekte/pwa/index.html"); 
-
+res.sendFile(path.join(__dirname, "/../../index.html")); 
 }); 
 
-app.get("/src/html/login.html", (req, res) => { 
-res.sendFile("D:/Projekt/data-exchange-pwa/src/html/login.html");  
-});  
+app.get("/login", (req, res) => { 
+  res.sendFile(path.join(__dirname, "/../html/login.html"));  
+}); 
+
+
+app.get("/about-us", (req, res) => { 
+  res.sendFile(path.join(__dirname, "/../html/about-us.html"));  
+}); 
+
+app.get("/admin-controller", (req, res) => { 
+  res.sendFile(path.join(__dirname, "/../html/admin-controller.html"));  
+}); 
+
+app.get("/admin-login", (req, res) => { 
+  res.sendFile(path.join(__dirname, "/../html/admin-login.html"));  
+}); 
+
+app.get("/download", (req, res) => { 
+  res.sendFile(path.join(__dirname, "/../html/download.html"));  
+}); 
+
+app.get("/faq", (req, res) => { 
+  res.sendFile(path.join(__dirname, "/../html/faq.html"));  
+}); 
+
+app.get("/pic-maker", (req, res) => { 
+  res.sendFile(path.join(__dirname, "/../html/pic-maker.html"));  
+}); 
+
+app.get("/upload-form", (req, res) => { 
+  res.sendFile(path.join(__dirname, "/../html/upload-form.html"));  
+}); 
+
+app.get("/user-profil", (req, res) => { 
+  res.sendFile(path.join(__dirname, "/../html/user-profil.html"));  
+}); 
+
+app.get("/voice-maker", (req, res) => { 
+  res.sendFile(path.join(__dirname, "/../html/voice-maker.html"));  
+}); 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 app.post("/src/html/login.html", async (req, res) => {   
   const email = req.body.email; 

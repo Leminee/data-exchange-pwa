@@ -9,6 +9,7 @@ const app = express();
 
 app.use(express.json());  
 app.use(cors()); 
+app.use(express.static(__dirname + '/static'));
 app.use(express.urlencoded({ extended: false }));
 app.use(parser.urlencoded({ extended: false }));
 app.use(parser.json());
@@ -19,8 +20,6 @@ user: "root",
 password: "",
 database: "pwa",
 });
-
-
 
 
 app.listen(3001, () => console.log('listening on port 3001'));
@@ -34,6 +33,7 @@ db.connect(function(error) {
     } else {console.log('db ' + db.state)}
   });
   
+
 //get all users from database
 app.get('/user', (req, res) => {
     let sql = 'SELECT `id_user`, `e_mail`, `upload_limit` FROM user';
