@@ -44,9 +44,9 @@ function forTabFun(){
 function register(){
     event.preventDefault();
 
-    var email = document.getElementById("email-reg").value;
-    var username = document.getElementById("username-reg").value;
-    var password= document.getElementById("password-reg").value;
+    var email = document.getElementById("email").value;
+    var username = document.getElementById("username").value;
+    var password= document.getElementById("password").value;
 
     if (email == ""){
         alert("E-Mail-Adresse erforderlich.");
