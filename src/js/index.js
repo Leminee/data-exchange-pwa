@@ -1,7 +1,8 @@
 const express = require('express');  
 const mysql = require('mysql'); 
 const cors = require('cors');
-const app = express();     
+const app = express();      
+const path = require('path');
 /*var parser = require("body-parser"); */
 /*var urlParser = parser.urlencoded({extended:false}); */
 
@@ -16,21 +17,25 @@ app.use(express.static(__dirname + '/static'));
 app.use(express.urlencoded({ extended: false }))
 
 
-const db = mysql.createConnection({
-host: "localhost", 
-user: "root", 
-password: "",
-database: "pwa",
+var db = mysql.createConnection({
+  host     : 'localhost',
+  user     : 'mel',
+  password : '36177436',
+  database : 'pwa'
 });  
  
 db.connect(function(error) { 
     if (!!error) { 
       console.log('Verbindungsfehler');
-    } 
+    }  
+ 
+    else { 
+      console.log('connected')
+    }
 })
  
-app.get("/", (req, res) => { 
-res.sendFile("/Users/lem/Documents/Projekte/pwa/index.html"); 
+app.get("/index", (req, res) => { 
+  res.sendFile(path.join(__dirname, "/../../index.html"));
 
 }); 
 
