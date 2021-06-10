@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
     
+    <link rel="stylesheet" href="/src/css/admin-controller.css">
     <link rel="icon" href="/src/images/icons/icon256px.png">  
     <link rel="apple-touch-icon" href="/src/images/icons/icon256px.png">  
     <link rel="icon" href="/src/images/icons/icon256px.png">
@@ -13,9 +14,51 @@
     <title>Admin Kontroller</title>  
 </head>
 <body>
-    
+    <div>
+        <input placeholder="search by userID" id="search">
+        <button id="seachButton">Search</button>
+    </div>
+    <div class="container">
+     <table>
+          <thead>
+             <tr>
+                <th>User ID</th>
+                <th>Email</th>
+                <th>Upload Limit</th>
+                <th>Edit Limit</th>
+          </tr>
+         </thead>
+     <tbody id="users">
+            
+     </tbody>
+
+    </table>
+</div>
 
 
+    <script>
+        fetch("http://localhost:3001/user").then( response => {
+            response.json().then(
+                data => {
+                    console.log(data);
+                    if(data.length > 0) {
+                        var temp = "";
+
+                        data.forEach((u) => {
+                            temp += "<tr>";
+                            temp += "<td>"+u.id_user+"</td>";
+                            temp += "<td>"+u.e_mail+"</td>";
+                            temp += "<td>"+u.upload_limit+"</td></tr>";
+                        })
+
+                        document.getElementById("users").innerHTML = temp;
+                    }
+                }
+            )
+        })
+
+
+    </script> 
 </body>
 
 
