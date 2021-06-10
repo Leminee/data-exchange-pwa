@@ -39,9 +39,7 @@ app.get('/user', (req, res) => {
     let sql = 'SELECT `id_user`, `e_mail`, `upload_limit` FROM user';
     let query = db.query(sql, (err, result) => {
         if(err) throw err;
-        console.log(result);
         res.send(result);
-
     });
 });
   
@@ -51,11 +49,15 @@ app.get('/user/:id_user', (req, res) => {
     let sql = `SELECT id_user, e_mail, upload_limit FROM user WHERE id_user = ${req.params.id_user}`;
     let query = db.query(sql, (err, result) => {
         if(err) throw err;
-        console.log(result);
         res.send(result);
     });
 });
 
+//take id_user from html and redirect 
+app.post('/user', (req, res, next) => {
+    var id_user = req.body.id_user;
+    res.redirect('/user/' + id_user);
+});
 
 
 
@@ -65,7 +67,6 @@ app.get('/updateuser/:id_user', (req, res) => {
     let sql = `UPDATE user SET upload_limit = '${newUploadLimit}' WHERE id_user = ${req.params.id_user}`;
     let query = db.query(sql, (err, result) => {
         if(err) throw err;
-        console.log(result);
         res.send('user updated');
     });
 });

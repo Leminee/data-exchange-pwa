@@ -13,11 +13,17 @@
 
     <title>Admin Kontroller</title>  
 </head>
-<body>
+<body onload="getUserFromDB();">
     <div>
-        <input placeholder="search by userID" id="search">
-        <button id="seachButton">Search</button>
+        <input placeholder="Search for a specific user by ID" id="showSingleUser">
+        <button id="showSingleUser">Search for a specific user by ID</button>
     </div>
+
+    <form action="/user" method="post">
+    <input type="text" name="id_user">
+    <button type="submit">submit</button>
+    </form>
+
     <div class="container">
      <table>
           <thead>
@@ -35,30 +41,13 @@
     </table>
 </div>
 
-
-    <script>
-        fetch("http://localhost:3001/user").then( response => {
-            response.json().then(
-                data => {
-                    console.log(data);
-                    if(data.length > 0) {
-                        var temp = "";
-
-                        data.forEach((u) => {
-                            temp += "<tr>";
-                            temp += "<td>"+u.id_user+"</td>";
-                            temp += "<td>"+u.e_mail+"</td>";
-                            temp += "<td>"+u.upload_limit+"</td></tr>";
-                        })
-
-                        document.getElementById("users").innerHTML = temp;
-                    }
-                }
-            )
-        })
+<script type="text/javascript" src="/src/js/admin-controller.js"></script>
 
 
-    </script> 
+
+
+
+    
 </body>
 
 
