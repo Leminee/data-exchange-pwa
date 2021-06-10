@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    
+    <link rel="stylesheet" href="/src/css/admin-controller.css">
+    <link rel="icon" href="/src/images/icons/icon256px.png">  
+    <link rel="apple-touch-icon" href="/src/images/icons/icon256px.png">  
+    <link rel="icon" href="/src/images/icons/icon256px.png">
+
+    <title>Admin Kontroller</title>  
+</head>
+<body onload="getUserFromDB();">
+    <div>
+        <input placeholder="Search for a specific user by ID" id="showSingleUser">
+        <button id="showSingleUser">Search for a specific user by ID</button>
+    </div>
+
+    <form action="/user" method="post">
+    <input type="text" name="id_user">
+    <button type="submit">submit</button>
+    </form>
+
+    <div class="container">
+     <table>
+          <thead>
+             <tr>
+                <th>User ID</th>
+                <th>Email</th>
+                <th>Upload Limit</th>
+                <th>Edit Limit</th>
+          </tr>
+         </thead>
+     <tbody id="users">
+            
+     </tbody>
+
+    </table>
+</div>
+
+<script type="text/javascript" src="/src/js/admin-controller.js"></script>
+
+
+
+
+
+    
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>

@@ -18,8 +18,8 @@ app.use(express.urlencoded({ extended: false }))
 
 const db = mysql.createConnection({
 host: "localhost", 
-user: "mel", 
-password: "36177436",
+user: "root", 
+password: "",
 database: "pwa",
 });  
  
@@ -35,7 +35,7 @@ res.sendFile("/Users/lem/Documents/Projekte/pwa/index.html");
 }); 
 
 app.get("/src/html/login.html", (req, res) => { 
-res.sendFile("/Users/lem/Documents/Projekte/pwa/src/html/login.html");  
+res.sendFile("D:/Projekt/data-exchange-pwa/src/html/login.html");  
 });  
 
 app.post("/src/html/login.html", async (req, res) => {   

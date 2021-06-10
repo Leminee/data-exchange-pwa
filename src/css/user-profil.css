@@ -389,3 +389,56 @@ textarea.form-control {
         margin-bottom: 10px;
     }
 }
+
+@media screen and (max-width:768px){
+    /*hides links*/
+    body{
+        overflow-x: hidden;
+    }
+    /*container for links*/
+    .text-center{
+        position: absolute;
+        right: 0px;
+        height: 92vh;
+        top: 8vh;
+        background-color: #3e789c;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 30%;
+        transform: translateX(100%);
+        transition: transform 0.5s ease-in;
+    }
+    .burger{
+        display: block;
+    }
+    /*show navigation*/
+    .nav-active{
+        transform: translateX(0%);
+    }
+    /*Animation for Links*/
+    @keyframes navLinkFade{
+        from{
+            opacity: 0;
+            transform: translateX(50px);
+        }
+        to{
+            opacity: 1;
+            transform: translateX(0px);
+        }
+    }
+    /*Animation Burger to "X"*/
+    .toggle .line1{
+        transform: rotate(-45deg) translate(-5px, 6px);
+    }
+
+    .toggle .line2{
+        opacity: 0;
+    }
+
+    .toggle .line3{
+        transform: rotate(45deg) translate(-5px, -6px);
+    }
+
+
+}
