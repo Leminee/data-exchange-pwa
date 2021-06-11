@@ -129,3 +129,10 @@ var emailArray=[];
      alert("email is send to your email check it in 24hr. \n Thanks");
      document.getElementById("fe").value ="";
  }
+ 
+ function faq(){
+    event.preventDefault();
+
+    window.open("/faq");
+    return ;
+}
