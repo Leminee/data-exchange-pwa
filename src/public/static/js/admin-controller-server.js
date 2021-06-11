@@ -3,16 +3,17 @@ const mysql = require('mysql');
 const cors = require('cors');
 const bcrypt = require("bcrypt"); 
 const parser = require("body-parser"); 
+const path = require('path');
 const saltRounds = 10;
 
 const app = express();    
 
 app.use(express.json());  
-app.use(cors()); 
-app.use(express.static(__dirname + '/static'));
-app.use(express.urlencoded({ extended: false }));
-app.use(parser.urlencoded({ extended: false }));
-app.use(parser.json());
+app.use(cors());   
+app.use(express.static(__dirname + '/..'));
+app.use(express.urlencoded({ extended: false }))
+app.use(parser.urlencoded({ extended: false }))
+
 
 const db = mysql.createConnection({
 host: "localhost", 
@@ -22,7 +23,7 @@ database: "pwa",
 });
 
 
-app.listen(3001, () => console.log('listening on port 3001'));
+app.listen(3002, () => console.log('listening on port 3002'));
 
 
 
@@ -33,6 +34,12 @@ db.connect(function(error) {
     } else {console.log('db ' + db.state)}
   });
   
+
+
+  app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, "/../../../html/admin-controller.html"));
+});
+
 
 //get all users from database
 app.get('/user', (req, res) => {
@@ -54,13 +61,13 @@ app.get('/user/:id_user', (req, res) => {
 });
 
 //take id_user from html and redirect 
-app.post('/user', (req, res, next) => {
+app.post('/user', (req, res) => {
     var id_user = req.body.id_user;
     res.redirect('/user/' + id_user);
 });
 
 
-
+/*
 //update user Upload limit
 app.get('/updateuser/:id_user', (req, res) => {
     let newUploadLimit = '55';
@@ -70,5 +77,16 @@ app.get('/updateuser/:id_user', (req, res) => {
         res.send('user updated');
     });
 });
+*/
 
 
+//update user Upload limit for all user
+app.post('/update_user', (req, res) => {
+    const upload_limit = req.body.upload_limit;
+    let sql = `UPDATE user SET upload_limit = '${upload_limit}'`;
+    let query = db.query(sql, (err, res) => {
+        if(err) throw err;
+    });
+    res.redirect('/');
+    res.end()
+});

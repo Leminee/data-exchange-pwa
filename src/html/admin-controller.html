@@ -13,16 +13,22 @@
     <title>Admin Kontroller</title>  
 </head>
 <body onload="getUserFromDB();">
-    <div>
-        <input placeholder="Search for a specific user by ID" id="showSingleUser">
-        <button id="showSingleUser">Search for a specific user by ID</button>
-    </div>
+    
 
+    
+
+
+    
     <form action="/user" method="post">
-    <input type="text" name="id_user">
-    <button type="submit">submit</button>
+    <input type="text" placeholder="Search user by ID" name="id_user">
+    <button type="submit">Seach user by ID</button>
     </form>
 
+    <form action="/update_user" method="post">
+    <input type="text" placeholder="Update user upload Limit" name="upload_limit">
+    <button type="submit">Update user upload limit</button>
+    </form>
+    
     <div class="container">
      <table>
           <thead>
@@ -30,7 +36,6 @@
                 <th>User ID</th>
                 <th>Email</th>
                 <th>Upload Limit</th>
-                <th>Edit Limit</th>
           </tr>
          </thead>
      <tbody id="users">
