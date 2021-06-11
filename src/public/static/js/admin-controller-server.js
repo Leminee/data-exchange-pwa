@@ -3,16 +3,16 @@ const mysql = require('mysql');
 const cors = require('cors');
 const bcrypt = require("bcrypt"); 
 const parser = require("body-parser"); 
+const path = require('path');
 const saltRounds = 10;
 
 const app = express();    
 
 app.use(express.json());  
-app.use(cors()); 
+app.use(cors());   
 app.use(express.static(__dirname + '/static'));
-app.use(express.urlencoded({ extended: false }));
-app.use(parser.urlencoded({ extended: false }));
-app.use(parser.json());
+app.use(express.urlencoded({ extended: false }))
+
 
 const db = mysql.createConnection({
 host: "localhost", 
@@ -22,7 +22,7 @@ database: "pwa",
 });
 
 
-app.listen(3001, () => console.log('listening on port 3001'));
+app.listen(3002, () => console.log('listening on port 3002'));
 
 
 
@@ -33,6 +33,12 @@ db.connect(function(error) {
     } else {console.log('db ' + db.state)}
   });
   
+
+
+  app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, "/../../../html/admin-controller.html"));
+});
+
 
 //get all users from database
 app.get('/user', (req, res) => {

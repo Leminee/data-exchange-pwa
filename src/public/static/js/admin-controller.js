@@ -1,5 +1,5 @@
 function getUserFromDB() {
-        fetch("http://localhost:3001/user").then( response => {
+        fetch("http://localhost:3002/user").then( response => {
             response.json().then(
                 data => {
                     if(data.length > 0) {
@@ -16,10 +16,10 @@ function getUserFromDB() {
                 }
             )
         })
-    }
+    };
 
     function showSingleUser(){
-        fetch("http://localhost:3001/user/:id_user").then( response => {
+        fetch("http://localhost:3002/user/:id_user").then( response => {
             response.json().then(
                 data => {
                     if(data.length > 0) {
@@ -37,5 +37,5 @@ function getUserFromDB() {
             )
         })
 
-    }
+    };
 

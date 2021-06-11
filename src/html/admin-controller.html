@@ -13,13 +13,10 @@
     <title>Admin Kontroller</title>  
 </head>
 <body onload="getUserFromDB();">
-    <div>
-        <input placeholder="Search for a specific user by ID" id="showSingleUser">
-        <button id="showSingleUser">Search for a specific user by ID</button>
-    </div>
-
+    
+    
     <form action="/user" method="post">
-    <input type="text" name="id_user">
+    <input type="text" placeholder="Search user by ID" name="id_user">
     <button type="submit">submit</button>
     </form>
 
