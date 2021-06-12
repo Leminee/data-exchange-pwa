@@ -16,10 +16,10 @@ app.use(parser.urlencoded({ extended: false }))
 
 
 const db = mysql.createConnection({
-host: "localhost", 
-user: "root", 
-password: "",
-database: "pwa",
+host: 'localhost', 
+user: 'mel', 
+password: '36177436',
+database: 'pwa',
 });
 
 
