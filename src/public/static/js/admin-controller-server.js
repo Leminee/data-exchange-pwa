@@ -12,6 +12,7 @@ app.use(express.json());
 app.use(cors());   
 app.use(express.static(__dirname + "/.."));
 app.use(express.urlencoded({ extended: false }))
+app.use(parser.urlencoded({ extended: false }))
 
 
 const db = mysql.createConnection({
@@ -60,13 +61,13 @@ app.get('/user/:id_user', (req, res) => {
 });
 
 //take id_user from html and redirect 
-app.post('/user', (req, res, next) => {
+app.post('/user', (req, res) => {
     var id_user = req.body.id_user;
     res.redirect('/user/' + id_user);
 });
 
 
-
+/*
 //update user Upload limit
 app.get('/updateuser/:id_user', (req, res) => {
     let newUploadLimit = '55';
@@ -76,5 +77,16 @@ app.get('/updateuser/:id_user', (req, res) => {
         res.send('user updated');
     });
 });
+*/
 
 
+//update user Upload limit for all user
+app.post('/update_user', (req, res) => {
+    const upload_limit = req.body.upload_limit;
+    let sql = `UPDATE user SET upload_limit = '${upload_limit}'`;
+    let query = db.query(sql, (err, res) => {
+        if(err) throw err;
+    });
+    res.redirect('/');
+    res.end()
+});
