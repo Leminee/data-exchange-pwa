@@ -13,11 +13,33 @@
     <title>Download</title>
 </head>
 
-<body>
+<body onload="getFileName2();">
 
-    <a href="javascript:x" download>href</a>
-    <a href="#" onclick="javascript:x" download>onclick</a>
-    <a href="/Secret.txt" download>hard</a>
+    <a>Filename:</a>
+    <a id="filename"></a>
+
+    <br>
+    <br>
+
+    <form action="/download/:id_file" method="get">
+        <button>Download</button>
+    </form>
+
+    <br>
+
+    <form action="" method="post">
+        <button>Generate Link</button>
+    </form>
+
+    <br>
+
+    <form action="" method="post">
+        <button>Send as E-mail</button>
+    </form>
+
+    <br>
+
+
     <script src="/js/download.js"></script>
     
 </body>
