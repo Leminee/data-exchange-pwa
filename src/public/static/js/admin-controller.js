@@ -17,8 +17,8 @@ function getUserFromDB() {
             )
         })
     }
-/*
-    function showSingleUser(){
+
+   function showSingleUser(){
         fetch("http://localhost:3002/user/:id_user").then( response => {
             response.json().then(
                 data => {
@@ -38,4 +38,4 @@ function getUserFromDB() {
         })
 
     }
-*/
+

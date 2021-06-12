@@ -52,8 +52,23 @@ app.get("/admin-login", (req, res) => {
   res.sendFile(path.join(__dirname, "/../html/admin-login.html"));  
 }); 
 
-app.get("/download", (req, res) => { 
+/*
+app.get("/download/:id_file", (req, res) => { 
   res.sendFile(path.join(__dirname, "/../html/download.html"));  
+}); 
+*/
+
+app.get("/download/:id_file", (req, res) => { 
+  const id_file = req.params.id_file;
+  let sql = `SELECT file_name FROM file WHERE id_file = ${id_file}`;
+  let query = db.query(sql, (err, result) => {
+    if(err) throw err;
+    res.sendFile(path.join(__dirname, "/../html/download.html"));  
+  }); 
+}); 
+
+app.get("/download/:id_file/download", (req, res) => { 
+   
 }); 
 
 app.get("/faq", (req, res) => { 
