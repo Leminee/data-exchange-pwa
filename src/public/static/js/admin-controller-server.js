@@ -14,7 +14,7 @@ app.use(express.static(__dirname + "/.."));
 app.use(express.urlencoded({ extended: false }))
 app.use(parser.urlencoded({ extended: false }))
 
-
+var id_user;
 const db = mysql.createConnection({
 host: "localhost", 
 user: "root", 
@@ -59,8 +59,8 @@ app.get('/user', (req, res) => {
 
 //get a user from database by id
 app.get('/user/:id_user', (req, res) => {
-    const id_user = req.params.id_user;
-    let sql = `SELECT id_user, e_mail, upload_limit FROM user WHERE id_user = ${id_user}`;
+    
+    let sql = `SELECT id_user, e_mail, upload_limit FROM user WHERE id_user = "${id_user}"`;
     let query = db.query(sql, (err, result) => {
         if(err) throw err;
         res.send(result);
@@ -71,7 +71,7 @@ app.get('/user/:id_user', (req, res) => {
 
 //take id_user from html and redirect 
 app.post('/user', (req, res) => {
-    var id_user = req.body.id_user;
+    id_user = req.body.id_user;
     res.redirect('/user/' + id_user + '/show');
 });
 
@@ -81,6 +81,7 @@ app.post('/user', (req, res) => {
 //update user Upload limit for all user
 app.post('/update_user', (req, res) => {
     const upload_limit = req.body.upload_limit;
+    console.log(upload_limit);
     let sql = `UPDATE user SET upload_limit = '${upload_limit}'`;
     let query = db.query(sql, (err, res) => {
         if(err) throw err;
