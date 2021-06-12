@@ -10,17 +10,13 @@
     <link rel="icon" href="/images/icons/icon256px.png">  
     <link rel="apple-touch-icon" href="/images/icons/icon256px.png">
 
-    <title>Admin Kontroller</title>  
+    <title>Admin Kontroller for a single User</title>  
 </head>
-<body onload="getUserFromDB();">
-
+<body onload="showSingleUser();">
     
-    <form action="/user" method="post">
-    <input type="text" placeholder="Search user by ID" name="id_user">
-    <button type="submit">Seach user by ID</button>
-    </form>
+    
 
-    <form action="/update_user" method="post">
+    <form action="/update_user/:id_user" method="post">
     <input type="text" placeholder="Update user upload Limit" name="upload_limit">
     <button type="submit">Update user upload limit</button>
     </form>

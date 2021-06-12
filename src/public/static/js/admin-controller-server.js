@@ -27,7 +27,6 @@ app.listen(3002, () => console.log('listening on port 3002'));
 
 
 
-
 db.connect(function(error) { 
     if (error) { 
       console.log(error.msg);
@@ -35,10 +34,17 @@ db.connect(function(error) {
   });
   
 
-
+//list of all users
   app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, "/../../../html/admin-controller.html"));
 });
+
+
+//list of a single user
+app.get('/user/:id_user/show', (req, res) => {
+    res.sendFile(path.join(__dirname, "/../../../html/admin-controller-single.html"));
+});
+
 
 
 //get all users from database
@@ -53,37 +59,42 @@ app.get('/user', (req, res) => {
 
 //get a user from database by id
 app.get('/user/:id_user', (req, res) => {
-    let sql = `SELECT id_user, e_mail, upload_limit FROM user WHERE id_user = ${req.params.id_user}`;
+    const id_user = req.params.id_user;
+    let sql = `SELECT id_user, e_mail, upload_limit FROM user WHERE id_user = ${id_user}`;
     let query = db.query(sql, (err, result) => {
         if(err) throw err;
         res.send(result);
     });
 });
 
+
+
 //take id_user from html and redirect 
 app.post('/user', (req, res) => {
     var id_user = req.body.id_user;
-    res.redirect('/user/' + id_user);
+    res.redirect('/user/' + id_user + '/show');
 });
 
 
-/*
-//update user Upload limit
-app.get('/updateuser/:id_user', (req, res) => {
-    let newUploadLimit = '55';
-    let sql = `UPDATE user SET upload_limit = '${newUploadLimit}' WHERE id_user = ${req.params.id_user}`;
-    let query = db.query(sql, (err, result) => {
-        if(err) throw err;
-        res.send('user updated');
-    });
-});
-*/
 
 
 //update user Upload limit for all user
 app.post('/update_user', (req, res) => {
     const upload_limit = req.body.upload_limit;
     let sql = `UPDATE user SET upload_limit = '${upload_limit}'`;
+    let query = db.query(sql, (err, res) => {
+        if(err) throw err;
+    });
+    res.redirect('/');
+    res.end()
+});
+
+
+//update user Upload limit for a single user
+app.post('/update_user/:id_user', (req, res) => {
+    const id_user = req.params.id_user;
+    const upload_limit = req.body.upload_limit;
+    let sql = `UPDATE user SET upload_limit = '${upload_limit}' WHERE id_user = '${id_user}'`;
     let query = db.query(sql, (err, res) => {
         if(err) throw err;
     });
