@@ -15,9 +15,19 @@
 <body onload="showSingleUser();">
     
     
-
-    <form action="/update_user/:id_user" method="post">
-    <input type="text" placeholder="Update user upload Limit" name="upload_limit">
+    <form action="/user/show/:id_user/update_user" method="post">
+        <label for="upload_limit">Choose the upload limit for this user:</label>
+        <select name="upload_limit">
+            <option value="1">1MB</option>
+            <option value="5">5MB</option>
+            <option value="10">10MB</option>
+            <option value="20">20MB</option>
+            <option value="50">50MB</option>
+            <option value="100">100MB</option>
+            <option value="200">200MB</option>
+            <option value="500">500MB</option>
+            <option value="1000">1GB</option>
+        </select><br>
     <button type="submit">Update user upload limit</button>
     </form>
     
@@ -36,6 +46,10 @@
 
     </table>
 </div>
+
+
+    <button onclick="backToAllUsers();">Go back too all users list</button>
+
 
 <script type="text/javascript" src="/js/admin-controller.js"></script>
 
