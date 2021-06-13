@@ -330,16 +330,16 @@ textarea.form-control {
 .bg-gradient-default {
     background: linear-gradient(87deg, rgb(243, 227, 250) 0, rgb(243, 227, 250) 100%) !important;
 }
-
+/*Buttons werden hervorgehoben */
 .btn:hover {
     transform: translateY(-1px);
     box-shadow: 0 7px 14px rgba(50, 50, 93, .1), 0 3px 6px rgba(0, 0, 0, .08);
 }
-
+/*Buttons werden verkleinert */
 .btn-sm {
     font-size: .75rem;
 }
-
+/*setzt den ganzen Part einen weiter runter (wie ein Paragraphen) */
 .card-profile-stats {
     padding: 1rem 0;
 }
