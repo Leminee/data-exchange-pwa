@@ -21,8 +21,8 @@ var audio_url;
 
 var db = mysql.createConnection({
   host     : 'localhost',
-  user     : 'mel',
-  password : '36177436',
+  user     : 'hkoyun',
+  password : '12345',
   database : 'pwa'
 });
 
@@ -90,7 +90,11 @@ app.get("/upload-form", (req, res) => {
 
 app.get("/user-profil", (req, res) => { 
   res.sendFile(path.join(__dirname, "/../html/user-profil.html"));  
-}); 
+});
+
+app.get("/profil-edit", (req, res) => {
+  res.sendFile(path.join(__dirname, "/../html/profil-edit.html"));
+});
 
 app.get("/voice-maker", (req, res) => { 
   res.sendFile(path.join(__dirname, "/../html/voice-maker.html"));  
@@ -99,6 +103,8 @@ app.get("/voice-maker", (req, res) => {
 app.get("/voice-maker", (req, res) => { 
   audio_url = URL.createObjectURL(req.params.blob);
 });
+
+
 
 app.post("/voice-maker", (req, res) => {
   id_user = 2;
@@ -166,6 +172,6 @@ app.post("/src/html/login.html", async (req, res) => {
   });
 });
 
-app.listen(3001, ()=> { 
+app.listen(3001, ()=> {
 
 }); 
