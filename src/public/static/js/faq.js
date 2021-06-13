@@ -14,8 +14,8 @@ for(i = 0; i < len; i++) {
 }
 
 function backToLogin(){
-    event.preventDefault();
 
+    event.preventDefault();
     window.open("/login");
-    return ;
+  
 }
