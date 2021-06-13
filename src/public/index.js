@@ -13,6 +13,11 @@ app.use(express.static(__dirname + '/static'));
 
 app.use(express.urlencoded({ extended: false }))
 
+var id_format;
+var id_file;
+var id_folder;
+var id_user;
+var audio_url;
 
 var db = mysql.createConnection({
   host     : 'localhost',
@@ -90,6 +95,29 @@ app.get("/user-profil", (req, res) => {
 app.get("/voice-maker", (req, res) => { 
   res.sendFile(path.join(__dirname, "/../html/voice-maker.html"));  
 }); 
+
+app.get("/voice-maker", (req, res) => { 
+  audio_url = URL.createObjectURL(req.params.blob);
+});
+
+app.post("/voice-maker", (req, res) => {
+  id_user = 2;
+  id_format = 3;
+  file_name = req.body.file_name;
+  file_size = req.body.file_size;
+  file_path = req.body.file_path;
+
+  let sql = `INSERT INTO file (id_user, id_format, file_name, file_size, file_path) VALUES ('${id_user}', '${id_format}', '${file_name}', '${file_size}', '${file_path}')`;
+  let query = db.query(sql, (err, res) => {
+    if (err) throw err;
+    console.log(file_name);
+    console.log(file_size);
+    console.log(file_path);
+  });
+  res.redirect('/voice-maker');
+  res.end();
+});
+
 
 
 app.post("/src/html/login.html", async (req, res) => {   
