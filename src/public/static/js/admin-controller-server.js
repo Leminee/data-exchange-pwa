@@ -15,6 +15,8 @@ app.use(express.urlencoded({ extended: false }))
 app.use(parser.urlencoded({ extended: false }))
 
 var id_user;
+var upload_limit;
+
 const db = mysql.createConnection({
 host: "localhost", 
 user: "root", 
@@ -41,7 +43,7 @@ db.connect(function(error) {
 
 
 //list of a single user
-app.get('/user/:id_user/show', (req, res) => {
+app.get('/user/show/:id_user', (req, res) => {
     res.sendFile(path.join(__dirname, "/../../../html/admin-controller-single.html"));
 });
 
@@ -59,8 +61,7 @@ app.get('/user', (req, res) => {
 
 //get a user from database by id
 app.get('/user/:id_user', (req, res) => {
-    
-    let sql = `SELECT id_user, e_mail, upload_limit FROM user WHERE id_user = "${id_user}"`;
+    let sql = `SELECT id_user, e_mail, upload_limit FROM user WHERE id_user = '${id_user}'`;
     let query = db.query(sql, (err, result) => {
         if(err) throw err;
         res.send(result);
@@ -72,7 +73,7 @@ app.get('/user/:id_user', (req, res) => {
 //take id_user from html and redirect 
 app.post('/user', (req, res) => {
     id_user = req.body.id_user;
-    res.redirect('/user/' + id_user + '/show');
+    res.redirect('/user/show/' + id_user);
 });
 
 
@@ -80,8 +81,7 @@ app.post('/user', (req, res) => {
 
 //update user Upload limit for all user
 app.post('/update_user', (req, res) => {
-    const upload_limit = req.body.upload_limit;
-    console.log(upload_limit);
+    upload_limit = req.body.upload_limit;
     let sql = `UPDATE user SET upload_limit = '${upload_limit}'`;
     let query = db.query(sql, (err, res) => {
         if(err) throw err;
@@ -92,13 +92,12 @@ app.post('/update_user', (req, res) => {
 
 
 //update user Upload limit for a single user
-app.post('/update_user/:id_user', (req, res) => {
-    const id_user = req.params.id_user;
-    const upload_limit = req.body.upload_limit;
+app.post('/user/show/:id_user/update_user', (req, res) => {
+    upload_limit = req.body.upload_limit;
     let sql = `UPDATE user SET upload_limit = '${upload_limit}' WHERE id_user = '${id_user}'`;
     let query = db.query(sql, (err, res) => {
         if(err) throw err;
     });
-    res.redirect('/');
+    res.redirect('/user/show/' + id_user);
     res.end()
 });

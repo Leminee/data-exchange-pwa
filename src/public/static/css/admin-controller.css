@@ -3,10 +3,12 @@ body{
     width: 50%;
     margin: 50px auto;
     text-align: center;
+    font-size: 17px;
 }
 
 table{
-    margin: 50px auto;
+    margin: 70px auto;
+    font-weight: bold;
 }
 
 th, td {
@@ -15,6 +17,47 @@ th, td {
 
 table, th, td {
     border-collapse: collapse;
-    border: 1px solid rgb(0, 0, 0);
+    border: 2px solid rgb(0, 0, 0);
+}
+button {
+    background-color: #3e789c;
+    color: white;
+ 
+    text-align: center;
+    text-decoration: none;
+    font-size: 18px;
+    margin-right: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width:160px;
+    height:50px;
+  }
+
+button:hover{
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+  }
+
+button:active {
+    background-color: #3e8e41;
+    box-shadow: 0 1px #666;
+    transform: translateY(1px);
+}
+
+input{
+    width: 180px;
+    margin: 10px 10px;
+    padding: 10px;
+    font-size: 1.3em;
+    color: rgba(2, 95, 135, 0.82);
+}
+
+select {
+    width: 9em;
+    height: 3em;
+    color: white;
+    background-color: #3e789c;
+    border: 1px solid;
+    cursor: pointer;
+    border-radius: 5px;
 }
 
