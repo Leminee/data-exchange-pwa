@@ -8,7 +8,6 @@ const navSlide = () => {
         //Toggle nav
         nav.classList.toggle('nav-active');
 
-
         //Animate Links
         navLinks.forEach((link, index)=>{
             console.log(index / 5);
