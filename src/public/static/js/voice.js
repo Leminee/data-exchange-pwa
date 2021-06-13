@@ -1,4 +1,5 @@
-
+let mediaRecorder = false;
+const constraints = { audi: true, video: false};
 
 record.onclick = () =>{
     navigator.mediaDevices.getUserMedia({audio:true})
@@ -6,15 +7,15 @@ record.onclick = () =>{
 
         mediaRecorder = new MediaRecorder(stream)
         mediaRecorder.start()
-        chuck = [] 
+        chunk = [] 
 
 
         mediaRecorder.addEventListener("dataavailable", e =>{
-            chuck.push(e.data)
+            chunk.push(e.data)
         })
 
-        mediaRecorder.addEventListener("stop", e =>{
-            blob = new Blob(chuck, {type : 'audio/mp3'})
+        mediaRecorder.addEventListener('stop', e =>{
+            blob = new Blob(chunk, {type : 'audio/mp3'})
             audio_url = URL.createObjectURL(blob)
             audio = new Audio(audio_url)
             audio.setAttribute("controls",1)
@@ -25,11 +26,12 @@ record.onclick = () =>{
 
             mp3.appendChild(audio);
             audio.load();
-            
-            
-        
+            var aElement = document.createElement("a");
+            aElement.href = audio.src;
+            aElement.download = audio_url;
+            document.body.appendChild(aElement);
+            aElement.click();
         })
-
     })
 }
 
