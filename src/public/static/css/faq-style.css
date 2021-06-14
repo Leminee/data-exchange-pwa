@@ -1,5 +1,6 @@
 /* Import Google Font */
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap'); 
+
 
 body{
     font-family: 'Raleway', sans-serif;
@@ -51,7 +52,7 @@ body{
     padding: 0 15px;
     border-left: 1px solid #3e789c;
     margin-left: 25px;
-    font-size: 14px;
+    font-size: 16px;
     text-align: justify;
     overflow: hidden;
     max-height: 0;

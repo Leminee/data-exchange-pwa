@@ -14,15 +14,15 @@ nav{
     display: flex;
     justify-content: space-around;
     align-items: center;
-    min-height: 8vh;
+    min-height: 6vh;
     background-color: #3e789c;
 }
 /*top left text*/
 .logo{
     color: rgb(65, 1, 1);
     text-transform: uppercase;
-    letter-spacing: 5px;
-    font-size: 20px;
+    letter-spacing: 2px;
+    font-size: 13px;
 }
 /*links*/
 .nav-links{
@@ -38,7 +38,7 @@ nav{
 .nav-links a{
     color: rgb(65, 1, 1);
     text-decoration: none;
-    letter-spacing: 3px;
+    letter-spacing: 2px;
     font-weight: bold;
     font-size: 13px;
 }
@@ -61,7 +61,7 @@ nav{
 .websiteHeadline h2{
     font-size: 30px;
     text-align: center;
-    letter-spacing: 3px;
+    letter-spacing: 2px;
     margin: 50px;
     padding: 0px;
 }
