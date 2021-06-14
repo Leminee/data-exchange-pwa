@@ -28,13 +28,13 @@ const navSlide = () => {
 */
 
 function insertEmail(){
-    fetch("http://localhost:3001/user-profil/:id_user").then( response => {
+    fetch("http://localhost:3001/user-profil").then( response => {
         response.json().then(
             data => {
                 if (data.length > 0) {
                     var tempEmail = "";
                     tempEmail = "<label className>" + data.e_mail + "</label>";
-                    document.getElementByID("tempEmail").innerHTML = tempEmail;
+                    document.getElementById("tempEmail").innerHTML = tempEmail;
                 };
             }
         )
@@ -43,33 +43,42 @@ function insertEmail(){
 
 
 function insertUsername(){
-    fetch("http://localhost:3001/user-profil/:id_user").then( response => {
+    console.log("vor dem fetch");
+    fetch("http://localhost:3001/user-profil").then( response => {
         response.json().then(
             data => {
                 if (data.length > 0) {
                     var tempUsername = "";
-                    tempUsername += "<label className>" + data.username + "</label>";
-                    document.getElementByID("tempUsername").innerHTML = tempUsername;
+
+                    data.forEach((u) => {
+                        console.log("banana ");
+                    tempUsername += "<p>" + u.username + "</p>";
+                    console.log("banana " + u.username);
+                    console.log("banana " + data.id_user);
+                    })
+                    document.getElementById("tempUsername").innerHTML = tempUsername;
                 };
             }
         )
     })
 };
+
 //<img src="" height="100" width="100"   align="right" hspace="30" vspace="30"></img>
 
 function insertProfilePicture(){
-    fetch("http://localhost:3001/user-profil/:id_user").then( response => {
+    fetch("http://localhost:3001/user-profil").then( response => {
         response.json().then(
             data => {
                 if (data.length > 0) {
                     var tempProfilePicture = "";
                     tempProfilePicture += "<img src=" + data.profil_pic_path + "height='100' width='100' algin='right' hspace='30' vspace='30'></img>";
-                    document.getElementByID("profilPicture").innerHTML = tempProfilePicture;
+                    document.getElementById("profilPicture").innerHTML = tempProfilePicture;
                 };
             }
         )
     })
 };
+
 
 function fillInTheData(){
     insertEmail();
