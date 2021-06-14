@@ -88,9 +88,19 @@ app.get("/upload-form", (req, res) => {
   res.sendFile(path.join(__dirname, "/../html/upload-form.html"));  
 }); 
 
-app.get("/user-profil", (req, res) => { 
+app.get("/user-profil/2", (req, res) => {
   res.sendFile(path.join(__dirname, "/../html/user-profil.html"));  
 });
+
+app.get("/user-profil/profil/2", (req, res) => {
+  let sql ='SELECT id_user, e_mail, username, profil_pic_path FROM user WHERE id_user = 2';
+  let query = db.query(sql, (err,result) => {
+    if(err) throw err;
+    res.send(result);
+    console.log(result);
+  });
+});
+
 
 app.get("/profil-edit", (req, res) => {
   res.sendFile(path.join(__dirname, "/../html/profil-edit.html"));
@@ -174,4 +184,4 @@ app.post("/src/html/login.html", async (req, res) => {
 
 app.listen(3001, ()=> {
 
-}); 
+});  
