@@ -21,8 +21,8 @@ var audio_url;
 
 var db = mysql.createConnection({
   host     : 'localhost',
-  user     : 'hkoyun',
-  password : '12345',
+  user     : 'root',
+  password : '',
   database : 'pwa'
 });
 

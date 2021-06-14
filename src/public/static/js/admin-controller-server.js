@@ -19,8 +19,8 @@ var upload_limit;
 
 const db = mysql.createConnection({
 host: 'localhost', 
-user: 'mel', 
-password: '36177436',
+user: 'root', 
+password: '',
 database: 'pwa',
 });
 
