@@ -33,8 +33,13 @@ function insertEmail(){
             data => {
                 if (data.length > 0) {
                     var tempEmail = "";
-                    tempEmail = "<label className>" + data.e_mail + "</label>";
-                    document.getElementById("tempEmail").innerHTML = tempEmail;
+                    data.forEach((u) => {
+                        console.log("banana ");
+                        tempEmail += "<p>" + u.email + "</p>";
+                        console.log("banana " + u.email);
+                        console.log("banana " + data.id_user);
+                    })
+                    document.getElementById("tempUEmail").innerHTML = tempEmail;
                 };
             }
         )
@@ -71,8 +76,14 @@ function insertProfilePicture(){
             data => {
                 if (data.length > 0) {
                     var tempProfilePicture = "";
-                    tempProfilePicture += "<img src=" + data.profil_pic_path + "height='100' width='100' algin='right' hspace='30' vspace='30'></img>";
+                    data.forEach((u) => {
+                        console.log("banana ");
+                        tempProfilePicture += "<p>" + u.profilepicture + "</p>";
+                        console.log("banana " + u.profilepicture);
+                        console.log("banana " + data.id_user);
+                    })
                     document.getElementById("profilPicture").innerHTML = tempProfilePicture;
+                    tempProfilePicture += "<img src=" + data.profil_pic_path + "height='100' width='100' algin='right' hspace='30' vspace='30'></img>";
                 };
             }
         )
