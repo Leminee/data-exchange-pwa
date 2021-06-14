@@ -3,28 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name ="description" content="Registrien Sie sich ein, um Dateien unkompliziert austauschen zu können"> 
     <meta keywords="Dateien austauschen, Dateien hochladen, Dateien herunterladen"> 
     <meta name="robots" content="index"/> 
-    <meta name="robots" content="follow"/>    
-    <link rel="icon" href="/images/icons/icon256px.png">  
+    <meta name="robots" content="follow"/>
+    <link rel="icon" href="/images/icons/icon256px.png">
     <link rel="apple-touch-icon" href="/images/icons/icon256px.png">
     <meta name="theme-color" content="#5c5b5b"/> 
-    
-    
+
+
     <link rel="stylesheet" href="/css/login.css"> 
-  
-    
-    <title>Login&Registration</title>  
-    
-</head> 
+
+
+    <title>Login&Registration</title>
+
+
+</head>
 <body> 
     <noscript>You need to enable JavaScript to run this app.</noscript>
-     
-    <div id="container"> 
 
-        <div id="tabs"> 
 
             <p id="lt" class="tabs" onclick="loginTabFun()">Anmelden</p>
             <p id="rt" class="tabs" onclick="regTabFun()">Registrieren</p>
@@ -42,32 +40,36 @@
                 <input name="login" type="submit" onclick="login()" value="Anmelden"/>
                 <p onclick="forTabFun()">Passwort vergessen?</p>
                 <p onclick="faq()">F.A.Q</p>
-            </div>  
+            </div>
+           
+
+            </form>
+
+            <form action="/src/html/login.html" method="POST"> 
+            <div id="register" class="comm"> 
 
     
         <div id="register" class="comm">
                 <h3>Registrieren</h3>
 
-                <input id="re" name="email" type="email" placeholder="E-Mail-Adresse" required/>
-                <input id="rp" name="username" type="username" placeholder="Username" required/>
-                <input id="rpp" name="password" type="password" placeholder="Passwort" required/>  
+                <input id="re" name="email-reg" type="email" placeholder="E-Mail-Adresse" required/>
+                <input id="rp" name="username-reg" type="username" placeholder="Username" required/>
+                <input id="rpp" name="password-reg" type="password" placeholder="Passwort" required/>
                 <input name ="register" type="submit" onclick="register()" value="Registrieren"/>
         </div> 
 
-    
-
-            <div id="forgot" class="comm">
+            </div> 
+            </form>
+<div id="forgot" class="comm">
             <h3>Passwort zurücksetzen</h3>
             <div>
                 <input id="fe" type="email" placeholder="E-Mail-Adresse" required/>
                 <input type="submit" onclick="forgot()" value="Abschicken"/>
-               </div>
-              </div>
-            </div> 
+            </div>
+            </div>
         </div>
-            </body>
 
     <script type="text/javascript" src="/js/app.js"></script>
-    <script type="text/javascript" src="/js/register-login.js"></script>  
+    <script type="text/javascript" src="/js/register-login.js"></script>
 </body>
 </html>

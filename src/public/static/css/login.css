@@ -65,6 +65,7 @@ input[type="submit"] {
 
 .comm {
     visibility: hidden;
+    position: absolute;
 }
 
 #login {
