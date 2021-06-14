@@ -1,3 +1,4 @@
+/*
 const navSlide = () => {
     const burger = document.querySelector('.burger');
     const nav = document.querySelector('.text-center');
@@ -23,65 +24,65 @@ const navSlide = () => {
 
     });
 
-
 }
+*/
 
 function insertEmail(){
-    fetch("http://localhost:3001/user-profil/profil/2").then( response => {
+    fetch("http://localhost:3001/user-profil/:id_user").then( response => {
         response.json().then(
             data => {
                 if (data.length > 0) {
                     var tempEmail = "";
-                    temEmail += "<label className" > data.e_mail < /label>
-                    document.getElementByID("tempEmail").innerHTML = temEmail;
-
-                }
-                ;
-
-
-            })
-
-        function insertEmail(){
-            fetch("http://localhost:3001/user-profil/profil/2).then( response => {
-            response.json().then(
-                data => {
-                    if(data.length > 0) {
-                        var tempEmail = "";
-                        temEmail += "<label className">data.e_mail</label>
-                        document.getElementByID("tempEmail").innerHTML = temEmail;
-
-                    };
+                    tempEmail = "<label className>" + data.e_mail + "</label>";
+                    document.getElementByID("tempEmail").innerHTML = tempEmail;
+                };
+            }
+        )
+    })
+};
 
 
-
-
-
-function insertusername(){
-    fetch("http://localhost:3001/user-profil/profil/2").then( response => {
+function insertUsername(){
+    fetch("http://localhost:3001/user-profil/:id_user").then( response => {
         response.json().then(
             data => {
                 if (data.length > 0) {
-                    var tempEmail = "";
-                    tempUsername += "<label className" > data.username < /label>
-                    document.getElementByID("tempUsernamel").innerHTML = tempUsername;
+                    var tempUsername = "";
+                    tempUsername += "<label className>" + data.username + "</label>";
+                    document.getElementByID("tempUsername").innerHTML = tempUsername;
+                };
+            }
+        )
+    })
+};
+//<img src="" height="100" width="100"   align="right" hspace="30" vspace="30"></img>
 
-                }
-                ;
+function insertProfilePicture(){
+    fetch("http://localhost:3001/user-profil/:id_user").then( response => {
+        response.json().then(
+            data => {
+                if (data.length > 0) {
+                    var tempProfilePicture = "";
+                    tempProfilePicture += "<img src=" + data.profil_pic_path + "height='100' width='100' algin='right' hspace='30' vspace='30'></img>";
+                    document.getElementByID("profilPicture").innerHTML = tempProfilePicture;
+                };
+            }
+        )
+    })
+};
+
+function fillInTheData(){
+    insertEmail();
+    insertUsername();
+    insertProfilePicture();
+};
 
 
-            });
-
-app.post('/profil', (req, res) => {
-    e_mail = req.body.e_mail;
-    res.redirect('/profil/show/' + e_mail);
-});
-
-app.post('/profil', (req, res) => {
-    username = req.body.username;
-    res.redirect('/profil/show/' + username);
-        });
 
 
+
+
+/*
                 navSlide();
                 var acc = document.getElementsByClassName('accordion');
                 var i;
@@ -97,7 +98,7 @@ app.post('/profil', (req, res) => {
                         }
                     )}
 
-/*
+
                 function backToLogin() {
                     event.preventDefault();
 

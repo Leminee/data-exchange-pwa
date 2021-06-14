@@ -16,7 +16,7 @@ function getUserFromDB() {
             }
         )
     })
-}
+};
 
 function showSingleUser(){
     fetch("http://localhost:3002/user/:id_user").then( response => {
@@ -36,7 +36,7 @@ function showSingleUser(){
             }
         )
     })
-}
+};
 
 
 function backToAllUsers() {

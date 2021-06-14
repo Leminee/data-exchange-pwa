@@ -16,8 +16,10 @@ app.use(express.urlencoded({ extended: false }))
 var id_format;
 var id_file;
 var id_folder;
-var id_user;
 var audio_url;
+var id_user;
+var e_mail;
+var username;
 
 var db = mysql.createConnection({
   host     : 'localhost',
@@ -32,7 +34,7 @@ db.connect(function(error) {
     }  
  
     else { 
-      console.log('connected')
+      console.log("db " + db.state);
     }
 })
  
@@ -88,12 +90,18 @@ app.get("/upload-form", (req, res) => {
   res.sendFile(path.join(__dirname, "/../html/upload-form.html"));  
 }); 
 
-app.get("/user-profil/2", (req, res) => {
+app.get("/user-profil/profil/:id_user", (req, res) => {
   res.sendFile(path.join(__dirname, "/../html/user-profil.html"));  
 });
 
-app.get("/user-profil/profil/2", (req, res) => {
-  let sql ='SELECT id_user, e_mail, username, profil_pic_path FROM user WHERE id_user = 2';
+app.get("/user-profil/profil/:id_user/edit", (req, res) => {
+  res.sendFile(path.join(__dirname, "/../html/profil-edit.html"));
+});
+
+app.get("/user-profil/:id_user", (req, res) => {
+  id_user = req.params.id_user;
+  console.log(id_user);
+  let sql =`SELECT id_user, e_mail, username, profil_pic_path FROM user WHERE id_user = '${id_user}'`;
   let query = db.query(sql, (err,result) => {
     if(err) throw err;
     res.send(result);
@@ -102,9 +110,31 @@ app.get("/user-profil/profil/2", (req, res) => {
 });
 
 
-app.get("/profil-edit", (req, res) => {
-  res.sendFile(path.join(__dirname, "/../html/profil-edit.html"));
+app.get('/edit-profil', (req, res) => {
+  id_user = req.params.id_user;
+  res.redirect('/user-profil/profil/'+ id_user + '/edit');
 });
+
+
+app.post('/profil-edit/:id_user', (req, res) => {
+  id_user = req.params.id_user;
+  e_mail = req.body.e_mail;
+  username = req.body.username;
+  let sql = `UPDATE user SET email = '${e_mail}', username = '${username}' WHERE id = '${id_user}'`;
+  let query = db.query(sql, (err,result) => {
+    if(err) throw err;
+  });
+  res.redirect('/user-profil/profil/' + id_user);
+  res.end();
+});
+
+
+
+
+
+
+
+
 
 app.get("/voice-maker", (req, res) => { 
   res.sendFile(path.join(__dirname, "/../html/voice-maker.html"));  
