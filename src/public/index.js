@@ -90,7 +90,7 @@ app.get("/upload-form", (req, res) => {
   res.sendFile(path.join(__dirname, "/../html/upload-form.html"));  
 }); 
 
-app.get("/user-profil/profil/:id_user", (req, res) => {
+app.get("/user-profil/profil", (req, res) => {
   res.sendFile(path.join(__dirname, "/../html/user-profil.html"));  
 });
 
@@ -98,16 +98,24 @@ app.get("/user-profil/profil/:id_user/edit", (req, res) => {
   res.sendFile(path.join(__dirname, "/../html/profil-edit.html"));
 });
 
-app.get("/user-profil/:id_user", (req, res) => {
-  id_user = req.params.id_user;
-  console.log(id_user);
-  let sql =`SELECT id_user, e_mail, username, profil_pic_path FROM user WHERE id_user = '${id_user}'`;
+app.get("/user-profil", (req, res) => {
+  let sql =`SELECT id_user, e_mail, username, profil_pic_path FROM user WHERE id_user = 2`;
   let query = db.query(sql, (err,result) => {
     if(err) throw err;
     res.send(result);
-    console.log(result);
   });
 });
+
+
+
+
+
+
+
+
+
+
+
 
 
 app.get('/edit-profil', (req, res) => {
