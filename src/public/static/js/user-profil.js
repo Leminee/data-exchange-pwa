@@ -48,9 +48,9 @@ function backToLogin(){
     return ;
 }
 
-function Inhalt1(){
+/*function Inhalt1(){
     var Inhalt = document.getElementById('inhalt');
     Inhalt.innerHTML = '<btn btn-sm btn-primary onclick="Inhalt1()">Inhalt1</>
-        <btn btn-sm btn-primary onclick="Inhalt2()">Inhalt2</button><br /><h1>Irgendeininhalt</h1>';
-}
+        <btn btn-sm btn-primary onclick="Inhalt2()">Inhalt2</button> <br /><h1>Irgendeininhalt</h1>';
+}*/
 
