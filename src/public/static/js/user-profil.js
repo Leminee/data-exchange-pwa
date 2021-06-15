@@ -70,7 +70,6 @@ function insertProfilData(){
 
 
 
-
 /*
                 navSlide();
                 var acc = document.getElementsByClassName('accordion');
