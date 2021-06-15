@@ -27,51 +27,29 @@ const navSlide = () => {
 }
 */
 
-function insertEmail(){
+let defaultProfilPicture = "<img src='/images/icons/blank-profile-picture.png' height='100' width='100' algin='right' hspace='30' vspace='30'></img>";
+
+function insertProfilData(){
     fetch("http://localhost:3001/user-profil").then( response => {
         response.json().then(
             data => {
                 if (data.length > 0) {
-                    var tempEmail = "";
-                    tempEmail = "<label className>" + data.e_mail + "</label>";
-                    document.getElementById("tempEmail").innerHTML = tempEmail;
-                };
-            }
-        )
-    })
-};
-
-
-function insertUsername(){
-    console.log("vor dem fetch");
-    fetch("http://localhost:3001/user-profil").then( response => {
-        response.json().then(
-            data => {
-                if (data.length > 0) {
-                    var tempUsername = "";
-
+                    let tempEmail = "";
+                    let tempUsername = "";
+                    let tempProfilePicture = "";
                     data.forEach((u) => {
-                        console.log("banana ");
-                    tempUsername += "<p>" + u.username + "</p>";
-                    console.log("banana " + u.username);
-                    console.log("banana " + data.id_user);
+                        tempEmail += "<p>" + u.e_mail + "</p>";
+                        tempUsername += "<p>" + u.username + "</p>";
+                        if (u.profil_pic_path == null) {
+                            console.log("Using default Profil Picture")
+                            tempProfilePicture += defaultProfilPicture
+                        } else {
+                            console.log("Using profil picture the user chose")
+                            tempProfilePicture += "<img src=" + u.profil_pic_path + "height='100' width='100' algin='right' hspace='30' vspace='30'></img>";
+                        }
                     })
+                    document.getElementById("tempEmail").innerHTML = tempEmail;
                     document.getElementById("tempUsername").innerHTML = tempUsername;
-                };
-            }
-        )
-    })
-};
-
-//<img src="" height="100" width="100"   align="right" hspace="30" vspace="30"></img>
-
-function insertProfilePicture(){
-    fetch("http://localhost:3001/user-profil").then( response => {
-        response.json().then(
-            data => {
-                if (data.length > 0) {
-                    var tempProfilePicture = "";
-                    tempProfilePicture += "<img src=" + data.profil_pic_path + "height='100' width='100' algin='right' hspace='30' vspace='30'></img>";
                     document.getElementById("profilPicture").innerHTML = tempProfilePicture;
                 };
             }
@@ -80,11 +58,13 @@ function insertProfilePicture(){
 };
 
 
-function fillInTheData(){
-    insertEmail();
-    insertUsername();
-    insertProfilePicture();
-};
+
+
+
+
+
+
+
 
 
 
