@@ -23,8 +23,8 @@ var username;
 
 var db = mysql.createConnection({
   host     : 'localhost',
-  user     : 'mel',
-  password : '36177436',
+  user     : 'root',
+  password : '',
   database : 'pwa'
 });
 
@@ -51,13 +51,6 @@ app.get("/about-us", (req, res) => {
   res.sendFile(path.join(__dirname, "/../html/about-us.html"));  
 }); 
 
-app.get("/admin-controller", (req, res) => { 
-  res.sendFile(path.join(__dirname, "/../html/admin-controller.html"));  
-}); 
-
-app.get("/admin-login", (req, res) => { 
-  res.sendFile(path.join(__dirname, "/../html/admin-login.html"));  
-}); 
 
 /*
 app.get("/download/:id_file", (req, res) => { 
@@ -105,17 +98,6 @@ app.get("/user-profil", (req, res) => {
     res.send(result);
   });
 });
-
-
-
-
-
-
-
-
-
-
-
 
 
 app.get('/edit-profil', (req, res) => {
@@ -174,7 +156,7 @@ app.post("/voice-maker", (req, res) => {
 
 
 
-app.post("/src/html/login.html", async (req, res) => {   
+app.post("/login", async (req, res) => {   
   const email = req.body.email; 
   const username = req.body.username; 
   const password = req.body.password; 
@@ -191,10 +173,10 @@ app.post("/src/html/login.html", async (req, res) => {
       }
     );
   }); 
-  res.sendFile("/Users/lem/Documents/Projekte/pwa/src/html/login.html"); 
+  res.sendFile("/../html/login.html"); 
 }); 
 
-app.post("/src/html/login.html", async (req, res) => {   
+app.post("/login", async (req, res) => {   
   const email = req.body.email; 
   const username = req.body.username-login; 
   const password = req.body.password-login; 
@@ -207,7 +189,7 @@ app.post("/src/html/login.html", async (req, res) => {
       connection.query('SELECT username FROM user where username = ? AND password = ?', [username, password], function(error, results, fields) {
         if (results.length > 0) {
         
-          response.redirect('/src/html/user-profil.html');
+          response.redirect('/user-profil/profil');
         } else {
           response.send('Error');
         }			
@@ -219,6 +201,10 @@ app.post("/src/html/login.html", async (req, res) => {
     }
   });
 });
+
+
+
+
 
 app.listen(3001, ()=> {
 
