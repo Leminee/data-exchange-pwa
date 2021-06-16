@@ -21,12 +21,16 @@ var id_user;
 var e_mail;
 var username;
 
+
 var db = mysql.createConnection({
   host     : 'localhost',
-  user     : 'root',
-  password : '',
+  user     : 'mel',
+  password : '36177436',
   database : 'pwa'
-});
+}); 
+
+
+
 
 db.connect(function(error) { 
     if (!!error) { 
@@ -92,13 +96,15 @@ app.get("/user-profil/profil/:id_user/edit", (req, res) => {
 });
 
 app.get("/user-profil", (req, res) => {
-  let sql =`SELECT id_user, e_mail, username, profil_pic_path FROM user WHERE id_user = 2`;
+
+  let sql =`SELECT user.e_mail, user.username, user.profil_pic_path, (SELECT COUNT(file.id_file) FROM file WHERE file.id_user = 1) AS 'id_file', (SELECT COUNT(folder.id_folder) FROM folder WHERE folder.id_user = 1) AS 'id_folder' FROM user WHERE user.id_user = 1`;
   let query = db.query(sql, (err,result) => {
     if(err) throw err;
     res.send(result);
-  });
-});
+  });  
+});    
 
+ 
 
 app.get('/edit-profil', (req, res) => {
   id_user = req.params.id_user;
@@ -117,11 +123,6 @@ app.post('/profil-edit/:id_user', (req, res) => {
   res.redirect('/user-profil/profil/' + id_user);
   res.end();
 });
-
-
-
-
-
 
 
 
@@ -201,8 +202,6 @@ app.post("/login", async (req, res) => {
     }
   });
 });
-
-
 
 
 

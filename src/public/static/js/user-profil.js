@@ -36,10 +36,15 @@ function insertProfilData(){
                 if (data.length > 0) {
                     let tempEmail = "";
                     let tempUsername = "";
-                    let tempProfilePicture = "";
+                    let tempProfilePicture = ""; 
+                    let tempAmountFiles = ""; 
+                    let tempAmountFolders = "";
                     data.forEach((u) => {
                         tempEmail += "<p>" + u.e_mail + "</p>";
-                        tempUsername += "<p>" + u.username + "</p>";
+                        tempUsername += "<p>" + u.username + "</p>"; 
+                        tempAmountFiles += "<p>" + u.id_file + "</p>";  
+                        tempAmountFolders += "<p>" + u.id_folder + "</p>"; 
+
                         if (u.profil_pic_path == null) {
                             console.log("Using default Profil Picture")
                             tempProfilePicture += defaultProfilPicture
@@ -50,7 +55,10 @@ function insertProfilData(){
                     })
                     document.getElementById("tempEmail").innerHTML = tempEmail;
                     document.getElementById("tempUsername").innerHTML = tempUsername;
-                    document.getElementById("profilPicture").innerHTML = tempProfilePicture;
+                    document.getElementById("profilPicture").innerHTML = tempProfilePicture;  
+                    document.getElementById("numberFile").innerHTML = tempAmountFiles;  
+                    document.getElementById("numberFolder").innerHTML = tempAmountFolders; 
+
                 };
             }
         )
