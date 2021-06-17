@@ -14,17 +14,18 @@ app.use(express.static(__dirname + '/static'));
 app.use(express.urlencoded({ extended: false }))
 
 var id_format;
-var id_file;
+let id_file;
 var id_folder;
 var audio_url;
 var id_user;
 var e_mail;
 var username;
 
+
 var db = mysql.createConnection({
   host     : 'localhost',
-  user     : 'mel',
-  password : '36177436',
+  user     : 'root',
+  password : '',
   database : 'pwa'
 });
 
@@ -59,24 +60,42 @@ app.get("/admin-login", (req, res) => {
   res.sendFile(path.join(__dirname, "/../html/admin-login.html"));  
 }); 
 
-/*
-app.get("/download/:id_file", (req, res) => { 
-  res.sendFile(path.join(__dirname, "/../html/download.html"));  
-}); 
-*/
 
 app.get("/download/:id_file", (req, res) => { 
-  const id_file = req.params.id_file;
-  let sql = `SELECT file_name FROM file WHERE id_file = ${id_file}`;
+  id_file = req.params.id_file;
+  console.log(id_file);
+  res.sendFile(path.join(__dirname, "/../html/download.html"));  
+}); 
+
+
+app.get("/download/:id_file/d", (req, res) => { 
+  id_file = req.params.id_file;
+  console.log(id_file);
+  let sql = `SELECT file_name, id_file FROM file WHERE id_file = ${id_file}`;
   let query = db.query(sql, (err, result) => {
     if(err) throw err;
-    res.sendFile(path.join(__dirname, "/../html/download.html"));  
+     res.send(result);
   }); 
 }); 
 
 app.get("/download/:id_file/download", (req, res) => { 
    
 }); 
+
+
+app.post('/download/:id_file', (req, res) => {
+  console.log(id_file);
+  /*
+  let sql = `SELECT file_name FROM file WHERE id_file = ${id_file}`;
+  let query = db.query(sql, (err,result) => {
+    if(err) throw err;
+  });
+  */
+  res.sendFile(path.join(__dirname, "/../html/download.html"));  
+  res.end();
+});
+
+
 
 app.get("/faq", (req, res) => { 
   res.sendFile(path.join(__dirname, "/../html/faq.html"));  
