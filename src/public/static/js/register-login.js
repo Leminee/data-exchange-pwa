@@ -87,13 +87,16 @@ function register(){
         return ;
     }
 }
+
 function login(){
-    event.preventDefault();
+    console.log("es geht in login function")
+   
 
     var email = document.getElementById("se").value;
     var password = document.getElementById("sp").value;
-
+    console.log(email,password);
     var i = emailArray.indexOf(email);
+    console.log(i, emailArray)
 
     if(emailArray.indexOf(email) == -1){
         if (email == ""){
@@ -116,6 +119,7 @@ function login(){
 
         document.getElementById("se").value ="";
         document.getElementById("sp").value="";
+        console.log("bin am ende angekommen");
         return ;
     }
 
@@ -143,4 +147,7 @@ function faq(){
     window.open("/faq");
     return ;
 }
+
+
+
 
