@@ -66,10 +66,7 @@ function insertProfilData(){
 };
 
 
-function faq(){
-    window.open("/faq");
-    return ;
-}
+
 
 
 

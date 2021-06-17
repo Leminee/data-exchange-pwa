@@ -98,3 +98,10 @@ p {
     font-size: 1.3em;
     color: #060404;
 }
+
+a{
+    padding: 10px 15px;
+    font-size: 1.3em;
+    color: #060404;
+    text-decoration: none;
+}
