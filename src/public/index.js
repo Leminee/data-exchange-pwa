@@ -72,7 +72,7 @@ app.get("/", (req, res) => {
 res.sendFile(path.join(__dirname, "/../../index.html")); 
 }); 
 
-app.get("/login",  (req, res) => { 
+app.get("/login", redirectUser, (req, res) => { 
   console.log(req.session + " login");
   res.sendFile(path.join(__dirname, "/../html/login.html"));  
 }); 
