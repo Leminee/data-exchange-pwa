@@ -13,7 +13,7 @@
     <title>Download</title>
 </head>
 
-<body onload="getFileName2();">
+<body onload="getFileName();">
   
     <a>Filename:</a>
     <a id="filename"></a>
@@ -23,7 +23,7 @@
     <br>
 
     <form action="/download/:id_file" method="get">
-        <button>Download</button>
+        <button type="submit">Download</button>
     </form>
 
     <br>
@@ -41,7 +41,7 @@
     <br>
 
 
-    <script src="../public/index.js"></script>
+    <script src="/js/download.js"></script>
     
 </body>
 </html>

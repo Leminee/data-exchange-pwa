@@ -84,14 +84,14 @@ app.get("/about-us", (req, res) => {
 }); 
 
 
-
 app.get("/download/:id_file", (req, res) => { 
   id_file = req.params.id_file;
   console.log(id_file);
   res.sendFile(path.join(__dirname, "/../html/download.html"));  
 }); 
 
-app.get("/download/:id_file", redirectLogin, (req, res) => { 
+
+app.get("/download/:id_file/d", redirectLogin, (req, res) => { 
   const id_file = req.params.id_file;
   let sql = `SELECT file_name FROM file WHERE id_file = ${id_file}`;
   let query = db.query(sql, (err, result) => {
@@ -189,8 +189,8 @@ app.post("/register", redirectUser, async (req, res) => {
 app.post('/login', async (req, res)=> {
   const email = req.body.email_login;
   const password = req.body.password_login;
-  var hash = await bcrypt.hash(password, saltRounds);
-  const dcryptPassword =  await bcrypt.compare(password, hash);
+  var hash = await bcrypt.hashSync(password, saltRounds);
+  const dcryptPassword =  await bcrypt.compareSync(password, hash);
   console.log(dcryptPassword)
   if (email && dcryptPassword) {
       db.query('SELECT e_mail, id_user FROM user WHERE e_mail = ? AND password_hash != ?', [email, dcryptPassword], 
