@@ -1,0 +1,62 @@
+
+
+error handling bei admin?	ja
+
+index.js behalten	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+landing page g6 weiter nach links.
+die links nach rechts schieben und weniger lücke
+passwort vergessen, registrieren komisch angezeigt

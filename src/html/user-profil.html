@@ -8,7 +8,7 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
   <title>Benutzerprofil</title>
 </head>
-<body onload="fillInTheData();">
+<body onload="insertProfilData();">
 <div class="main-content">
   <!-- Top navigationsbar -->
 </div>
@@ -38,7 +38,10 @@
                     <a href="" class="btn btn-sm btn-primary">Meine Dateien</a>
                     <a href="/pic-maker" class="btn btn-sm btn-primary">Bild Aufnehemen</a>
                     <a href="/voice-maker" class="btn btn-sm btn-primary">Audio Aufnehemen</a>
-                    <a href="/" class="btn btn-sm btn-primary">Ausloggen</a>
+                    <form action="/logout" method="post"> 
+                      <button class="btn btn-sm btn-primary" type="submit">Ausloggen</button>
+                    </form>
+
                     <div id="profilPicture">
               
                     </div>
@@ -61,44 +64,47 @@
                   <div class="pl-lg-4">
                     <div class="row">
 
-                      <div class="col-lg-6">
-                        <div class="form-group focused" id="tempEmail">
-                          
+                      <div class="col-lg-6"> 
+                        <label class="form-control-label" for="input-last-name">E-Mail-Adresse:</label>
+                        <div class="form-group" id="tempEmail">
                         </div>
                       </div>
-
-                      <div class="col-lg-6">
-                        <div class="form-group" id="tempUsername">
-
+                      <div class="col-lg-6"> 
+                        <label class="form-control-label" for="input-last-name">Username:</label>
+                        <div class="form-group" id="tempUsername"> 
                         </div>
                       </div>
                     </div>
 
                     <div class="row">
                       <div class="col-lg-6">
-                        <div class="form-group focused">
-                          <label class="form-control-label" for="input-first-name">Anzahl Ordner</label>
                         
+                          <label class="form-control-label" for="input-first-name">Anzahl Ordner</label>
+                        <div id="numberFolder" class="form-group focused">
+
                         </div>
 
-                        <div class="form-group focused">
-                          <label class="form-control-label" for="input-last-name">Anzahl Dateien</label>
-                         
+                        <label class="form-control-label" for="input-last-name">Anzahl Dateien</label>
+                        <div id ="numberFile" class="form-group focused">
+                          
+                      
                         </div>
                         
                       </div>
                     </div>
-
+                  </div>
                 </form>
               </div>
             </div>
           </div>
 
     </div>
-      <script type="text/javascript" src="/js/user-profil.js"></script>
+      
     </div>
 </div>
 </div>
 </div>
+<script type="text/javascript" src="/js/user-profil.js">
+</script>
 </body>
 </html>
