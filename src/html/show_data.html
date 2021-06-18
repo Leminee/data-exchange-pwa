@@ -1,137 +1,64 @@
 <!doctype html>
-<html lang="en">
+<html lang="de">
 <head>
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet" type="text/css" href="/css/user-profil.css">
-  <link rel="icon" href="/images/icons/icon256px.png">
-  <link rel="apple-touch-icon" href="/images/icons/icon256px.png">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-  <title></title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" type="text/css" href="/css/show_data.css">
+<link rel="icon" href="/images/icons/icon256px.png">
+<link rel="apple-touch-icon" href="/images/icons/icon256px.png">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+<title>Meine Dateien</title>
 
 </head>
-<body>
-<div class="main-content">
-  <!-- Top navigationsbar -->
-</div>
-<!-- Header -->
-<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center">
-  <!-- Mask -->
-  <span class="mask bg-gradient-default opacity-8"></span>
-  <!-- Header container -->
-  <div class="container-fluid d-flex align-items-center">
-    <div class="row">
-    </div>
-  </div>
-</div>
-<!-- Page content -->
-<div class="container-fluid mt--7"><div class="row">
-  <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
-    <div class="card card-profile shadow">
 
-      <div class="card-body pt-0 pt-md-4">
+<body onload="insertProfilData();">
 
-        <div class="row">
 
-          <div class="col">
+    <div class="wrapper">
+        <header>
+            <h1>Meine Dateien</h1>
+        </header>
 
-            <div class="card-profile-stats d-flex justify-content-center mt-md-5">
-              <div class="container">
-                <h2 class="mb-5">Table #1</h2>
+        <section class="columns">
 
-                <table class="table custom-table">
-                  <thead>
-                  <tr>
-                    <th scope="col">
-                      <div class="control__indicator"></div>
-                    </th>
-                    <th scope="col">ID</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Format</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr>
-                    <th scope="row">
-                      <label class="control control--checkbox">
-                        <input type="checkbox"/>
-                        <div class="control__indicator"></div>
-                      </label>
-                    </th>
-                    <td>4</td>
-                    <td>Projekt</td>
-                    <td>Zip</td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      <label class="control control--checkbox">
-                        <input type="checkbox"/>
-                        <div class="control__indicator"></div>
-                      </label>
-                    </th>
-                    <td>3</td>
-                    <td>Hund</td>
-                    <td>png</td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      <label class="control control--checkbox">
-                        <input type="checkbox"/>
-                        <div class="control__indicator"></div>
-                      </label>
-                    </th>
-                    <td>2</td>
-                    <td>Blume</td>
-                    <td>jpeg</td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      <label class="control control--checkbox">
-                        <input type="checkbox"/>
-                        <div class="control__indicator"></div>
-                      </label>
-                    </th>
-                    <a href=""></a>
-                    <td>1</td>
-                    <td>Hallo</td>
-                    <td>PDF Datei</td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-
-                  <div class="hermann">
-
-                  </div>
-
-                  </tbody>
-                </table>
-              <div class="text-center">
-                <div class="content">
-
-                  </div>
-
-                </div>
-                </div>
-              </div>
+            <div class ="column">
+                <h2>Profil</h2>
+                <a href="/user-profil/profil"><button type="button">Zurück zum Profil</button></a>
+                <a href=""><button type="button">Dateien hochladen</button></a>
+                <a href="/pic-maker"><button type="button">Bild Aufnehemen</button></a>
+                <a href="/voice-maker"><button type="button">Audio Aufnehemen</button></a>
             </div>
-          </div>
-        <button type="submit">Download</button>
-        </div>
 
+            <div class ="column">
+                <h2>Meine Dateien</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th id="file_id">ID</th>
+                            <th id="file_name">Dateiname</th>
+                            <th id="file_format">Format</th>
+                        </tr>
+                    </thead>
+                    <tbody id="data">
+            
+                    </tbody>
+                </table>
+            </div>
+
+            <div class ="column">
+                <h2>Datei Ansicht</h2>
+                <p>May your heart be your guiding key</p>
+            </div>
+
+        </section>
     </div>
 
-  </div>
-</div>
-</div>
 
-<script type="text/javascript" src="/js/user-profil.js">
+
+
+
+<script type="text/javascript" src="/js/show_data.js">
 </script>
 </body>
 </html>
