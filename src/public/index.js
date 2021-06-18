@@ -176,8 +176,8 @@ app.post('/login', async (req, res)=> {
   const dcryptPassword =  await bcrypt.compare(password, hash);
   console.log(dcryptPassword)
   if (email && dcryptPassword) {
-      db.query('SELECT e_mail, id_user FROM user WHERE e_mail = ? AND password_hash != ?', [email, dcryptPassword], 
-      (error, results, fields)=> {
+     var dbResult = db.query('SELECT e_mail, id_user FROM user WHERE e_mail = ? AND password_hash = ?', [email, dcryptPassword], 
+      (error, results)=> {
           if (results.length > 0 ) {
               req.session.id_user = results[0].id_user;
               res.redirect('/user-profil/profil');
