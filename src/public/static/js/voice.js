@@ -65,11 +65,11 @@ function handleStop(event) {
 }
 
 function toggleRecording() {
-    if (recordButton.textContent === 'Start Recording') {
+    if (recordButton.textContent === 'Aufnahme starten') {
         startRecording();
     } else {
         stopRecording();
-        recordButton.textContent = 'Start Recording';
+        recordButton.textContent = 'Aufnahme starten';
         playButton.disabled = false;
         downloadButton.disabled = false;
     }
