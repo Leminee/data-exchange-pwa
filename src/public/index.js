@@ -33,8 +33,8 @@ app.use(session( {
 
 var db = mysql.createConnection({
   host     : 'localhost',
-  user     : 'hkoyun',
-  password : '12345',
+  user     : 'root',
+  password : '',
   database : 'pwa'
 }); 
 
@@ -132,7 +132,7 @@ app.get("/upload-form", redirectLogin, (req, res) => {
   res.sendFile(path.join(__dirname, "/../html/upload-form.html"));  
 });
 
-app.get("/show_data", (req, res) => {
+app.get("/user-profil/profil/data", (req, res) => {
   res.sendFile(path.join(__dirname, "/../html/show_data.html"));
 });
 
@@ -153,9 +153,9 @@ app.get("/user-profil", redirectLogin, (req, res) => {
   });  
 });
 
-// hier habe ich die Datenbank nicht gefunden wusste nicht welches es ist...//
-app.get("/show_file", redirectLogin, (req, res) => {
-  let sql =`SELECT user.e_mail, user.username, user.profil_pic_path, (SELECT COUNT(file.id_file) FROM file WHERE file.id_user = '${req.session.id_user}') AS 'id_file', (SELECT COUNT(folder.id_folder) FROM folder WHERE folder.id_user = '${req.session.id_user}') AS 'id_folder' FROM user WHERE user.id_user = '${req.session.id_user}'`;
+
+app.get("/show_data", redirectLogin, (req, res) => {
+  let sql =`SELECT id_file, id_format, file_name, file_size, id_folder FROM file WHERE id_user = '${req.session.id_user}'`;
   let query = db.query(sql, (err,result) => {
     if(err) throw err;
     res.send(result);
@@ -206,7 +206,7 @@ app.post('/login', async (req, res)=> {
   const dcryptPassword =  await bcrypt.compareSync(password, hash);
   console.log(dcryptPassword)
   if (email && dcryptPassword) {
-     var dbResult = db.query('SELECT e_mail, id_user FROM user WHERE e_mail = ? AND password_hash = ?', [email, dcryptPassword], 
+     var dbResult = db.query('SELECT e_mail, id_user FROM user WHERE e_mail = ? AND password_hash != ?', [email, dcryptPassword], 
       (error, results)=> {
           if (results.length > 0 ) {
               req.session.id_user = results[0].id_user;
