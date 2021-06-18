@@ -143,7 +143,6 @@ function forgot(){
 }
 
 function faq(){
-    event.preventDefault();
     window.open("/faq");
     return ;
 }
