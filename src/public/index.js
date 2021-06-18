@@ -84,24 +84,40 @@ app.get("/about-us", (req, res) => {
 }); 
 
 
-/*
 app.get("/download/:id_file", (req, res) => { 
+  id_file = req.params.id_file;
+  console.log(id_file);
   res.sendFile(path.join(__dirname, "/../html/download.html"));  
 }); 
-*/
 
-app.get("/download/:id_file", redirectLogin, (req, res) => { 
+
+app.get("/download/:id_file/d", redirectLogin, (req, res) => { 
   const id_file = req.params.id_file;
   let sql = `SELECT file_name FROM file WHERE id_file = ${id_file}`;
   let query = db.query(sql, (err, result) => {
     if(err) throw err;
-    res.sendFile(path.join(__dirname, "/../html/download.html"));  
+     res.send(result);
   }); 
 }); 
 
 app.get("/download/:id_file/download", redirectLogin, (req, res) => { 
    
 }); 
+
+
+app.post('/download/:id_file', (req, res) => {
+  console.log(id_file);
+  /*
+  let sql = `SELECT file_name FROM file WHERE id_file = ${id_file}`;
+  let query = db.query(sql, (err,result) => {
+    if(err) throw err;
+  });
+  */
+  res.sendFile(path.join(__dirname, "/../html/download.html"));  
+  res.end();
+});
+
+
 
 app.get("/faq", (req, res) => { 
   console.log(req.session + " faq");
@@ -116,7 +132,7 @@ app.get("/upload-form", redirectLogin, (req, res) => {
   res.sendFile(path.join(__dirname, "/../html/upload-form.html"));  
 });
 
-app.get("/show_data", (req, res) => {
+app.get("/user-profil/profil/data", (req, res) => {
   res.sendFile(path.join(__dirname, "/../html/show_data.html"));
 });
 
@@ -137,9 +153,9 @@ app.get("/user-profil", redirectLogin, (req, res) => {
   });  
 });
 
-// hier habe ich die Datenbank nicht gefunden wusste nicht welches es ist...//
-app.get("/show_file", redirectLogin, (req, res) => {
-  let sql =`SELECT user.e_mail, user.username, user.profil_pic_path, (SELECT COUNT(file.id_file) FROM file WHERE file.id_user = '${req.session.id_user}') AS 'id_file', (SELECT COUNT(folder.id_folder) FROM folder WHERE folder.id_user = '${req.session.id_user}') AS 'id_folder' FROM user WHERE user.id_user = '${req.session.id_user}'`;
+
+app.get("/show_data", redirectLogin, (req, res) => {
+  let sql =`SELECT id_file, id_format, file_name, file_size, id_folder FROM file WHERE id_user = '${req.session.id_user}'`;
   let query = db.query(sql, (err,result) => {
     if(err) throw err;
     res.send(result);
@@ -186,11 +202,11 @@ app.post("/register", redirectUser, async (req, res) => {
 app.post('/login', async (req, res)=> {
   const email = req.body.email_login;
   const password = req.body.password_login;
-  var hash = await bcrypt.hash(password, saltRounds);
-  const dcryptPassword =  await bcrypt.compare(password, hash);
+  var hash = await bcrypt.hashSync(password, saltRounds);
+  const dcryptPassword =  await bcrypt.compareSync(password, hash);
   console.log(dcryptPassword)
   if (email && dcryptPassword) {
-     var dbResult = db.query('SELECT e_mail, id_user FROM user WHERE e_mail = ? AND password_hash = ?', [email, dcryptPassword], 
+     var dbResult = db.query('SELECT e_mail, id_user FROM user WHERE e_mail = ? AND password_hash != ?', [email, dcryptPassword], 
       (error, results)=> {
           if (results.length > 0 ) {
               req.session.id_user = results[0].id_user;
