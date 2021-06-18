@@ -32,8 +32,8 @@ app.use(session( {
 
 var db = mysql.createConnection({
   host     : 'localhost',
-  user     : 'root',
-  password : '',
+  user     : 'hkoyun',
+  password : '12345',
   database : 'pwa'
 }); 
 
@@ -113,7 +113,11 @@ app.get("/pic-maker", redirectLogin, (req, res) => {
 
 app.get("/upload-form", redirectLogin, (req, res) => { 
   res.sendFile(path.join(__dirname, "/../html/upload-form.html"));  
-}); 
+});
+
+app.get("/show_data", (req, res) => {
+  res.sendFile(path.join(__dirname, "/../html/show_data.html"));
+});
 
 app.get("/user-profil/profil", redirectLogin, (req, res) => {
   console.log(req.session.id_user)
@@ -130,7 +134,16 @@ app.get("/user-profil", redirectLogin, (req, res) => {
     if(err) throw err;
     res.send(result);
   });  
-});    
+});
+
+// hier habe ich die Datenbank nicht gefunden wusste nicht welches es ist...//
+app.get("/show_file", redirectLogin, (req, res) => {
+  let sql =`SELECT user.e_mail, user.username, user.profil_pic_path, (SELECT COUNT(file.id_file) FROM file WHERE file.id_user = '${req.session.id_user}') AS 'id_file', (SELECT COUNT(folder.id_folder) FROM folder WHERE folder.id_user = '${req.session.id_user}') AS 'id_folder' FROM user WHERE user.id_user = '${req.session.id_user}'`;
+  let query = db.query(sql, (err,result) => {
+    if(err) throw err;
+    res.send(result);
+  });
+});
 
 app.get('/edit-profil', redirectLogin, (req, res) => {
   res.redirect('/user-profil/profil/'+ req.session.id_user + '/edit');
