@@ -200,52 +200,36 @@ app.post("/register", redirectUser, async (req, res) => {
 }); 
 
 app.post('/login', async (req, res)=> {
+//Information the user typed in
   const email = req.body.email_login;
   const password = req.body.password_login;
-  var hash = await bcrypt.hashSync(password, saltRounds);
-  const dcryptPassword =  await bcrypt.compareSync(password, hash);
+//Take the password from the typed in e-mail
+  var queryPassword = db.query('SELECT password_hash FROM user WHERE e_mail = ?', [email], (error, result3) => {
+  hashDBPassword = result3[0].password_hash
+//compare the hashed password from the db and the password the user typed in
+  const dcryptPassword =  bcrypt.compareSync(password, hashDBPassword);
   console.log(dcryptPassword)
   if (email && dcryptPassword) {
+//if there is an e-mail and the password fits, give the information
      var dbResult = db.query('SELECT e_mail, id_user FROM user WHERE e_mail = ? AND password_hash != ?', [email, dcryptPassword], 
       (error, results)=> {
           if (results.length > 0 ) {
+//put the user id equal with the id from the session
               req.session.id_user = results[0].id_user;
               res.redirect('/user-profil/profil');
           } else {
-              console.log('Incorrect Email and/or Password!');
+//wrong passowrd or e-mail
+              console.log('Incorrect E-mail and/or Password!');
           }           
           res.end();
       });
   } else {
-      res.send('Please enter Username and Password!');
+//no e-mail or password typed in
+      res.send('Please enter E-mail and Password!');
       res.end();
   }
 });
-/*
-app.post("/login", async (req, res) => {   
-  const  email_login = req.body.email_login;
-  const password_login = req.body.password_login;
-  bcrypt.hash(password_login, saltRounds, (err, hash) => { 
-    if (err) {
-      console.log(err);
-    }    
-    if (email_login && password_login) {
-      db.query('SELECT email, id_user FROM user where email = ? AND password = ?', [email_login, password_login], function(error, results, fields) {
-        if (results.length > 0) {
-
-          req.session.id_user = results[0].id_user;
-          return res.redirect('/user-profil/profil');
-        } else {
-          response.send('Error, login failed');
-        }
-        console.log("nicht sicher was hier ist 1")
-        res.redirect('/login');			
-        response.end();
-      });
-    } 
-  });
 });
-*/
 
 app.post('/logout', redirectLogin, (req, res) => {
   req.session.destroy(err => {
