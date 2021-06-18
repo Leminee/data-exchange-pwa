@@ -32,8 +32,8 @@ app.use(session( {
 
 var db = mysql.createConnection({
   host     : 'localhost',
-  user     : 'root',
-  password : '',
+  user     : 'mel',
+  password : '36177436',
   database : 'pwa'
 }); 
 
