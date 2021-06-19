@@ -85,38 +85,22 @@ app.get("/about-us", (req, res) => {
 
 
 app.get("/download/:id_file", (req, res) => { 
-  id_file = req.params.id_file;
-  console.log(id_file);
   res.sendFile(path.join(__dirname, "/../html/download.html"));  
 }); 
 
-
-app.get("/download/:id_file/d", redirectLogin, (req, res) => { 
-  const id_file = req.params.id_file;
-  let sql = `SELECT file_name FROM file WHERE id_file = ${id_file}`;
-  let query = db.query(sql, (err, result) => {
-    if(err) throw err;
-     res.send(result);
-  }); 
-}); 
-
-app.get("/download/:id_file/download", redirectLogin, (req, res) => { 
-   
-}); 
-
-
+/*
 app.post('/download/:id_file', (req, res) => {
   console.log(id_file);
-  /*
+  
   let sql = `SELECT file_name FROM file WHERE id_file = ${id_file}`;
   let query = db.query(sql, (err,result) => {
     if(err) throw err;
   });
-  */
+  
   res.sendFile(path.join(__dirname, "/../html/download.html"));  
   res.end();
 });
-
+*/
 
 
 app.get("/faq", (req, res) => { 
