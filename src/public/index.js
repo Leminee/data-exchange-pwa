@@ -33,10 +33,10 @@ app.use(session( {
 
 var db = mysql.createConnection({
   host     : 'localhost',
-  user     : 'root',
-  password : '',
+  user     : 'mel',
+  password : '36177436',
   database : 'pwa'
-}); 
+});  
 
 
 const redirectLogin = (req, res, next) => {
@@ -93,7 +93,7 @@ app.get("/download/:id_file", (req, res) => {
 
 app.get("/download/:id_file/d", redirectLogin, (req, res) => { 
   const id_file = req.params.id_file;
-  let sql = `SELECT file_name FROM file WHERE id_file = ${id_file}`;
+  let sql = `SELECT file_name FROM file WHERE id_file = ${id_file}`; //PS später
   let query = db.query(sql, (err, result) => {
     if(err) throw err;
      res.send(result);
