@@ -44,16 +44,32 @@
             
                     </tbody>
                 </table>
+
+                <form action="/show_data" method="post">
+                    <label for="file_nameDownloadSelect">Choose the File you want to download:</label>
+                    <select name="file_nameDownloadSelect" id="file_nameDownloadSelect">
+                    
+                    </select><br>
+                <button type="submit">speichere auswahl</button>
+                <button type="submit"  onclick="fileNameClicked();">Datei anzeigen</button>
+                </form>
+
+
+
+
             </div>
 
+           
             <div class ="column">
+            <form action="/show_data/file" method="post">
                 <a>Filename:</a>
-                <a id="filename"></a>
+                <a id="file_nameDownload"></a>
+            </form>
 
                 <br>
                 <br>
 
-                <form action="/show_data" method="get">
+                <form action="/show_data/file/:file_name/download" method="get">
                     <button type="submit">Download</button>
                 </form>
 
@@ -70,6 +86,8 @@
                 </form>
 
                 <br>
+
+                
 
             </div>
 

@@ -14,6 +14,7 @@ const sessionID = 'sid'
 app.use(express.json());  
 app.use(cors());   
 app.use(express.static(__dirname + '/static'));
+app.use(express.static('/../../server'));
 app.use(express.urlencoded({ extended: false }))
 app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -33,8 +34,8 @@ app.use(session( {
 
 var db = mysql.createConnection({
   host     : 'localhost',
-  user     : 'mel',
-  password : '36177436',
+  user     : 'root',
+  password : '',
   database : 'pwa'
 });  
 
@@ -69,42 +70,22 @@ db.connect(function(error) {
  
 app.get("/", (req, res) => { 
   const { id_user } = req.session
-  console.log(req.session + " Landingpage");
 res.sendFile(path.join(__dirname, "/../../index.html")); 
 }); 
 
 app.get("/login", redirectUser, (req, res) => { 
-  console.log(req.session + " login");
   res.sendFile(path.join(__dirname, "/../html/login.html"));  
 }); 
-
 
 app.get("/about-us", (req, res) => { 
   res.sendFile(path.join(__dirname, "/../html/about-us.html"));  
 }); 
 
-
 app.get("/download/:id_file", (req, res) => { 
   res.sendFile(path.join(__dirname, "/../html/download.html"));  
 }); 
 
-/*
-app.post('/download/:id_file', (req, res) => {
-  console.log(id_file);
-  
-  let sql = `SELECT file_name FROM file WHERE id_file = ${id_file}`;
-  let query = db.query(sql, (err,result) => {
-    if(err) throw err;
-  });
-  
-  res.sendFile(path.join(__dirname, "/../html/download.html"));  
-  res.end();
-});
-*/
-
-
 app.get("/faq", (req, res) => { 
-  console.log(req.session + " faq");
   res.sendFile(path.join(__dirname, "/../html/faq.html"));  
 }); 
 
@@ -121,13 +102,22 @@ app.get("/user-profil/profil/data", (req, res) => {
 });
 
 app.get("/user-profil/profil", redirectLogin, (req, res) => {
-  console.log(req.session.id_user)
   res.sendFile(path.join(__dirname, "/../html/user-profil.html"));  
 });
 
 app.get("/user-profil/profil/:id_user/edit", redirectLogin, (req, res) => {
   res.sendFile(path.join(__dirname, "/../html/profil-edit.html"));
 });
+
+app.get('/edit-profil', redirectLogin, (req, res) => {
+  res.redirect('/user-profil/profil/'+ req.session.id_user + '/edit');
+});
+
+app.get("/voice-maker", redirectLogin, (req, res) => { 
+  res.sendFile(path.join(__dirname, "/../html/voice-maker.html"));  
+}); 
+
+
 
 app.get("/user-profil", redirectLogin, (req, res) => {
   let sql =`SELECT user.e_mail, user.username, user.profil_pic_path, (SELECT COUNT(file.id_file) FROM file WHERE file.id_user = '${req.session.id_user}') AS 'id_file', (SELECT COUNT(folder.id_folder) FROM folder WHERE folder.id_user = '${req.session.id_user}') AS 'id_folder' FROM user WHERE user.id_user = '${req.session.id_user}'`;
@@ -137,6 +127,24 @@ app.get("/user-profil", redirectLogin, (req, res) => {
   });  
 });
 
+app.get("/show_data/file/:file_name", (req, res) => {
+  let sql =`SELECT id_file, id_format, file_name, file_size, id_folder, file_path FROM file WHERE file_name = '${file_name}'`;
+  let query = db.query(sql, (err,result) => {
+    if(err) throw err;
+    res.send(result);
+  })
+}); 
+
+app.get("/show_data/file/:file_name/download", (req, res) => { 
+  let sql = `SELECT id_format, file_name, id_user FROM file WHERE file_name = '${file_name}'`;
+  let query = db.query(sql, (err,result) => {
+    if(err) throw err;
+    id_userString = result[0].id_user.toString();
+    id_formatString = result[0].id_format.toString();
+    file_nameString = result[0].file_name.toString();
+   res.download(path.join(__dirname, '/../../server/', id_userString, "/",  id_formatString,"/", file_nameString));
+  })
+}); 
 
 app.get("/show_data", redirectLogin, (req, res) => {
   let sql =`SELECT id_file, id_format, file_name, file_size, id_folder FROM file WHERE id_user = '${req.session.id_user}'`;
@@ -146,14 +154,9 @@ app.get("/show_data", redirectLogin, (req, res) => {
   });
 });
 
-app.get('/edit-profil', redirectLogin, (req, res) => {
-  res.redirect('/user-profil/profil/'+ req.session.id_user + '/edit');
-});
 
 
-app.get("/voice-maker", redirectLogin, (req, res) => { 
-  res.sendFile(path.join(__dirname, "/../html/voice-maker.html"));  
-}); 
+
 
 app.get("/voice-maker", redirectLogin, (req, res) => { 
   audio_url = URL.createObjectURL(req.params.blob);
@@ -192,7 +195,6 @@ app.post('/login', async (req, res)=> {
   hashDBPassword = result3[0].password_hash
 //compare the hashed password from the db and the password the user typed in
   const dcryptPassword =  bcrypt.compareSync(password, hashDBPassword);
-  console.log(dcryptPassword)
   if (email && dcryptPassword) {
 //if there is an e-mail and the password fits, give the information
      var dbResult = db.query('SELECT e_mail, id_user FROM user WHERE e_mail = ? AND password_hash != ?', [email, dcryptPassword], 
@@ -240,6 +242,13 @@ app.post('/profil-edit/:id_user', (req, res) => {
   res.end();
 });
 
+
+
+app.post('/show_data', (req, res) => {
+  file_name = req.body.file_nameDownloadSelect;
+  console.log(file_name); 
+  //res.redirect(("/show_data/file/" + file_name))
+});
 
 
 app.post("/voice-maker", (req, res) => {
