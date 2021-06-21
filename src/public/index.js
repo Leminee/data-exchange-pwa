@@ -1,7 +1,8 @@
 const express = require('express');  
 const mysql = require('mysql'); 
 const cors = require('cors');
-const app = express();   
+const app = express();
+const upload = require('express-fileupload');   
 const path = require('path');   
 const session = require('express-session');
 const bcrypt = require('bcrypt'); 
@@ -17,6 +18,8 @@ app.use(express.static(__dirname + '/static'));
 app.use(express.urlencoded({ extended: false }))
 app.use(bodyParser.urlencoded({ extended: true }))
 
+//Upload for Audio File
+app.use(upload())
 
 app.use(session( {
   name: sessionID,
@@ -64,6 +67,30 @@ db.connect(function(error) {
       console.log("db " + db.state);
     }
 })
+
+
+//Upload MP3 File to Server Folder
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/../html/voice-maker.html')
+});
+
+app.post('/', (req, res) => {
+  if (req.files) {
+    console.log(req.files)
+    var file = req.files.file
+    filename = file.name
+    console.log(filename);
+
+    file.mv('./server/' + filename, function (err) {
+      if (err) {
+        res.send(err)
+      } else {
+        res.send("File uploaded");
+      }
+    });
+  }
+});
+
 
 
  

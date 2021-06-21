@@ -172,6 +172,7 @@ function download() {
     a.download = clipName;
     document.body.appendChild(a);
     a.click();
+    //Timeout
     setTimeout(function() {
         document.body.removeChild(a);
         window.URL.revokeObjectURL(url);
@@ -232,6 +233,10 @@ function visualize(stream) {
         canvasCtx.stroke();
     }
 }
+
+
+
+
 
 window.onresize = function() {
     canvas.width = mainSection.offsetWidth;
