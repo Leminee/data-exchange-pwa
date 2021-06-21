@@ -47,7 +47,7 @@ const redirectLogin = (req, res, next) => {
     next()
   }
 }
-
+ 
 const redirectUser = (req, res, next) => {
   if (req.session.id_user) {
     res.redirect("/user-profil/profil");
