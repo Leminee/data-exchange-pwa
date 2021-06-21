@@ -242,6 +242,25 @@ app.post('/profil-edit/:id_user', (req, res) => {
 
 
 
+app.get("/show_data/file/:file_name", (req, res) => {
+  let sql =`SELECT id_file, id_format, file_name, file_size, id_folder, id_user, file_path FROM file WHERE file_name = '${file_name}'`;
+  let query = db.query(sql, (err,result) => {
+    if(err) throw err;
+    res.send(result);
+  })
+});
+
+
+app.post('/show_data', (req, res) => {
+  file_name = req.body.file_nameDownloadSelect;
+  console.log(file_name); 
+  //res.redirect(("/show_data/file/" + file_name))
+});
+
+
+
+
+
 app.post("/voice-maker", (req, res) => {
   id_user = 2;
   id_format = 3;
