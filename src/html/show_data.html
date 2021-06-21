@@ -44,19 +44,55 @@
             
                     </tbody>
                 </table>
+
+                <form action="/show_data" method="post">
+                    <label for="file_nameDownloadSelect">Choose the File you want to download:</label>
+                    <select name="file_nameDownloadSelect" id="file_nameDownloadSelect">
+                    
+                    </select><br>
+                <button type="submit">speichere auswahl</button>
+                <button type="submit"  onclick="fileNameClicked();">Datei anzeigen</button>
+                </form>
+
+
+
+
             </div>
 
+           
             <div class ="column">
-                <h2>Datei Ansicht</h2>
-                <p>May your heart be your guiding key</p>
+            <form action="/show_data/file" method="post">
+                <a>Filename:</a>
+                <a id="file_nameDownload"></a>
+            </form>
+
+                <br>
+                <br>
+
+                <form action="/show_data/file/:file_name/download" method="get">
+                    <button type="submit">Download</button>
+                </form>
+
+                <br>
+
+                <form action="" method="post">
+                    <button>Generate Link</button>
+                </form>
+
+                <br>
+
+                <form action="" method="post">
+                    <button>Send as E-mail</button>
+                </form>
+
+                <br>
+
+                
+
             </div>
 
         </section>
     </div>
-
-
-
-
 
 <script type="text/javascript" src="/js/show_data.js">
 </script>

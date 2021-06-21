@@ -1,8 +1,6 @@
-
-
-function getFileName(){
+/*function getFileName(){
     
-    fetch("http://localhost:3001/download/:id_file/d").then(response => {
+    fetch("http://localhost:3001/show_data").then(response => {
         response.json().then(
             data => {
                 if(data.length > 0) {
@@ -16,12 +14,5 @@ function getFileName(){
             }
         )
     })
-}
-
-function getFileName2(){
-    
-      temp = "5";
-      console.log(temp);
-    document.getElementById("filename").innerHTML = temp;
-    
-}
+};
+*/
