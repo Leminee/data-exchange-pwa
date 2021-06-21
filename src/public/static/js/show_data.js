@@ -4,7 +4,6 @@ function insertProfilData(){
             data => {
                 if (data.length > 0) {
                     let temp = "";
-                    let fileNameRight ="";
                     let fileNameSelect ="";
                     data.forEach((u) => {
                         temp += "<tr>";
@@ -37,8 +36,3 @@ function fileNameClicked() {
         )
     })   
 };
-/*
-function waitBeforeFetch() {
-    setTimeout(fileNameClicked(),500)
-}
-*/
