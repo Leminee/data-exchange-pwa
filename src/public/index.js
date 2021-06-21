@@ -142,9 +142,18 @@ app.get("/show_data/file/:file_name/download", (req, res) => {
     id_userString = result[0].id_user.toString();
     id_formatString = result[0].id_format.toString();
     file_nameString = result[0].file_name.toString();
-   res.download(path.join(__dirname, '/../../server/', id_userString, "/",  id_formatString,"/", file_nameString));
+  res.download(path.join(__dirname, '/../../server/', id_userString, "/",  id_formatString,"/", file_nameString));
+  
   })
 }); 
+
+//Sharelink
+app.get("/:a/:b/:c", (req, res) => {
+  let id_user = req.params.a;
+  let id_format = req.params.b;
+  let file_name = req.params.c;
+  res.download(path.join(__dirname, '/../../server/', id_user, "/",  id_format,"/", file_name));
+  }); 
 
 app.get("/show_data", redirectLogin, (req, res) => {
   let sql =`SELECT id_file, id_format, file_name, file_size, id_folder FROM file WHERE id_user = '${req.session.id_user}'`;
