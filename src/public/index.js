@@ -14,6 +14,7 @@ const sessionID = 'sid'
 app.use(express.json());  
 app.use(cors());   
 app.use(express.static(__dirname + '/static'));
+app.use(express.static('/../../server'));
 app.use(express.urlencoded({ extended: false }))
 app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -36,7 +37,7 @@ var db = mysql.createConnection({
   user     : 'root',
   password : '',
   database : 'pwa'
-}); 
+});  
 
 
 const redirectLogin = (req, res, next) => {
@@ -102,6 +103,13 @@ app.post('/download/:id_file', (req, res) => {
 });
 */
 
+app.get("/lol", (req, res) => { 
+  console.log("lol");
+  id_user="3";
+  id_format="zip"
+  file_name="Secret.zip"
+  res.download(path.join(__dirname, '/../../server/', id_user, "/", id_format,"/", file_name)); 
+}); 
 
 app.get("/faq", (req, res) => { 
   console.log(req.session + " faq");
