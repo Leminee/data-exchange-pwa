@@ -71,11 +71,11 @@ db.connect(function(error) {
 
 
 //Upload MP3 File to Server Folder
-app.get('/HERMANN', (req, res) => {
+app.get('/upload-audio', (req, res) => {
   res.sendFile(__dirname + '/../html/voice-maker.html')
 });
 
-app.post('/HERMANN', (req, res) => {
+app.post('/upload-audio', (req, res) => {
   if (req.files) {
     console.log(req.files)
     var file = req.files.file
