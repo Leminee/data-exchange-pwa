@@ -132,7 +132,28 @@ function stopRecording() {
     recordedAudio.controls = true;
     //base64ToFile
     let file = base64ToFile(recordedAudio.src + (new Date().getTime()) + '.webp');
-    
+    if (file) {
+        let evt = new DragEvent('drop');
+        Object.defineProperty(evt, 'dataTransfer', {
+            value: new MyDataTransfer(file)
+        });
+
+        document.getElementById('uploadFile').dispatchEvent(
+            evt
+        );
+    }  
+}
+
+//Data Transfer
+function MyDataTransfer(file) {
+    this.dropEffect = 'all';
+    this.effectAllowed = 'all';
+    this.items = [file];
+    this.types = ['Files'];
+    this.getData = function() {
+        return file;
+    }
+    this.files = [file];
 }
 
 function play() {
