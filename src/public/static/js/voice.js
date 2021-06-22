@@ -109,9 +109,29 @@ function startRecording() {
     console.log('MediaRecorder started', mediaRecorder);
 }
 
+function base64ToFile(data = false, fileName = false) {
+    if (!data || !fileName) {
+        return false;
+    }
+
+    var arr = data.split(','),
+    mime = arr[0].match(/:(.*?);/)[1],
+    bstr = atob(arr[1]),
+    n = bstr.length,
+    u8arr = new Uint8Array(n);
+
+    while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+
+    return new File([u8arr], fileName, {type: mime}) || false;
+}
+
 function stopRecording() {
     mediaRecorder.stop();
     recordedAudio.controls = true;
+    //base64ToFile
+    let file = base64ToFile(recordedAudio.src + (new Date().getTime()) + '.webp');
     
 }
 
