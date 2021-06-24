@@ -1,12 +1,14 @@
 const express = require('express');  
 const mysql = require('mysql'); 
 const cors = require('cors');
-const app = express();   
+const app = express();
+const upload = require('express-fileupload');   
 const path = require('path');   
 const session = require('express-session');
 const bcrypt = require('bcrypt'); 
 const bodyParser = require('body-parser'); 
 
+const nodemailer = require("nodemailer");
 
 const saltRounds = 10; 
 const twoHours = 1000 * 60 * 60 * 2
@@ -67,10 +69,34 @@ db.connect(function(error) {
 })
 
 
+//Upload MP3 File to Server Folder
+app.get('/upload-audio', (req, res) => {
+  res.sendFile(__dirname + '/../html/voice-maker.html')
+});
+
+app.post('/upload-audio', (req, res) => {
+  if (req.files) {
+    console.log(req.files)
+    var file = req.files.file
+    filename = file.name
+    console.log(filename);
+
+    file.mv('./server/' + filename, function (err) {
+      if (err) {
+        res.send(err)
+      } else {
+        res.send("File uploaded");
+      }
+    });
+  }
+});
+
+
+
  
 app.get("/", (req, res) => { 
   const { id_user } = req.session
-res.sendFile(path.join(__dirname, "/../../index.html")); 
+  res.sendFile(path.join(__dirname, "/../../index.html")); 
 }); 
 
 app.get("/login", redirectUser, (req, res) => { 
@@ -128,7 +154,7 @@ app.get("/user-profil", redirectLogin, (req, res) => {
 });
 
 app.get("/show_data/file/:file_name", (req, res) => {
-  let sql =`SELECT id_file, id_format, file_name, file_size, id_folder, file_path FROM file WHERE file_name = '${file_name}'`;
+  let sql =`SELECT id_file, id_format, file_name, file_size, id_folder, id_user, file_path FROM file WHERE file_name = '${file_name}'`;
   let query = db.query(sql, (err,result) => {
     if(err) throw err;
     res.send(result);
@@ -142,9 +168,19 @@ app.get("/show_data/file/:file_name/download", (req, res) => {
     id_userString = result[0].id_user.toString();
     id_formatString = result[0].id_format.toString();
     file_nameString = result[0].file_name.toString();
-   res.download(path.join(__dirname, '/../../server/', id_userString, "/",  id_formatString,"/", file_nameString));
+  res.download(path.join(__dirname, '/../../server/', id_userString, "/",  id_formatString,"/", file_nameString));
+  
   })
 }); 
+
+//Sharelink
+app.get("/download/:a/:b/:c", (req, res) => {
+  let id_user = req.params.a;
+  let id_format = req.params.b;
+  let file_name = req.params.c;
+  res.download(path.join(__dirname, '/../../server/', id_user, "/",  id_format,"/", file_name));
+  }); 
+
 
 app.get("/show_data", redirectLogin, (req, res) => {
   let sql =`SELECT id_file, id_format, file_name, file_size, id_folder FROM file WHERE id_user = '${req.session.id_user}'`;
@@ -278,3 +314,36 @@ app.post("/voice-maker", (req, res) => {
 app.listen(3001, ()=> {
 
 });  
+
+
+//NodeMailer
+app.post('/mail', async (req, res) => {
+    const{email} = req.body;
+    // create reusable transporter object using the default SMTP transport
+    let transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'ProjectG6.2021@gmail.com',
+        pass: 'ABC123!?',
+      }
+    });
+    
+    const msg ={
+      from: '"Coin Flip" <kris.macgyver73@ethereal.email>', // sender address
+      to: "calvinkluk@yahoo.de", // list of receivers
+      subject: "Download Link", // Subject line
+      text: "Here is your Downloadlink:", // plain text body
+    }
+
+    // send mail with defined transport object
+    let info = await transporter.sendMail(msg);
+
+    console.log("Message sent: %s", info.messageId);
+    // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+
+    // Preview only available when sending through an Ethereal account
+    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+    // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+
+    res.send('Email sent!');
+})
