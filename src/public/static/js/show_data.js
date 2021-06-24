@@ -28,11 +28,24 @@ function fileNameClicked() {
             data => {
                 if (data.length > 0) {
                     let fileNameForDownload = "";
+                    let fileFormatForDownload = "";
+                    let fileUserForDownload = "";
                     fileNameForDownload = data[0].file_name;
-                    console.log(fileNameForDownload);
+                    fileUserForDownload = data[0].id_user;
+                    fileFormatForDownload = data[0].id_format;
                     document.getElementById("file_nameDownload").innerHTML = fileNameForDownload;
+                    document.getElementById("downloadLink").innerHTML = "http://localhost:3001/download/"+fileUserForDownload+"/"+fileFormatForDownload+"/"+fileNameForDownload;
                 }
             } 
         )
     })   
+};
+
+function copyToClipboard(element) {
+    alert("Sie haben den Link kopiert.")
+    var $temp = $("<input>");
+  $("body").append($temp);
+  $temp.val($(element).text()).select();
+  document.execCommand("copy");
+  $temp.remove();
 };

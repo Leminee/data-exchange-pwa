@@ -8,6 +8,7 @@ const session = require('express-session');
 const bcrypt = require('bcrypt'); 
 const bodyParser = require('body-parser'); 
 
+const nodemailer = require("nodemailer");
 
 const saltRounds = 10; 
 const twoHours = 1000 * 60 * 60 * 2
@@ -155,7 +156,7 @@ app.get("/user-profil", redirectLogin, (req, res) => {
 });
 
 app.get("/show_data/file/:file_name", (req, res) => {
-  let sql =`SELECT id_file, id_format, file_name, file_size, id_folder, file_path FROM file WHERE file_name = '${file_name}'`;
+  let sql =`SELECT id_file, id_format, file_name, file_size, id_folder, id_user, file_path FROM file WHERE file_name = '${file_name}'`;
   let query = db.query(sql, (err,result) => {
     if(err) throw err;
     res.send(result);
@@ -175,12 +176,13 @@ app.get("/show_data/file/:file_name/download", (req, res) => {
 }); 
 
 //Sharelink
-app.get("/:a/:b/:c", (req, res) => {
+app.get("/download/:a/:b/:c", (req, res) => {
   let id_user = req.params.a;
   let id_format = req.params.b;
   let file_name = req.params.c;
   res.download(path.join(__dirname, '/../../server/', id_user, "/",  id_format,"/", file_name));
   }); 
+
 
 app.get("/show_data", redirectLogin, (req, res) => {
   let sql =`SELECT id_file, id_format, file_name, file_size, id_folder FROM file WHERE id_user = '${req.session.id_user}'`;
@@ -314,3 +316,36 @@ app.post("/voice-maker", (req, res) => {
 app.listen(3001, ()=> {
 
 });  
+
+
+//NodeMailer
+app.post('/mail', async (req, res) => {
+    const{email} = req.body;
+    // create reusable transporter object using the default SMTP transport
+    let transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'ProjectG6.2021@gmail.com',
+        pass: 'ABC123!?',
+      }
+    });
+    
+    const msg ={
+      from: '"Coin Flip" <kris.macgyver73@ethereal.email>', // sender address
+      to: "calvinkluk@yahoo.de", // list of receivers
+      subject: "Download Link", // Subject line
+      text: "Here is your Downloadlink:", // plain text body
+    }
+
+    // send mail with defined transport object
+    let info = await transporter.sendMail(msg);
+
+    console.log("Message sent: %s", info.messageId);
+    // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+
+    // Preview only available when sending through an Ethereal account
+    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+    // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+
+    res.send('Email sent!');
+})

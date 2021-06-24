@@ -51,7 +51,7 @@
                     
                     </select><br>
                 <button type="submit">speichere auswahl</button>
-                <button type="submit"  onclick="fileNameClicked();">Datei anzeigen</button>
+                <button type="submit" onclick="fileNameClicked();">Datei anzeigen</button>
                 </form>
 
 
@@ -75,26 +75,29 @@
 
                 <br>
 
-                <form action="/lol" method="post">
-                    <button>Generate Link</button>
-                </form>
-
+               
+                    <button onclick="copyToClipboard('#downloadLink')">Link kopieren</button>
+                
+                    <br>
                 <br>
 
-                <form action="" method="post">
+                <form action="/mail" method="post">
                     <button>Send as E-mail</button>
                 </form>
 
                 <br>
-
+                <a>Downloadlink:</a>
+                <p id="downloadLink"></p>
                 
 
             </div>
 
         </section>
     </div>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="/js/show_data.js">
+
+    
 </script>
 </body>
 </html>
