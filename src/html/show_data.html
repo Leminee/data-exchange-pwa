@@ -51,7 +51,7 @@
                     
                     </select><br>
                 <button type="submit">speichere auswahl</button>
-                <button type="submit"  onclick="fileNameClicked();">Datei anzeigen</button>
+                <button type="submit" onclick="fileNameClicked();">Datei anzeigen</button>
                 </form>
 
 
@@ -73,28 +73,37 @@
                     <button type="submit">Download</button>
                 </form>
 
+               
+
+               
+                    <button onclick="copyToClipboard('#downloadLink')">Link kopieren</button>
+                
+                    <br>
                 <br>
-
-                <form action="" method="post">
-                    <button>Generate Link</button>
-                </form>
-
                 <br>
+                <a>From:</a>
+                <input id=xy name="fromInput" type="email" placeholder="Deine E-Mail-Adresse"/>
+                <br>
+                <a>To:</a>
+                <input id=xy name="toInput" type="email" placeholder="Empfänger E-Mail-Adresse"/>
 
-                <form action="" method="post">
+                <form action="/mail" method="post">
                     <button>Send as E-mail</button>
                 </form>
 
                 <br>
-
+                <a>Downloadlink:</a>
+                <a name="dLink" id="downloadLink"></a>
                 
 
             </div>
 
         </section>
     </div>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="/js/show_data.js">
+
+    
 </script>
 </body>
 </html>

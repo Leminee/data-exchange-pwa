@@ -1,12 +1,15 @@
 const express = require('express');  
 const mysql = require('mysql'); 
 const cors = require('cors');
-const app = express();   
+const app = express();
+const upload = require('express-fileupload');   
 const path = require('path');   
 const session = require('express-session');
 const bcrypt = require('bcrypt'); 
 const bodyParser = require('body-parser'); 
 const jwt = require('jsonwebtoken')
+
+const nodemailer = require("nodemailer");
 
 const saltRounds = 10; 
 const twoHours = 1000 * 60 * 60 * 2
@@ -18,7 +21,7 @@ app.use(express.static('/../../server'));
 app.use(express.urlencoded({ extended: false }))
 app.use(bodyParser.urlencoded({ extended: true }))
 
-
+ 
 app.use(session( {
   name: sessionID,
   resave: false,
@@ -31,7 +34,7 @@ app.use(session( {
 }),
 );
 
-
+ 
 var db = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
@@ -49,7 +52,7 @@ const redirectLogin = (req, res, next) => {
     next()
   }
 }
-
+ 
 const redirectUser = (req, res, next) => {
   if (req.session.id_user) {
     res.redirect("/user-profil/profil");
@@ -69,10 +72,34 @@ db.connect(function(error) {
 })
 
 
+//Upload MP3 File to Server Folder
+app.get('/upload-audio', (req, res) => {
+  res.sendFile(__dirname + '/../html/voice-maker.html')
+});
+
+app.post('/upload-audio', (req, res) => {
+  if (req.files) {
+    console.log(req.files)
+    var file = req.files.file
+    filename = file.name
+    console.log(filename);
+
+    file.mv('./server/' + filename, function (err) {
+      if (err) {
+        res.send(err)
+      } else {
+        res.send("File uploaded");
+      }
+    });
+  }
+});
+
+
+
  
 app.get("/", (req, res) => { 
   const { id_user } = req.session
-res.sendFile(path.join(__dirname, "/../../index.html")); 
+  res.sendFile(path.join(__dirname, "/../../index.html")); 
 }); 
 
 app.get("/login", redirectUser, (req, res) => { 
@@ -133,7 +160,7 @@ app.get("/user-profil", redirectLogin, (req, res) => {
 });
 
 app.get("/show_data/file/:file_name", (req, res) => {
-  let sql =`SELECT id_file, id_format, file_name, file_size, id_folder, file_path FROM file WHERE file_name = '${file_name}'`;
+  let sql =`SELECT id_file, id_format, file_name, file_size, id_folder, id_user, file_path FROM file WHERE file_name = '${file_name}'`;
   let query = db.query(sql, (err,result) => {
     if(err) throw err;
     res.send(result);
@@ -147,9 +174,19 @@ app.get("/show_data/file/:file_name/download", (req, res) => {
     id_userString = result[0].id_user.toString();
     id_formatString = result[0].id_format.toString();
     file_nameString = result[0].file_name.toString();
-   res.download(path.join(__dirname, '/../../server/', id_userString, "/",  id_formatString,"/", file_nameString));
+  res.download(path.join(__dirname, '/../../server/', id_userString, "/",  id_formatString,"/", file_nameString));
+  
   })
 }); 
+
+//Sharelink
+app.get("/download/:a/:b/:c", (req, res) => {
+  let id_user = req.params.a;
+  let id_format = req.params.b;
+  let file_name = req.params.c;
+  res.download(path.join(__dirname, '/../../server/', id_user, "/",  id_format,"/", file_name));
+  }); 
+
 
 app.get("/show_data", redirectLogin, (req, res) => {
   let sql =`SELECT id_file, id_format, file_name, file_size, id_folder FROM file WHERE id_user = '${req.session.id_user}'`;
@@ -358,4 +395,42 @@ app.post("/voice-maker", (req, res) => {
 
 app.listen(3001, ()=> {
 
-}) 
+});  
+
+
+//NodeMailer
+app.post('/mail', async (req, res) => {
+
+  //FLO WARUM GEHT DAS NICHT? AM I DUMBOOOO?
+    var fromInput = req.body.fromInput;
+    var toInput = req.body.toInput;
+    var link = req.body.dLink;
+
+
+    console.log(fromInput);
+    console.log(toInput);
+    console.log(link);
+
+
+    // create reusable transporter object using the default SMTP transport
+    let transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'ProjectG6.2021@gmail.com',
+        pass: 'ABC123!?',
+      }
+    });
+  
+
+    const msg ={
+      from: '"CoinFlip" <foo@example.com>', // sender address
+      to: "calvinkluk@yahoo.de", // list of receivers
+      subject: "Download Link", // Subject line
+      text: "Here is your Downloadlink:", // plain text body
+    }
+
+    // send mail with defined transport object
+    let info = await transporter.sendMail(msg);
+
+    res.send('Email sent!');
+})
