@@ -20,9 +20,7 @@ app.use(express.static('/../../server'));
 app.use(express.urlencoded({ extended: false }))
 app.use(bodyParser.urlencoded({ extended: true }))
 
-//Upload for Audio File
-app.use(upload())
-
+ 
 app.use(session( {
   name: sessionID,
   resave: false,
@@ -35,11 +33,11 @@ app.use(session( {
 }),
 );
 
-
+ 
 var db = mysql.createConnection({
   host     : 'localhost',
-  user     : 'root',
-  password : '',
+  user     : 'mel',
+  password : '36177436',
   database : 'pwa'
 });  
 
