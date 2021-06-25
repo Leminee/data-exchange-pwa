@@ -78,26 +78,21 @@
                
                     <button onclick="copyToClipboard('#downloadLink')">Link kopieren</button>
                 
-                    <br>
                 <br>
                 <br>
-                <a>From:</a>
-                <input id=xy name="fromInput" type="email" placeholder="Deine E-Mail-Adresse"/>
                 <br>
-                <a>To:</a>
-                <input id=xy name="toInput" type="email" placeholder="Empfänger E-Mail-Adresse"/>
-
                 <form action="/mail" method="post">
+                    <a>From:</a>
+                    <input id=xy name="fromInput" type="email" placeholder="Deine E-Mail-Adresse"/>
+                    <br>
+                    <a>To:</a>
+                    <input id=xy name="toInput" type="email" placeholder="Empfänger E-Mail-Adresse"/>
                     <button>Send as E-mail</button>
+                    <br>
+                    <a>Downloadlink:</a>
+                    <a name="dLink" id="downloadLink"></a>
                 </form>
-
-                <br>
-                <a>Downloadlink:</a>
-                <a name="dLink" id="downloadLink"></a>
-                
-
             </div>
-
         </section>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>

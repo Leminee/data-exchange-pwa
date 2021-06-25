@@ -289,7 +289,7 @@ app.post('/logout', redirectLogin, (req, res) => {
 })
 
 
-app.post('/forgot-password', (req, res) => {
+app.post('/forgot-password',  (req, res) => {
   const emailForgot = req.body.forgotEmail;
   let sql = `SELECT e_mail, password_hash, id_user FROM user WHERE e_mail = '${emailForgot}'`;
   let query = db.query(sql, (err,result) => {
@@ -304,7 +304,22 @@ app.post('/forgot-password', (req, res) => {
     }
     const token = jwt.sign(payload, secret, {expiresIn: '15m'})
     const link = `http://localhost:3001/reset-password/${result[0].id_user}/${token}`
-    console.log(link)//diesen Link per E-mail schicken
+    let transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'ProjectG6.2021@gmail.com',
+        pass: 'ABC123!?',
+      }
+    });
+    const msg ={
+      from: '"CoinFlip" <NOREPLY@NOREPLY.de>', // sender address
+      to: emailForgot, // list of receivers
+      subject: "Passwort Vergessen Link", // Subject line
+      text: "Dieser Link ist nur für 15min Aktiv. Bitte klicke hier um ein neues Passwort einzutragen:" + link, // plain text body
+    }
+    // send mail with defined transport object
+    let info = transporter.sendMail(msg);
+
     res.redirect("/login");
   })
 })
