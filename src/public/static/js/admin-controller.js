@@ -38,7 +38,36 @@ function showSingleUser(){
     })
 };
 
+function showUserFiles() {
+    fetch("http://localhost:3002/user/:id_user/files").then( response => {
+        response.json().then(
+            data => {
+                if (data.length > 0) {
+                    var tempFile = "";
+
+                    data.forEach((f) => {
+                        tempFile += "<tr>";
+                        tempFile += "<td>"+f.id_file+"</td>";
+                        tempFile += "<td>"+f.id_folder+"</td>";
+                        tempFile += "<td>"+f.id_format+"</td>";
+                        tempFile += "<td>"+f.file_name+"</td>";
+                        tempFile += "<td>"+f.file_size+"</td>";
+                        tempFile += "<td>"+f.uploaded_on+"</td></tr>";
+                    })
+                    document.getElementById("files").innerHTML = tempFile;
+                }
+            }
+        )
+    })
+}
+
 
 function backToAllUsers() {
     window.open("/");
+}
+
+
+function fillInData() {
+    showSingleUser();
+    showUserFiles();
 }

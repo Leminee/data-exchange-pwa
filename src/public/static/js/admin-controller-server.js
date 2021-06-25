@@ -5,17 +5,31 @@ const bcrypt = require("bcrypt");
 const parser = require("body-parser"); 
 const path = require('path');
 const saltRounds = 10;
+const session = require('express-session');
+
 
 const app = express();    
-
+const twoHours = 1000 * 60 * 60 * 2
+const sessionID = 'sid'
 app.use(express.json());  
 app.use(cors());   
 app.use(express.static(__dirname + "/.."));
 app.use(express.urlencoded({ extended: false }))
 app.use(parser.urlencoded({ extended: false }))
-
 var id_user;
 var upload_limit;
+
+app.use(session( {
+    name: sessionID,
+    resave: false,
+    saveUninitialized : false,
+    secret: "Lemine_admin",
+    cookie: {
+      maxAge: twoHours,
+      sameSite: true, 
+    },
+  }),
+  );
 
 const db = mysql.createConnection({
 host: 'localhost', 
@@ -24,8 +38,21 @@ password: '',
 database: 'pwa',
 });
 
-
-app.listen(3002, () => console.log('listening on port 3002'));
+const redirectLogin = (req, res, next) => {
+    if (!req.session.id_admin) {
+      res.redirect("/");
+    } else {
+      next()
+    }
+  };
+  
+  const redirectUser = (req, res, next) => {
+    if (req.session.id_admin) {
+      res.redirect("/home");
+    } else {
+      next()
+    }
+  };
 
 
 
@@ -37,20 +64,26 @@ db.connect(function(error) {
   
 
 //list of all users
-  app.get('/', (req, res) => {
+app.get('/', redirectUser, (req, res) => {
+    res.sendFile(path.join(__dirname, "/../../../html/admin-login.html"));
+});
+
+
+//list of all users
+  app.get('/home', redirectLogin, (req, res) => {
     res.sendFile(path.join(__dirname, "/../../../html/admin-controller.html"));
 });
 
 
 //list of a single user
-app.get('/user/show/:id_user', (req, res) => {
+app.get('/user/show/:id_user', redirectLogin, (req, res) => {
     res.sendFile(path.join(__dirname, "/../../../html/admin-controller-single.html"));
 });
 
 
 
 //get all users from database
-app.get('/user', (req, res) => {
+app.get('/user', redirectLogin, (req, res) => {
     let sql = 'SELECT `id_user`, `e_mail`, `upload_limit` FROM user';
     let query = db.query(sql, (err, result) => {
         if(err) throw err;
@@ -60,13 +93,22 @@ app.get('/user', (req, res) => {
   
 
 //get a user from database by id
-app.get('/user/:id_user', (req, res) => {
+app.get('/user/:id_user', redirectLogin, (req, res) => {
     let sql = `SELECT id_user, e_mail, upload_limit FROM user WHERE id_user = '${id_user}'`;
     let query = db.query(sql, (err, result) => {
         if(err) throw err;
         res.send(result);
     });
 });
+
+//get all the files from a single user
+app.get('/user/:id_user/files', redirectLogin, (req, res) => {
+    let sql = `SELECT id_user, id_file, id_folder, id_format, file_name, file_size, uploaded_on FROM file WHERE id_user = '${id_user}'`;
+    let query = db.query(sql, (err, result) => {
+        if(err) throw err;
+        res.send(result);
+    });
+})
 
 
 
@@ -101,3 +143,39 @@ app.post('/user/show/:id_user/update_user', (req, res) => {
     res.redirect('/user/show/' + id_user);
     res.end()
 });
+
+
+app.post('/login', (req, res)=> {
+  const email = req.body.email;
+  const password = req.body.password;
+  
+  if (email && password) {
+     var dbResult = db.query('SELECT e_mail_admin, id_admin FROM admin WHERE e_mail_admin = ? AND password_admin = ?', [email, password], 
+      (error, results)=> {
+          if (results.length > 0 ) {
+              req.session.id_admin = results[0].id_admin;
+              res.redirect('/home');
+          } else {
+              console.log('Incorrect E-mail and/or Password!');
+          }           
+          res.end();
+      });
+  } else {
+      res.send('Please enter E-mail and Password!');
+      res.end();
+  }
+});
+
+    
+app.post('/logout', redirectLogin, (req, res) => {
+    req.session.destroy(err => {
+    if(err) {
+        return res.redirect('/')
+    }
+    res.clearCookie(sessionID)
+    res.redirect("/");
+    });
+});
+
+
+app.listen(3002, () => console.log('listening on port 3002'));

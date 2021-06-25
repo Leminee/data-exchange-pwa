@@ -6,7 +6,7 @@ const path = require('path');
 const session = require('express-session');
 const bcrypt = require('bcrypt'); 
 const bodyParser = require('body-parser'); 
-
+const jwt = require('jsonwebtoken')
 
 const saltRounds = 10; 
 const twoHours = 1000 * 60 * 60 * 2
@@ -37,7 +37,9 @@ var db = mysql.createConnection({
   user     : 'root',
   password : '',
   database : 'pwa'
-});  
+}); 
+
+const JWT_SECRET = 'LemineWebToken'
 
 
 const redirectLogin = (req, res, next) => {
@@ -117,6 +119,9 @@ app.get("/voice-maker", redirectLogin, (req, res) => {
   res.sendFile(path.join(__dirname, "/../html/voice-maker.html"));  
 }); 
 
+app.get(`/reset-password/:id_user/:token`,(req, res) => {
+  res.sendFile(path.join(__dirname, "/../html/reset-password.html"));
+});
 
 
 app.get("/user-profil", redirectLogin, (req, res) => {
@@ -155,12 +160,30 @@ app.get("/show_data", redirectLogin, (req, res) => {
 });
 
 
-
-
-
 app.get("/voice-maker", redirectLogin, (req, res) => { 
   audio_url = URL.createObjectURL(req.params.blob);
 });
+
+
+app.get('/reset-password/:id_user/:token', (req, res) => {
+  const id_user = req.params.id_user;
+  const token = req.params.token;
+  let sql = `SELECT id_user, password_hash FROM user WHERE id_user = '${id_user}'`;
+  let query = db.query(sql, (err,result) => {
+    if (id_user != result[0].id_user) {
+      res.send("User with this ID not found")
+      return
+    }
+    const secret = JWT_SECRET + result[0].password_hash
+    try {
+      const payload = jwt.verify(token, secret)
+      res.redirect(`/reset-password/${id_user}/${token}`)
+    } catch (error) {
+      console.log(error.message);
+      res.send(error.message);
+    }
+  })
+})
 
 
 
@@ -180,7 +203,7 @@ app.post("/register", redirectUser, async (req, res) => {
           console.log(err);
         } 
         req.session.id_user = result.insertId;
-        res.redirect("/user-profil/profil");
+        res.redirect("/login");
       }
     );
   });  
@@ -217,16 +240,74 @@ app.post('/login', async (req, res)=> {
 });
 });
 
+
 app.post('/logout', redirectLogin, (req, res) => {
   req.session.destroy(err => {
     if(err) {
       return res.redirect('/user-profil/profil')
     }
-    console.log(sessionID)
     res.clearCookie(sessionID)
     res.redirect("/");
   });
 })
+
+
+app.post('/forgot-password', (req, res) => {
+  const emailForgot = req.body.forgotEmail;
+  let sql = `SELECT e_mail, password_hash, id_user FROM user WHERE e_mail = '${emailForgot}'`;
+  let query = db.query(sql, (err,result) => {
+    if (emailForgot !== result[0].e_mail) {
+      res.send("No user with that Email Adress")
+      return;
+    }
+    const secret = JWT_SECRET + result[0].password_hash
+    const payload = {
+      email: result[0].e_mail,
+      id: result[0].id_user
+    }
+    const token = jwt.sign(payload, secret, {expiresIn: '15m'})
+    const link = `http://localhost:3001/reset-password/${result[0].id_user}/${token}`
+    console.log(link)//diesen Link per E-mail schicken
+    res.redirect("/login");
+  })
+})
+
+app.post('/reset-password/:id_user/:token', (req, res) => {
+  const id_user = req.params.id_user;
+  const token = req.params.token;
+  const password = req.body.password
+  const password2 = req.body.password2
+  let sql = `SELECT id_user, password_hash FROM user WHERE id_user = '${id_user}'`;
+  let query = db.query(sql, (err,result) => {
+    if (id_user != result[0].id_user) {
+      res.send("User with this ID not found")
+      return
+    }
+    const secret = JWT_SECRET + result[0].password_hash
+    try {
+      const payload = jwt.verify(token, secret)
+      //irgednwie kontrollieren dass die beiden passwörter übereinstimmen if password == password2 oder so ?
+      bcrypt.hash(password, saltRounds, (err, hash) => { 
+        if (err) {
+          console.log(err);
+        }
+      let sqlpw = `UPDATE user SET password_hash = '${hash}' WHERE id_user = '${id_user}'`;
+      let query = db.query(sqlpw, (err,result) => {
+        res.send("Passwort erfolgreich geändert!")
+        if(err) throw err;
+      });
+    });
+    } catch (error) {
+      console.log(error.message)
+      res.send(error.message)
+    }
+})
+})
+
+
+
+
+
 
 
 
@@ -277,4 +358,4 @@ app.post("/voice-maker", (req, res) => {
 
 app.listen(3001, ()=> {
 
-});  
+}) 

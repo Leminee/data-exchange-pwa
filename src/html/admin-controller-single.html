@@ -12,7 +12,7 @@
 
     <title>Admin Kontroller</title>  
 </head>
-<body onload="showSingleUser();">
+<body onload="fillInData();">
     
     
     <form action="/user/show/:id_user/update_user" method="post">
@@ -45,8 +45,35 @@
      </tbody>
 
     </table>
+
+<hr>
 </div>
 
+    <label>All the files this user has:</label>
+    <div class="container">
+        <table>
+             <thead>
+                <tr>
+                   <th>File ID</th>
+                   <th>Folder ID</th>
+                   <th>Format ID</th>
+                   <th>File Name</th>
+                   <th>File Size</th>
+                   <th>File Uploaded on</th>
+             </tr>
+            </thead>
+        <tbody id="files">
+               
+        </tbody>
+       </table>
+   </div>
+
+
+
+
+
+
+<hr>
 
     <button onclick="backToAllUsers();">Go back too all users list</button>
 

@@ -55,13 +55,15 @@
                 <input name ="register" type="submit" onclick="register()" value="Registrieren"/>
             </div > 
             </form> 
+            <form action="/forgot-password" method="post">
             <div id="forgot" class="comm">
             <h3>Passwort zurücksetzen</h3>
             <div>
-                <input id="fe" type="email" placeholder="E-Mail-Adresse" required/>
-                <input type="submit" onclick="forgot()" value="Abschicken"/>
+                <input id="fe" name="forgotEmail" type="email" placeholder="E-Mail-Adresse" required/>
+                <input type="submit" value="Abschicken"/>
             </div>
             </div>
+            </form>
         </div>
     </div> 
     </div> 
