@@ -320,7 +320,9 @@ app.listen(3001, ()=> {
 
 //NodeMailer
 app.post('/mail', async (req, res) => {
-    const{email} = req.body;
+    const fromInput = req.body.fromInput;
+    const toInput = req.body.toInput;
+    const link = req.body.downloadLink;
     // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
       service: 'gmail',
@@ -330,6 +332,10 @@ app.post('/mail', async (req, res) => {
       }
     });
     
+    console.log(fromInput);
+    console.log(toInput);
+    console.log(link);
+
     const msg ={
       from: '"Coin Flip" <kris.macgyver73@ethereal.email>', // sender address
       to: "calvinkluk@yahoo.de", // list of receivers
@@ -339,13 +345,6 @@ app.post('/mail', async (req, res) => {
 
     // send mail with defined transport object
     let info = await transporter.sendMail(msg);
-
-    console.log("Message sent: %s", info.messageId);
-    // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-
-    // Preview only available when sending through an Ethereal account
-    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-    // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
 
     res.send('Email sent!');
 })

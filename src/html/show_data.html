@@ -73,13 +73,19 @@
                     <button type="submit">Download</button>
                 </form>
 
-                <br>
+               
 
                
                     <button onclick="copyToClipboard('#downloadLink')">Link kopieren</button>
                 
                     <br>
                 <br>
+                <br>
+                <a>From:</a>
+                <input name="fromInput" type="email" placeholder="Deine E-Mail-Adresse"/>
+                <br>
+                <a>To:</a>
+                <input name="toInput" type="email" placeholder="Empfänger E-Mail-Adresse"/>
 
                 <form action="/mail" method="post">
                     <button>Send as E-mail</button>
@@ -87,7 +93,7 @@
 
                 <br>
                 <a>Downloadlink:</a>
-                <p id="downloadLink"></p>
+                <a id="downloadLink"></a>
                 
 
             </div>
