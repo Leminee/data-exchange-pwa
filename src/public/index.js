@@ -36,8 +36,8 @@ app.use(session( {
  
 var db = mysql.createConnection({
   host     : 'localhost',
-  user     : 'mel',
-  password : '36177436',
+  user     : 'root',
+  password : '',
   database : 'pwa'
 });  
 
@@ -318,9 +318,18 @@ app.listen(3001, ()=> {
 
 //NodeMailer
 app.post('/mail', async (req, res) => {
-    const fromInput = req.body.fromInput;
-    const toInput = req.body.toInput;
-    const link = req.body.downloadLink;
+
+  //FLO WARUM GEHT DAS NICHT? AM I DUMBOOOO?
+    fromInput = req.body.fromInput;
+    toInput = req.body.toInput;
+    link = req.body.dLink;
+
+
+    console.log(fromInput);
+    console.log(toInput);
+    console.log(link);
+
+
     // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
       service: 'gmail',
@@ -329,13 +338,10 @@ app.post('/mail', async (req, res) => {
         pass: 'ABC123!?',
       }
     });
-    
-    console.log(fromInput);
-    console.log(toInput);
-    console.log(link);
+  
 
     const msg ={
-      from: '"Coin Flip" <kris.macgyver73@ethereal.email>', // sender address
+      from: '"CoinFlip" <foo@example.com>', // sender address
       to: "calvinkluk@yahoo.de", // list of receivers
       subject: "Download Link", // Subject line
       text: "Here is your Downloadlink:", // plain text body
