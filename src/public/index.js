@@ -320,9 +320,9 @@ app.listen(3001, ()=> {
 app.post('/mail', async (req, res) => {
 
   //FLO WARUM GEHT DAS NICHT? AM I DUMBOOOO?
-    fromInput = req.body.fromInput;
-    toInput = req.body.toInput;
-    link = req.body.dLink;
+    var fromInput = req.body.fromInput;
+    var toInput = req.body.toInput;
+    var link = req.body.dLink;
 
 
     console.log(fromInput);
