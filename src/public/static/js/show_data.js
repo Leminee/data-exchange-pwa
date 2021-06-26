@@ -5,17 +5,20 @@ function insertProfilData(){
                 if (data.length > 0) {
                     let temp = "";
                     let fileNameSelect ="";
+                    let fileComment ="";
                     data.forEach((u) => {
                         temp += "<tr>";
                         temp += "<td>"+u.id_file+"</td>";
                         temp += "<td>"+u.file_name+"</td>";
                         temp += "<td>"+u.id_format+"</td>";
+                        temp += "<td>"+u.comment+"</td>";
                         temp += "</tr>";
                         fileNameSelect += "<option>"+ u.file_name + "</option>";
+                        fileComment += "<option>" + u.file_name + "</option>";
                     })
                     document.getElementById("data").innerHTML = temp;
-                    document.getElementById("file_name").style.display = "none";
                     document.getElementById("file_nameDownloadSelect").innerHTML = fileNameSelect;
+                    document.getElementById("file_comment").innerHTML = fileComment;
                 };
             }
         )

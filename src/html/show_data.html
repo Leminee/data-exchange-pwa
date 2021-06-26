@@ -34,22 +34,33 @@
                 <h2>Meine Dateien</h2>
                 <table>
                     <thead>
-                        <tr>
-                            <th id="file_id">ID</th>
+                        <tr> 
+                            <th id="file_id">ID</th> 
                             <th id="file_name">Dateiname</th>
                             <th id="file_format">Format</th>
+                            <th id="comment">Kommentar</th>
                         </tr>
                     </thead>
                     <tbody id="data">
             
                     </tbody>
                 </table>
-
+                <form action="/file-comment" method="post">
+                    <label>Datei Auswählen zum Kommentar einfügen:</label>
+                    <select name="file_comment" id="file_comment"></select>
+                    <br>
+                    <button type="submit">Kommentar schreiben</button>
+                </form>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
                 <form action="/show_data" method="post">
-                    <label for="file_nameDownloadSelect">Choose the File you want to download:</label>
+                    <label for="file_nameDownloadSelect">Datei zum downloaden aussuchen:</label>
                     <select name="file_nameDownloadSelect" id="file_nameDownloadSelect">
-                    
-                    </select><br>
+                    </select>
+                    <br>
                 <button type="submit">speichere auswahl</button>
                 <button type="submit" onclick="fileNameClicked();">Datei anzeigen</button>
                 </form>

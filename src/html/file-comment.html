@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="de"> 
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/show_data.css">   
+    <link rel="apple-touch-icon" href="/images/icons/icon256px.png"> 
+    <link rel="icon" href="/images/icons/icon256px.png">
+     
+    
+
+    <title>Kommentar schreiben</title>
+
+</head>
+<body onload="writeFileName();">
+    <h2>Schreib dein Kommentar für: </h2>
+    <h2 id="file_name" name="file_name"></h2>
+
+    <form action="/file-comment/write" method="post">
+        <textarea name="comment" id="comment" maxlength="255" cols="80" rows="15"></textarea>
+        <br>
+        <button type="submit">Kommentar veröffentlichen</button>
+    </form>
+    
+
+
+
+
+
+
+    <script type="text/javascript" src="/js/file-comment.js"></script>
+</body>
+</html>

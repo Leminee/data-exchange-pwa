@@ -142,6 +142,10 @@ app.get('/edit-profil', redirectLogin, (req, res) => {
   res.redirect('/user-profil/profil/'+ req.session.id_user + '/edit');
 });
 
+app.get('/file-comment/:file_name', redirectLogin, (req, res) => {
+  res.sendFile(path.join(__dirname, "/../html/file-comment.html"));
+});
+
 app.get("/voice-maker", redirectLogin, (req, res) => { 
   res.sendFile(path.join(__dirname, "/../html/voice-maker.html"));  
 }); 
@@ -149,6 +153,7 @@ app.get("/voice-maker", redirectLogin, (req, res) => {
 app.get(`/reset-password/:id_user/:token`,(req, res) => {
   res.sendFile(path.join(__dirname, "/../html/reset-password.html"));
 });
+
 
 
 app.get("/user-profil", redirectLogin, (req, res) => {
@@ -189,12 +194,21 @@ app.get("/download/:a/:b/:c", (req, res) => {
 
 
 app.get("/show_data", redirectLogin, (req, res) => {
-  let sql =`SELECT id_file, id_format, file_name, file_size, id_folder FROM file WHERE id_user = '${req.session.id_user}'`;
+  let sql =`SELECT file.id_file, file.file_name, file.id_format, file.file_size, file.id_folder, file.comment FROM file WHERE id_user = '${req.session.id_user}'`;
   let query = db.query(sql, (err,result) => {
     if(err) throw err;
     res.send(result);
   });
 });
+
+app.get("/file-comment/:file_name/comment", redirectLogin, (req, res) => {
+  let sql =`SELECT file_name, comment FROM file WHERE file_name ='${file_name}'`;
+  let query = db.query(sql, (err,result) => {
+    if(err) throw err;
+    res.send(result);
+  })
+});
+
 
 
 app.get("/voice-maker", redirectLogin, (req, res) => { 
@@ -357,13 +371,6 @@ app.post('/reset-password/:id_user/:token', (req, res) => {
 })
 
 
-
-
-
-
-
-
-
 app.post('/profil-edit/:id_user', (req, res) => {
   var e_mail = req.body.e_mail;
   var username = req.body.username;
@@ -379,9 +386,25 @@ app.post('/profil-edit/:id_user', (req, res) => {
 
 app.post('/show_data', (req, res) => {
   file_name = req.body.file_nameDownloadSelect;
-  console.log(file_name); 
-  //res.redirect(("/show_data/file/" + file_name))
 });
+
+app.post('/file-comment', (req, res) => {
+  file_name = req.body.file_comment;
+  res.redirect("/file-comment/" + file_name)
+});
+
+app.post('/file-comment/write', (req, res) => {
+  const comment = req.body.comment;
+  console.log(comment);
+  console.log(file_name);
+  let sql = `UPDATE file SET comment = '${comment}' WHERE file_name = '${file_name}'`;
+  let query = db.query(sql, (err,result) => {
+    if(err) throw err;
+    res.redirect("/user-profil/profil/data")
+  });
+})
+
+
 
 
 app.post("/voice-maker", (req, res) => {
@@ -401,16 +424,6 @@ app.post("/voice-maker", (req, res) => {
   res.redirect('/voice-maker');
   res.end();
 });
-
-
-
-
-
-
-
-app.listen(3001, ()=> {
-
-});  
 
 
 //NodeMailer
@@ -449,3 +462,29 @@ app.post('/mail', async (req, res) => {
 
     res.send('Email sent!');
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+app.listen(3001, ()=> {
+
+});
