@@ -109,6 +109,7 @@ function startRecording() {
     console.log('MediaRecorder started', mediaRecorder);
 }
 
+/*
 function base64ToFile(data = false, fileName = false) {
     if (!data || !fileName) {
         return false;
@@ -126,12 +127,14 @@ function base64ToFile(data = false, fileName = false) {
 
     return new File([u8arr], fileName, {type: mime}) || false;
 }
+*/
+
 
 function stopRecording() {
     mediaRecorder.stop();
     recordedAudio.controls = true;
     //base64ToFile
-    let file = base64ToFile(recordedBlobs.src + (new Date().getTime()) + '.webp');
+    /*let file = base64ToFile(recordedBlobs.src + (new Date().getTime()) + '.webp');
     if (file) {
         let evt = new DragEvent('drop');
         Object.defineProperty(evt, 'dataTransfer', {
@@ -141,7 +144,7 @@ function stopRecording() {
         document.getElementById('uploadFile').dispatchEvent(
             evt
         );
-    }  
+    }*/
 }
 
 //Data Transfer
@@ -211,6 +214,14 @@ function download() {
     a.style.display = 'none';
     a.href = url;
     a.download = clipName;
+
+    var reader = new FileReader();
+    reader.readAsDataURL(blob);
+    reader.onloadend = function() {
+    var base64data = reader.result;
+    console.log(base64data);
+    }
+
     document.body.appendChild(a);
     a.click();
     //Timeout
