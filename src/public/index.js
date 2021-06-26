@@ -306,11 +306,13 @@ app.post('/logout', redirectLogin, (req, res) => {
 app.post('/forgot-password',  (req, res) => {
   const emailForgot = req.body.forgotEmail;
   let sql = `SELECT e_mail, password_hash, id_user FROM user WHERE e_mail = '${emailForgot}'`;
-  let query = db.query(sql, (err,result) => {
-    if (emailForgot !== result[0].e_mail) {
-      res.send("No user with that Email Adress")
+  let query = db.query(sql, (err,result) => { 
+
+    if (result.length < 1) {  
+      res.send('E-Mail-Adresse nicht registiert!')
       return;
     }
+
     const secret = JWT_SECRET + result[0].password_hash
     const payload = {
       email: result[0].e_mail,
@@ -462,12 +464,6 @@ app.post('/mail', async (req, res) => {
 
     res.send('Email sent!');
 })
-
-
-
-
-
-
 
 
 
