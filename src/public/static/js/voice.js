@@ -131,7 +131,7 @@ function stopRecording() {
     mediaRecorder.stop();
     recordedAudio.controls = true;
     //base64ToFile
-    let file = base64ToFile(recordedAudio.src + (new Date().getTime()) + '.webp');
+    let file = base64ToFile(recordedBlobs.src + (new Date().getTime()) + '.webp');
     if (file) {
         let evt = new DragEvent('drop');
         Object.defineProperty(evt, 'dataTransfer', {
