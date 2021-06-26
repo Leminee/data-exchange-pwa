@@ -81,7 +81,6 @@ app.get('/user/show/:id_user', redirectLogin, (req, res) => {
 });
 
 
-
 //get all users from database
 app.get('/user', redirectLogin, (req, res) => {
     let sql = 'SELECT `id_user`, `e_mail`, `upload_limit` FROM user';
@@ -111,14 +110,11 @@ app.get('/user/:id_user/files', redirectLogin, (req, res) => {
 })
 
 
-
 //take id_user from html and redirect 
 app.post('/user', (req, res) => {
     id_user = req.body.id_user;
     res.redirect('/user/show/' + id_user);
 });
-
-
 
 
 //update user Upload limit for all user
@@ -176,6 +172,18 @@ app.post('/logout', redirectLogin, (req, res) => {
     res.redirect("/");
     });
 });
+
+
+app.post('/deleteFile/:file_name', redirectLogin, (req, res) => {
+  file_name = req.body.deleteFiles
+  let sql = `DELETE FROM file WHERE file_name = '${file_name}'`;
+  let query = db.query(sql, (err,result) => {
+    console.log(result)
+    if(err) throw err;
+  });
+  res.redirect("/user/show/:user_id")
+  res.end()
+})
 
 
 app.listen(3002, () => console.log('listening on port 3002'));

@@ -44,7 +44,7 @@ function showUserFiles() {
             data => {
                 if (data.length > 0) {
                     var tempFile = "";
-
+                    var tempDelete = "";
                     data.forEach((f) => {
                         tempFile += "<tr>";
                         tempFile += "<td>"+f.id_file+"</td>";
@@ -53,8 +53,10 @@ function showUserFiles() {
                         tempFile += "<td>"+f.file_name+"</td>";
                         tempFile += "<td>"+f.file_size+"</td>";
                         tempFile += "<td>"+f.uploaded_on+"</td></tr>";
+                        tempDelete += "<option>"+f.file_name+"</option>";
                     })
                     document.getElementById("files").innerHTML = tempFile;
+                    document.getElementById("deleteFiles").innerHTML = tempDelete;
                 }
             }
         )
