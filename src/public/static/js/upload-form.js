@@ -1,4 +1,4 @@
-(function () {
+/*(function () {
    
     window.supportDrag = function() {
        let div = document.createElement('div');
@@ -26,4 +26,4 @@
        });
     }
     
- })();
+ })();*/
