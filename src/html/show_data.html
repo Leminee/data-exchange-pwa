@@ -94,14 +94,15 @@
                 <br>
                 <form action="/mail" method="post">
                     <a>From:</a>
-                    <input id=xy name="fromInput" type="email" placeholder="Deine E-Mail-Adresse"/>
+                    <input id=xy name="fromInput" type="email" placeholder="Deine E-Mail-Adresse"required/>
                     <br>
                     <a>To:</a>
-                    <input id=xy name="toInput" type="email" placeholder="Empfänger E-Mail-Adresse"/>
+                    <input id=yx name="toInput" type="email" placeholder="Empfänger E-Mail-Adresse"required/>
                     <button>Send as E-mail</button>
                     <br>
                     <a>Downloadlink:</a>
-                    <a name="dLink" id="downloadLink"></a>
+                    <a id="downloadLink"></a>
+                    <input type=text name=dLink id="hiding"/>
                 </form>
             </div>
         </section>

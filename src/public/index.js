@@ -39,8 +39,8 @@ app.use(session( {
  
 var db = mysql.createConnection({
   host     : 'localhost',
-  user     : 'mel',
-  password : '36177436',
+  user     : 'root',
+  password : '',
   database : 'pwa'
 }); 
 
@@ -506,18 +506,19 @@ app.post("/voice-maker", (req, res) => {
 });
 
 
+
+
 //NodeMailer
 app.post('/mail', async (req, res) => {
-
-  //FLO WARUM GEHT DAS NICHT? AM I DUMBOOOO?
     var fromInput = req.body.fromInput;
     var toInput = req.body.toInput;
-    var link = req.body.dLink;
+    var downloadLink = req.body.dLink;
 
 
     console.log(fromInput);
     console.log(toInput);
-    console.log(link);
+    console.log(downloadLink);
+    
 
 
     // create reusable transporter object using the default SMTP transport
@@ -531,10 +532,10 @@ app.post('/mail', async (req, res) => {
   
 
     const msg ={
-      from: '"CoinFlip" <foo@example.com>', // sender address
-      to: "calvinkluk@yahoo.de", // list of receivers
-      subject: "Passwort zurücksetzen", // Subject line
-      text: "Link zum Zurücksetzen Deines Passworts:", // plain text body
+      from: fromInput + '<foo@example.com>', // sender address
+      to: toInput, // list of receivers
+      subject: "Downloadlink", // Subject line
+      text: "Hier ist Ihr Downloadlink:"+ downloadLink, // plain text body
     }
 
     // send mail with defined transport object

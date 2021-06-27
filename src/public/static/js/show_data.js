@@ -1,3 +1,5 @@
+document.getElementById("hiding").style.display = "none";
+
 function insertProfilData(){
     fetch("http://localhost:3001/show_data").then( response => {
         response.json().then(
@@ -38,6 +40,7 @@ function fileNameClicked() {
                     fileFormatForDownload = data[0].id_format;
                     document.getElementById("file_nameDownload").innerHTML = fileNameForDownload;
                     document.getElementById("downloadLink").innerHTML = "http://localhost:3001/download/"+fileUserForDownload+"/"+fileFormatForDownload+"/"+fileNameForDownload;
+                    document.getElementById("hiding").value = "http://localhost:3001/download/"+fileUserForDownload+"/"+fileFormatForDownload+"/"+fileNameForDownload;
                 }
             } 
         )
