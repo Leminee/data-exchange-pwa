@@ -134,16 +134,18 @@ app.get("/user-profil/profil/data", (req, res) => {
 });
 
 app.get("/user-profil/profil", redirectLogin, (req, res) => {
-  res.sendFile(path.join(__dirname, "/../html/user-profil.html"));  
-});
-
+  //res.sendFile(path.join(__dirname, "/../html/user-profil.html"));  
+  res.render('user-profil');
+       
+});   
+  
 app.get("/user-profil/profil/:id_user/edit", redirectLogin, (req, res) => {
   res.sendFile(path.join(__dirname, "/../html/profil-edit.html"));
 });
 
 app.get('/edit-profil', redirectLogin, (req, res) => {
   res.redirect('/user-profil/profil/'+ req.session.id_user + '/edit');
-});
+});  
 
 app.get('/file-comment/:file_name', redirectLogin, (req, res) => {
   res.sendFile(path.join(__dirname, "/../html/file-comment.html"));
@@ -151,7 +153,11 @@ app.get('/file-comment/:file_name', redirectLogin, (req, res) => {
 
 app.get("/voice-maker", redirectLogin, (req, res) => { 
   res.sendFile(path.join(__dirname, "/../html/voice-maker.html"));  
-}); 
+});  
+
+app.get("/upload-form", redirectLogin, (req, res) => { 
+  res.sendFile(path.join(__dirname, "/../html/upload-form.html"));  
+});
 
 app.get(`/reset-password/:id_user/:token`,(req, res) => {
   res.sendFile(path.join(__dirname, "/../html/reset-password.html"));
@@ -298,18 +304,16 @@ app.post('/login', async (req, res)=> {
   if (email && dcryptPassword) {
 //if there is an e-mail and the password fits, give the information
      var dbResult = db.query('SELECT e_mail, id_user FROM user WHERE e_mail = ? AND password_hash != ?', [email, dcryptPassword], 
-      (error, results)=> {
+      (error, results)=> {  
           if (results.length > 0 ) {
 //put the user id equal with the id from the session
               req.session.id_user = results[0].id_user;
               res.redirect('/user-profil/profil');
           } 
                    
-         // res.end();
+      
       });
   } else {
-
-  
 
     errors.push({message: "Leider ist dein eingegebenes Passwort falsch. Bitte überprüfe es noch einmal."}); 
     res.render('login', {errors});
@@ -323,7 +327,7 @@ app.post('/logout', redirectLogin, (req, res) => {
     if(err) {
       return res.redirect('/user-profil/profil')
     }
-    res.clearCookie(sessionID)
+    res.clearCookie(sessionID)  
     res.redirect("/");
   });
 })
@@ -420,19 +424,45 @@ app.post('/reset-password/:id_user/:token', (req, res) => {
   
 })
 
+app.post('/profil-edit/email/:id_user', (req, res) => { 
+  var e_mail = req.body.email;   
+  const succ = []; 
 
-app.post('/profil-edit/:id_user', (req, res) => {
-  var e_mail = req.body.e_mail;
-  var username = req.body.username;
-  let sql = `UPDATE user SET e_mail = '${e_mail}', username = '${username}' WHERE id_user = '${req.session.id_user}'`;
+
+  let sql = `UPDATE user SET e_mail = '${e_mail}' WHERE id_user = '${req.session.id_user}'`;
+  let query = db.query(sql, (err,result) => {
+    if(err) throw err;
+  });   
+   
+        succ.push({message: "E-Mail-Adressewurde erfolgreich bearbeitet!"}); 
+        res.render('user-profil', {succ});   
+});
+
+
+app.post('/profil-edit/username/:id_user', (req, res) => {
+  var username = req.body.username; 
+  const erros = [];
+  let sql = `UPDATE user SET username = '${username}' WHERE id_user = '${req.session.id_user}'`;
+  let query = db.query(sql, (err,result) => {
+    if(err) throw err;
+  });    
+    
+  res.redirect('/user-profil/profil');
+  res.end();
+});
+
+ 
+ 
+app.post('/profil-edit/pass/:id_user', (req, res) => {
+  var password = req.body.password; 
+  const erros = [];
+  let sql = `UPDATE user SET password_hash = '${password}' WHERE id_user = '${req.session.id_user}'`;
   let query = db.query(sql, (err,result) => {
     if(err) throw err;
   });
   res.redirect('/user-profil/profil');
   res.end();
-});
-
-
+}); 
 
 app.post('/show_data', (req, res) => {
   file_name = req.body.file_nameDownloadSelect;
@@ -459,7 +489,7 @@ app.post('/file-comment/write', (req, res) => {
 
 app.post("/voice-maker", (req, res) => {
   id_user = 2;
-  id_format = 3;
+  id_format = 3; 
   file_name = req.body.file_name;
   file_size = req.body.file_size;
   file_path = req.body.file_path;

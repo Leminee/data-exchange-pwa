@@ -64,13 +64,13 @@ input[type="submit"] {
 #err{ 
 
     background-color: red;
-    border: 2px;
+    border-radius: 1px;
 }
  
 #succ{ 
 
     background-color: green;
-    border: 2px;
+    border-radius: 1px;
 }
 #clear {
     clear: both;

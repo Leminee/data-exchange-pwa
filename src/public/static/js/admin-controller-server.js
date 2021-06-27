@@ -186,4 +186,4 @@ app.post('/deleteFile/:file_name', redirectLogin, (req, res) => {
 })
 
 
-app.listen(3002, () => console.log('listening on port 3002'));
+app.listen(3002, () => console.log('listening on port 3002')); 

@@ -45,7 +45,7 @@
             <div id="login" class="comm">
                 <h3>Anmelden</h3>
 
-                <input id="se" name="email_login" type="email" placeholder="E-Mail-Adresse" required/>
+                <input id="se" name="email_login" type="email" placeholder="E-Mail-Adresse"  required/>
                 <input id="sp" name="password_login" type="password" placeholder="Passwort" required/>
                 <input name="login" type="submit" value="Anmelden"/>
             </form>
@@ -62,8 +62,8 @@
                 <h3>Registrieren</h3>
 
                 <input id="re" name="email" type="email" placeholder="E-Mail-Adresse" required/>
-                <input id="rp" name="username" type="username" placeholder="Username" required/>
-                <input id="rpp" name="password" type="password" placeholder="Passwort" required/>  
+                <input id="rp" name="username" type="username" placeholder="Username" minlength="2" maxlength="50" required/>
+                <input id="rpp" name="password" type="password" placeholder="Passwort" minlength="8" maxlength="50" required/>  
                 <input name ="register" type="submit"value="Registrieren"/>
             </div > 
             </form> 
