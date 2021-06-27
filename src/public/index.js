@@ -8,8 +8,9 @@ const session = require('express-session');
 const bcrypt = require('bcrypt'); 
 const bodyParser = require('body-parser'); 
 const jwt = require('jsonwebtoken');
-const ejs = require('ejs');
-
+const ejs = require('ejs'); 
+const uuid = require('uuid').v4; 
+const multer = require('multer');
 const nodemailer = require("nodemailer");
 
 const saltRounds = 10; 
@@ -72,7 +73,24 @@ db.connect(function(error) {
       console.log("db " + db.state);
     }
 })
+ 
 
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+      cb(null, 'up')
+  },
+  filename: (req, file, cb) => {
+      const { originalname } = file;
+
+      cb(null, originalname);
+  }
+})
+const up = multer({ storage }); 
+app.use(express.static('public'))
+
+app.post('/up', up.array('upload'), (req, res) => {
+  return res.json({ status: 'OK', uploaded: req.files.length });
+});
 
 //Upload MP3 File to Server Folder
 app.get('/upload-audio', (req, res) => {
@@ -97,8 +115,6 @@ app.post('/upload-audio', (req, res) => {
 });
 
 
-
- 
 app.get("/", (req, res) => { 
   const { id_user } = req.session
   res.sendFile(path.join(__dirname, "/../../index.html")); 
@@ -374,7 +390,6 @@ app.post('/forgot-password',  (req, res) => {
       succ.push({message: "Es wurde soeben eine E-Mail zum Zurücksetzen des Passworts versendet!"}); 
       res.render('login', {succ}); 
    
-  
   }
   })
 })
@@ -423,7 +438,6 @@ app.post('/reset-password/:id_user/:token', (req, res) => {
 }) 
   
 })
-
 app.post('/profil-edit/email/:id_user', (req, res) => { 
   var e_mail = req.body.email;   
   const succ = []; 
@@ -445,18 +459,24 @@ app.post('/profil-edit/username/:id_user', (req, res) => {
   let query = db.query(sql, (err,result) => {
     if(err) throw err;
   });    
-     
-  console.log("test");
+    
   succ.push({message: "Username wurde erfolgreich bearbeitet!"}); 
   res.render('user-profil', {succ}); 
 });
 
  
  
-app.post('/profil-edit/pass/:id_user', (req, res) => {
-  var password = req.body.password; 
+app.post('/profil-edit/pass/:id_user', async(req, res) => {
+  var password = req.body.password;  
+
+  const hashedPassword = await new Promise((resolve, reject) => {
+    bcrypt.hash(password, saltRounds, function(err, hash) {
+      if (err) reject(err)
+      resolve(hash)
+    }); 
+  })
   const succ = [];
-  let sql = `UPDATE user SET password_hash = '${password}' WHERE id_user = '${req.session.id_user}'`;
+  let sql = `UPDATE user SET password_hash = '${hashedPassword}' WHERE id_user = '${req.session.id_user}'`;
   let query = db.query(sql, (err,result) => {
     if(err) throw err;
   });
@@ -484,7 +504,6 @@ app.post('/file-comment/write', (req, res) => {
   });
 })
 
-          
 
 
 app.post("/voice-maker", (req, res) => {
@@ -544,7 +563,7 @@ app.post('/mail', async (req, res) => {
 })
 
 
- 
+
 
 app.listen(3001, ()=> {
 
