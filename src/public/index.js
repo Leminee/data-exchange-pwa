@@ -13,18 +13,20 @@ const uuid = require('uuid').v4;
 const multer = require('multer');
 const nodemailer = require("nodemailer"); 
 
+
+
+
 const saltRounds = 10; 
 const twoHours = 1000 * 60 * 60 * 2
 const sessionID = 'sid'
+
+
 app.use(express.json());  
 app.use(cors());   
 app.use(express.static(__dirname + '/static'));
 app.use(express.static('/../../server'));
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.urlencoded({ extended: true })); 
-app.set('view engine', 'ejs'); 
-
- 
 app.use(session( {
   name: sessionID,
   resave: false,
@@ -36,7 +38,8 @@ app.use(session( {
   },
 }),
 );
-
+ 
+app.set('view engine', 'ejs'); 
  
 var db = mysql.createConnection({
   host     : 'localhost',
@@ -44,6 +47,7 @@ var db = mysql.createConnection({
   password : '36177436',
   database : 'pwa'
 }); 
+
 
 const JWT_SECRET = 'LemineWebToken'
 
@@ -75,28 +79,9 @@ db.connect(function(error) {
 })
  
 
-
-
 //Upload MP3 File to Server Folder
 app.get('/upload-audio', (req, res) => {
-  res.sendFile(__dirname + '/../html/voice-maker.html')
-});
-
-app.post('/upload-audio', (req, res) => {
-  if (req.files) {
-    console.log(req.files)
-    var file = req.files.file
-    filename = file.name
-    console.log(filename);
-
-    file.mv('./server/' + filename, function (err) {
-      if (err) {
-        res.send(err)
-      } else {
-        res.send("File uploaded");
-      }
-    });
-  }
+  res.render('voice-maker');
 });
 
 
@@ -105,8 +90,7 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "/../../index.html")); 
 }); 
 
-app.get("/login", redirectUser, (req, res) => { 
-  //res.sendFile(path.join(__dirname, "/../html/login.ejs"));   
+app.get("/login", redirectUser, (req, res) => {  
   res.render('login');
 }); 
 
@@ -114,16 +98,16 @@ app.get("/about-us", (req, res) => {
   res.sendFile(path.join(__dirname, "/../html/about-us.html"));  
 }); 
 
-app.get("/download/:id_file", (req, res) => { 
-  res.sendFile(path.join(__dirname, "/../html/download.html"));  
+app.get("/download/:id_file", (req, res) => {   
+  res.render('download');
 }); 
 
 app.get("/faq", (req, res) => { 
   res.sendFile(path.join(__dirname, "/../html/faq.html"));  
 }); 
 
-app.get("/pic-maker", redirectLogin, (req, res) => { 
-  res.sendFile(path.join(__dirname, "/../html/pic-maker.html"));  
+app.get("/pic-maker", redirectLogin, (req, res) => {  
+  res.render('pic-maker');
 }); 
 
 app.get("/upload-form", redirectLogin, (req, res) => { 
@@ -131,11 +115,10 @@ app.get("/upload-form", redirectLogin, (req, res) => {
 });
 
 app.get("/user-profil/profil/data", (req, res) => {
-  res.sendFile(path.join(__dirname, "/../html/show_data.html"));
+  res.sendFile(path.join(__dirname, "/../html/show-data.html"));
 });
 
-app.get("/user-profil/profil", redirectLogin, (req, res) => {
-  //res.sendFile(path.join(__dirname, "/../html/user-profil.html"));  
+app.get("/user-profil/profil", redirectLogin, (req, res) => { 
   res.render('user-profil');
        
 });   
@@ -153,11 +136,13 @@ app.get('/file-comment/:file_name', redirectLogin, (req, res) => {
 });
 
 app.get("/voice-maker", redirectLogin, (req, res) => { 
-  res.sendFile(path.join(__dirname, "/../html/voice-maker.html"));  
+  //res.sendFile(path.join(__dirname, "/../html/voice-maker.html"));   
+  res.render('voice-maker')
 });  
 
 app.get("/upload-form", redirectLogin, (req, res) => { 
-  res.sendFile(path.join(__dirname, "/../html/upload-form.html"));  
+  //res.sendFile(path.join(__dirname, "/../html/upload-form.html"));  
+  res.render('upload-form');
 });
 
 app.get(`/reset-password/:id_user/:token`,(req, res) => {
@@ -174,7 +159,7 @@ app.get("/user-profil", redirectLogin, (req, res) => {
   });  
 });
 
-app.get("/show_data/file/:file_name", (req, res) => {
+app.get("/show-data/file/:file_name", (req, res) => {
   let sql =`SELECT id_file, id_format, file_name, file_size, id_folder, id_user, file_path FROM file WHERE file_name = '${file_name}'`;
   let query = db.query(sql, (err,result) => {
     if(err) throw err;
@@ -182,7 +167,7 @@ app.get("/show_data/file/:file_name", (req, res) => {
   })
 }); 
 
-app.get("/show_data/file/:file_name/download", (req, res) => { 
+app.get("/show-data/file/:file_name/download", (req, res) => { 
   let sql = `SELECT id_format, file_name, id_user FROM file WHERE file_name = '${file_name}'`;
   let query = db.query(sql, (err,result) => {
     if(err) throw err;
@@ -203,7 +188,7 @@ app.get("/download/:a/:b/:c", (req, res) => {
   }); 
 
 
-app.get("/show_data", redirectLogin, (req, res) => {
+app.get("/show-data", redirectLogin, (req, res) => {
   let sql =`SELECT file.id_file, file.file_name, file.id_format, file.file_size, file.id_folder, file.comment FROM file WHERE id_user = '${req.session.id_user}'`;
   let query = db.query(sql, (err,result) => {
     if(err) throw err;
@@ -246,6 +231,23 @@ app.get('/reset-password/:id_user/:token', (req, res) => {
   })
 })
 
+ 
+app.post('/upload-audio', (req, res) => {
+  if (req.files) {
+    console.log(req.files)
+    var file = req.files.file
+    filename = file.name
+    console.log(filename);
+
+    file.mv('./server/' + filename, function (err) {
+      if (err) {
+        res.send(err)
+      } else {
+        res.send("File uploaded");
+      }
+    });
+  }
+});
 
 
 app.post("/register", redirectUser, async (req, res) => {
@@ -469,7 +471,7 @@ app.post('/profil-edit/pass/:id_user', async(req, res) => {
   res.render('user-profil', {succ}); 
 }); 
 
-app.post('/show_data', (req, res) => {
+app.post('/show-data', (req, res) => {
   file_name = req.body.file_nameDownloadSelect;
 });
 
@@ -511,7 +513,6 @@ app.post("/voice-maker", (req, res) => {
 
 
 
-
 //NodeMailer
 app.post('/mail', async (req, res) => {
     var fromInput = req.body.fromInput;
@@ -547,6 +548,7 @@ app.post('/mail', async (req, res) => {
 
     res.send('Email sent!');
 })
+
 
 
 const storage = multer.diskStorage({
