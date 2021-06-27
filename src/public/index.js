@@ -11,7 +11,7 @@ const jwt = require('jsonwebtoken');
 const ejs = require('ejs'); 
 const uuid = require('uuid').v4; 
 const multer = require('multer');
-const nodemailer = require("nodemailer");
+const nodemailer = require("nodemailer"); 
 
 const saltRounds = 10; 
 const twoHours = 1000 * 60 * 60 * 2
@@ -75,22 +75,7 @@ db.connect(function(error) {
 })
  
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-      cb(null, 'up')
-  },
-  filename: (req, file, cb) => {
-      const { originalname } = file;
 
-      cb(null, originalname);
-  }
-})
-const up = multer({ storage }); 
-app.use(express.static('public'))
-
-app.post('/up', up.array('upload'), (req, res) => {
-  return res.json({ status: 'OK', uploaded: req.files.length });
-});
 
 //Upload MP3 File to Server Folder
 app.get('/upload-audio', (req, res) => {
@@ -563,7 +548,22 @@ app.post('/mail', async (req, res) => {
 })
 
 
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+      cb(null, 'up/')
+  }, 
+  filename: (req, file, cb) => {
+      const { originalname } = file;
 
+      cb(null, originalname);
+  }
+})
+const up = multer({ storage });  
+app.use(express.static('public'))
+
+app.post('/up', up.single('upload'), (req, res) => {
+  return res.json({ status: '201'});
+});
 
 app.listen(3001, ()=> {
 
