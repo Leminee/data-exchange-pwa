@@ -40,8 +40,8 @@ app.use(session( {
  
 var db = mysql.createConnection({
   host     : 'localhost',
-  user     : 'root',
-  password : '',
+  user     : 'mel',
+  password : '36177436',
   database : 'pwa'
 }); 
 
@@ -127,7 +127,7 @@ app.get("/pic-maker", redirectLogin, (req, res) => {
 }); 
 
 app.get("/upload-form", redirectLogin, (req, res) => { 
-  res.sendFile(path.join(__dirname, "/../html/upload-form.html"));  
+      res.render('upload-form'); 
 });
 
 app.get("/user-profil/profil/data", (req, res) => {
