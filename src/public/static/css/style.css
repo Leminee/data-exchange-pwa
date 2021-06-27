@@ -22,12 +22,12 @@ nav{
     color: rgb(65, 1, 1);
     text-transform: uppercase;
     letter-spacing: 2px;
-    font-size: 13px;
+    font-size: 20px;
 }
 /*links*/
 .nav-links{
     display: flex;
-    width: 30%;
+    width: 15%;
     justify-content: space-around;
 }
 /*remove bullet point*/
@@ -40,7 +40,7 @@ nav{
     text-decoration: none;
     letter-spacing: 2px;
     font-weight: bold;
-    font-size: 13px;
+    font-size: 15px;
 }
 /*Menu icon*/
 .burger{
@@ -49,7 +49,7 @@ nav{
 }
 /*clean up Icon*/
 .burger div{
-    width: 25px;
+    width: 20px;
     height: 3px;
     background-color: rgb(65, 1, 1);
     margin: 5px;
@@ -76,7 +76,7 @@ nav{
 
 .innerText{
     font-size: 15px;
-    margin: 20px;
+    margin: 10px;
     padding: 0px;
 }
 
@@ -91,13 +91,13 @@ nav{
     .nav-links{
         position: absolute;
         right: 0px;
-        height: 92vh;
-        top: 8vh;
+        height: 20vh;
+        top: 1vh;
         background-color: #3e789c;
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 30%;
+        width: 20%;
         transform: translateX(100%);
         transition: transform 0.5s ease-in;
     }

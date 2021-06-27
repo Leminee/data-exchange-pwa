@@ -59,8 +59,19 @@ input{
 input[type="submit"] {
     width: 272px;
     color: #2d2c2c;
-}
+} 
 
+#err{ 
+
+    background-color: red;
+    border: 2px;
+}
+ 
+#succ{ 
+
+    background-color: green;
+    border: 2px;
+}
 #clear {
     clear: both;
 }

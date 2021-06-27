@@ -7,7 +7,8 @@ const path = require('path');
 const session = require('express-session');
 const bcrypt = require('bcrypt'); 
 const bodyParser = require('body-parser'); 
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const ejs = require('ejs');
 
 const nodemailer = require("nodemailer");
 
@@ -18,8 +19,9 @@ app.use(express.json());
 app.use(cors());   
 app.use(express.static(__dirname + '/static'));
 app.use(express.static('/../../server'));
-app.use(express.urlencoded({ extended: false }))
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(express.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true })); 
+app.set('view engine', 'ejs'); 
 
  
 app.use(session( {
@@ -37,8 +39,8 @@ app.use(session( {
  
 var db = mysql.createConnection({
   host     : 'localhost',
-  user     : 'root',
-  password : '',
+  user     : 'mel',
+  password : '36177436',
   database : 'pwa'
 }); 
 
@@ -52,7 +54,7 @@ const redirectLogin = (req, res, next) => {
     next()
   }
 }
- 
+
 const redirectUser = (req, res, next) => {
   if (req.session.id_user) {
     res.redirect("/user-profil/profil");
@@ -103,7 +105,8 @@ app.get("/", (req, res) => {
 }); 
 
 app.get("/login", redirectUser, (req, res) => { 
-  res.sendFile(path.join(__dirname, "/../html/login.html"));  
+  //res.sendFile(path.join(__dirname, "/../html/login.ejs"));   
+  res.render('login');
 }); 
 
 app.get("/about-us", (req, res) => { 
@@ -238,37 +241,60 @@ app.get('/reset-password/:id_user/:token', (req, res) => {
 
 
 
-
 app.post("/register", redirectUser, async (req, res) => {
-  const {email, username, password } = req.body  
+  const {email, username, password } = req.body;  
+  const errors = [];
   bcrypt.hash(password, saltRounds, (err, hash) => { 
+
     if (err) {
       console.log(err);
-    }  
+    }    
+     
     db.query( 
-      "INSERT INTO user (e_mail, username, password_hash) VALUES (?,?,?)",
-      [email, username, hash],
+      "SELECT e_mail FROM user WHERE e_mail = ?",
+      [email],
       (err, result) => {
         if (err) {
           
           console.log(err);
         } 
-        req.session.id_user = result.insertId;
-        res.redirect("/login");
+        if (result.length > 0) { 
+  
+         errors.push({message:  "E-Mail-Adresse existiert bereits!"}); 
+         res.render('login', {errors});
+        
+        } 
+        else { 
+          db.query( 
+            "INSERT INTO user (e_mail, username, password_hash) VALUES (?,?,?)",
+            [email, username, hash],
+            (err, result) => {
+              if (err) {
+                
+                console.log(err);
+              } 
+              req.session.id_user = result.insertId;
+              res.redirect("/login");
+            }
+          ); 
+        }
       }
-    );
+    );    
   });  
 }); 
 
 app.post('/login', async (req, res)=> {
 //Information the user typed in
   const email = req.body.email_login;
-  const password = req.body.password_login;
+  const password = req.body.password_login; 
+  const errors = [];
 //Take the password from the typed in e-mail
   var queryPassword = db.query('SELECT password_hash FROM user WHERE e_mail = ?', [email], (error, result3) => {
   hashDBPassword = result3[0].password_hash
 //compare the hashed password from the db and the password the user typed in
-  const dcryptPassword =  bcrypt.compareSync(password, hashDBPassword);
+  const dcryptPassword =  bcrypt.compareSync(password, hashDBPassword); 
+
+
   if (email && dcryptPassword) {
 //if there is an e-mail and the password fits, give the information
      var dbResult = db.query('SELECT e_mail, id_user FROM user WHERE e_mail = ? AND password_hash != ?', [email, dcryptPassword], 
@@ -277,17 +303,17 @@ app.post('/login', async (req, res)=> {
 //put the user id equal with the id from the session
               req.session.id_user = results[0].id_user;
               res.redirect('/user-profil/profil');
-          } else {
-//wrong passowrd or e-mail
-              console.log('Incorrect E-mail and/or Password!');
-          }           
-          res.end();
+          } 
+                   
+         // res.end();
       });
   } else {
-//no e-mail or password typed in
-      res.send('Please enter E-mail and Password!');
-      res.end();
-  }
+
+  
+
+    errors.push({message: "Leider ist dein eingegebenes Passwort falsch. Bitte überprüfe es noch einmal."}); 
+    res.render('login', {errors});
+          } 
 });
 });
 
@@ -304,14 +330,19 @@ app.post('/logout', redirectLogin, (req, res) => {
 
 
 app.post('/forgot-password',  (req, res) => {
-  const emailForgot = req.body.forgotEmail;
+  const emailForgot = req.body.forgotEmail; 
+  const errors = [];  
+  const succ = [];
   let sql = `SELECT e_mail, password_hash, id_user FROM user WHERE e_mail = '${emailForgot}'`;
   let query = db.query(sql, (err,result) => { 
 
-    if (result.length < 1) {  
-      res.send('E-Mail-Adresse nicht registiert!')
-      return;
-    }
+    if (result.length < 1) {     
+ 
+      errors.push({message: "E-Mail-Adresse nicht erkannt!"}); 
+      res.render('login', {errors});
+    } 
+
+    else {
 
     const secret = JWT_SECRET + result[0].password_hash
     const payload = {
@@ -325,51 +356,68 @@ app.post('/forgot-password',  (req, res) => {
       auth: {
         user: 'ProjectG6.2021@gmail.com',
         pass: 'ABC123!?',
-      }
+      }  
     });
-    const msg ={
-      from: '"CoinFlip" <NOREPLY@NOREPLY.de>', // sender address
+    const msg ={ 
+      from: '"Project G6" <NOREPLY@NOREPLY.de>', // sender address
       to: emailForgot, // list of receivers
-      subject: "Passwort Vergessen Link", // Subject line
-      text: "Dieser Link ist nur für 15min Aktiv. Bitte klicke hier um ein neues Passwort einzutragen:" + link, // plain text body
+      subject: "Passwort zurücksetzen", // Subject line
+      text: "Link zum Zurücksetzen Deines Passworts: " + link, // plain text body
     }
     // send mail with defined transport object
     let info = transporter.sendMail(msg);
 
-    res.redirect("/login");
+      succ.push({message: "Es wurde soeben eine E-Mail zum Zurücksetzen des Passworts versendet!"}); 
+      res.render('login', {succ}); 
+   
+  
+  }
   })
 })
 
 app.post('/reset-password/:id_user/:token', (req, res) => {
   const id_user = req.params.id_user;
   const token = req.params.token;
-  const password = req.body.password
-  const password2 = req.body.password2
+  const password = req.body.password; 
+  const succ = []; 
+  const errors = [];
+  const password2 = req.body.password2;
   let sql = `SELECT id_user, password_hash FROM user WHERE id_user = '${id_user}'`;
   let query = db.query(sql, (err,result) => {
     if (id_user != result[0].id_user) {
       res.send("User with this ID not found")
-      return
+      return;
     }
     const secret = JWT_SECRET + result[0].password_hash
     try {
       const payload = jwt.verify(token, secret)
-      //irgednwie kontrollieren dass die beiden passwörter übereinstimmen if password == password2 oder so ?
+    
+      if (password != password2) { 
+ 
+        errors.push({message: "Passwörter stimmen nicht überein!"}); 
+        res.render('reset-password', {errors}); 
+      } 
+      else {
       bcrypt.hash(password, saltRounds, (err, hash) => { 
         if (err) {
           console.log(err);
         }
       let sqlpw = `UPDATE user SET password_hash = '${hash}' WHERE id_user = '${id_user}'`;
       let query = db.query(sqlpw, (err,result) => {
-        res.send("Passwort erfolgreich geändert!")
+       
+        succ.push({message: "Passwort wurde erfolgreich geändert. Logge dich ein!"}); 
+        res.render('login', {succ});   
+      
+
         if(err) throw err;
       });
     });
-    } catch (error) {
+    }} catch (error) {
       console.log(error.message)
       res.send(error.message)
     }
-})
+}) 
+  
 })
 
 
@@ -406,7 +454,7 @@ app.post('/file-comment/write', (req, res) => {
   });
 })
 
-
+          
 
 
 app.post("/voice-maker", (req, res) => {
@@ -455,8 +503,8 @@ app.post('/mail', async (req, res) => {
     const msg ={
       from: '"CoinFlip" <foo@example.com>', // sender address
       to: "calvinkluk@yahoo.de", // list of receivers
-      subject: "Download Link", // Subject line
-      text: "Here is your Downloadlink:", // plain text body
+      subject: "Passwort zurücksetzen", // Subject line
+      text: "Link zum Zurücksetzen Deines Passworts:", // plain text body
     }
 
     // send mail with defined transport object
@@ -466,20 +514,7 @@ app.post('/mail', async (req, res) => {
 })
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ 
 
 app.listen(3001, ()=> {
 

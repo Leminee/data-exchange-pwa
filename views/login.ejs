@@ -15,10 +15,21 @@
     <link rel="stylesheet" href="/css/login.css"> 
   
     
-    <title>Login&Registration</title>  
+    <title>Login&Registration</title>    
     
-</head> 
-<body> 
+</head>  
+<body>  
+    <span>
+        <% if (typeof succ != 'undefined') { %> <% succ.forEach(error => { %>
+        <p id="succ"><%= error.message %></p>
+        <% }) %> <% } %>
+        </span> 
+<span>
+<% if (typeof errors != 'undefined') { %> <% errors.forEach(error => { %>
+<p id="err"><%= error.message %></p>
+<% }) %> <% } %>
+</span> 
+
     <noscript>You need to enable JavaScript to run this app.</noscript>
      
     <div id="container">
@@ -45,6 +56,7 @@
 
             
 
+
             <form action="/register" method="POST"> 
             <div id="register" class="comm">
                 <h3>Registrieren</h3>
@@ -66,7 +78,9 @@
             </form>
         </div>
     </div> 
-    </div> 
+    </div>   
+
+
     <script type="text/javascript" src="/js/register-login.js"></script>  
 </body>
 </html>
