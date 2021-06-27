@@ -428,40 +428,40 @@ app.post('/profil-edit/email/:id_user', (req, res) => {
   var e_mail = req.body.email;   
   const succ = []; 
 
-
   let sql = `UPDATE user SET e_mail = '${e_mail}' WHERE id_user = '${req.session.id_user}'`;
   let query = db.query(sql, (err,result) => {
     if(err) throw err;
   });   
    
-        succ.push({message: "E-Mail-Adressewurde erfolgreich bearbeitet!"}); 
+        succ.push({message: "E-Mail-Adresse wurde erfolgreich bearbeitet!"}); 
         res.render('user-profil', {succ});   
 });
 
 
 app.post('/profil-edit/username/:id_user', (req, res) => {
   var username = req.body.username; 
-  const erros = [];
+  const succ = [];
   let sql = `UPDATE user SET username = '${username}' WHERE id_user = '${req.session.id_user}'`;
   let query = db.query(sql, (err,result) => {
     if(err) throw err;
   });    
-    
-  res.redirect('/user-profil/profil');
-  res.end();
+     
+  console.log("test");
+  succ.push({message: "Username wurde erfolgreich bearbeitet!"}); 
+  res.render('user-profil', {succ}); 
 });
 
  
  
 app.post('/profil-edit/pass/:id_user', (req, res) => {
   var password = req.body.password; 
-  const erros = [];
+  const succ = [];
   let sql = `UPDATE user SET password_hash = '${password}' WHERE id_user = '${req.session.id_user}'`;
   let query = db.query(sql, (err,result) => {
     if(err) throw err;
   });
-  res.redirect('/user-profil/profil');
-  res.end();
+  succ.push({message: "Passwort wurde erfolgreich bearbeitet!"}); 
+  res.render('user-profil', {succ}); 
 }); 
 
 app.post('/show_data', (req, res) => {

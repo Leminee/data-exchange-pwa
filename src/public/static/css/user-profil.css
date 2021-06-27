@@ -85,7 +85,12 @@ input {
 
 #succ { 
     background-color:green; 
-    border-radius: 1px;;
+    border-radius: 1px;
+    z-index:10;   
+    height: 32px; 
+    width: 100%;
+    position: absolute; 
+    
 }
 
 button {
