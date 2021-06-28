@@ -102,7 +102,7 @@ app.get('/user/:id_user', redirectLogin, (req, res) => {
 
 //get all the files from a single user
 app.get('/user/:id_user/files', redirectLogin, (req, res) => {
-    let sql = `SELECT id_user, id_file, id_folder, id_format, file_name, file_size, uploaded_on FROM file WHERE id_user = '${id_user}'`;
+    let sql = `SELECT id_user, id_file, id_folder, format, file_name, file_size, uploaded_on FROM file WHERE id_user = '${id_user}'`;
     let query = db.query(sql, (err, result) => {
         if(err) throw err;
         res.send(result);
@@ -146,7 +146,7 @@ app.post('/login', (req, res)=> {
   const password = req.body.password;
   
   if (email && password) {
-     var dbResult = db.query('SELECT e_mail_admin, id_admin FROM admin WHERE e_mail_admin = ? AND password_admin = ?', [email, password], 
+     var dbResult = db.query('SELECT e_mail_admin, id_admin FROM admin WHERE e_mail_admin = ? AND password_hash_admin = ?', [email, password], 
       (error, results)=> {
           if (results.length > 0 ) {
               req.session.id_admin = results[0].id_admin;
