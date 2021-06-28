@@ -18,20 +18,24 @@
         <div>
             <section class="main-controls">
                 <canvas class="visualizer" height="60px"></canvas>
-                <button class="btn btn-sm btn-primary"  id="record">Aufnahme starten</button>
-                <!--<button class= "border button" id="stopRecord">Aufnahme beenden</button>-->
-                <button class="btn btn-sm btn-primary"  id="play" disabled>Play</button>
-                <button class="btn btn-sm btn-primary"  id="download" disabled>Download</button>
+                <div id="ctrls">
+                    <button class="btn btn-sm btn-primary"  id="record">Aufnahme starten</button>
+                    <!--<button class= "border button" id="stopRecord">Aufnahme beenden</button>-->
+                    <button class="btn btn-sm btn-primary"  id="play" disabled>Play</button>
+                    <button class="btn btn-sm btn-primary"  id="download" disabled>Download</button>
+                </div>
              </section>
-
-            <section class="sound-clips"></section>
         </div>
-
-        <form method = "post" action="/upload-audio" enctype="multipart/form-data"> 
-            <!--<input type="file" name="file"/>-->
-            <button class="btn btn-sm btn-primary" type="submit" id="uploadFile" value="Upload">Upload</button>
-        </form>
-
+        <div id="form">
+            <form method = "post" action="/upload-audio" enctype="multipart/form-data"> 
+                <!--<input type="file" name="file"/>-->
+                <button class="btn btn-sm btn-primary" type="submit" id="uploadFile" value="Upload">Upload</button>
+            </form>
+        </div>
+        
+        <div id="back">
+            <button class="btn btn-sm btn-primary" onclick="window.location.href='user-profil.ejs'">Mein Profil</button>
+        </div>
         <script src="/js/voice.js"></script>
 </div>
         
