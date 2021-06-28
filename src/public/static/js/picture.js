@@ -13,7 +13,7 @@ document.getElementById('snap').addEventListener('click', ()=>{
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
     canvas.getContext('2d').drawImage(video, 0, 0);
-    screenshotImage.src = canvas.toDataURL('image/webp');
+    screenshotImage.src = canvas.toDataURL('image/png');
 });
 
 document.getElementById('send').addEventListener('click', ()=>{
@@ -36,17 +36,16 @@ function base64ToFile(data = false, fileName = false) {
         return false;
     }
 
-    var arr = data.split(','),
-    mime = arr[0].match(/:(.*?);/)[1],
-    bstr = atob(arr[1]),
-    n = bstr.length,
-    u8arr = new Uint8Array(n);
-
-    while (n--) {
-        u8arr[n] = bstr.charCodeAt(n);
+    var binary = atob(dataUrl.split(',')[1]);
+    var array = [];
+    for (var i = 0; i < binary.length; i++) {
+        array.push(binary.charCodeAt(i));
     }
 
-    return new File([u8arr], fileName, {type: mime}) || false;
+    var photo = new Blob([new Uint8Array(array)], { type: 'image/png'});
+    const formData = new FormData();
+    formData.append("files", photo, dateTime + ".png");
+
 }
 
 function MyDataTransfer(file) {
