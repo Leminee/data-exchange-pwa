@@ -9,7 +9,7 @@ var mediaRecorder;
 var recordedBlobs;
 var sourceBuffer;
 
-var gumAudio = document.querySelector('audio#gum');
+var playerAudio = document.querySelector('audio#player');
 var recordedAudio = document.querySelector('audio#recorded');
 
 var recordButton = document.querySelector('button#record');
@@ -40,7 +40,7 @@ function successCallback(stream) {
     console.log('getUserMedia() got stream: ', stream);
     visualize(stream);
     window.stream = stream;
-    gumAudio.srcObject = stream;
+    playerAudio.srcObject = stream;
 }
 
 function errrorCallback(stream) {
