@@ -301,7 +301,7 @@ window.onresize();
 
                                                 
                                                 let mediaRecorder = false;
-                                                const constraints = { audi: true, video: false};
+                                                const constraints = { audio: true, video: false};
 
                                                 record.onclick = () =>{
                                                     navigator.mediaDevices.getUserMedia({audio:true})
