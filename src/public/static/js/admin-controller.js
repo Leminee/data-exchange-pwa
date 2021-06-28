@@ -72,4 +72,4 @@ function backToAllUsers() {
 function fillInData() {
     showSingleUser();
     showUserFiles();
-}
+} 

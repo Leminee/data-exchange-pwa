@@ -8,8 +8,20 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
     <title>Benutzerprofil</title>
 </head>
-<body onload="insertProfilData();">
-<div class="main-content">
+<body onload="insertProfilData();">  
+ <span>
+        <% if (typeof succ != 'undefined') { %> <% succ.forEach(error => { %>
+        <p id="succ"><%= error.message %></p>
+        <% }) %> <% } %>
+        </span> 
+
+
+<div class="main-content"> 
+
+    
+       
+        
+
     <!-- Top navigationsbar -->
 </div>
 <!-- Header -->
@@ -35,15 +47,17 @@
                                 <div class="text-center">
                                     <div class="burger">
                                         <a class="btn btn-sm btn-primary" href="/edit-profil">Profil bearbeiten</a>
-                                        <a class="btn btn-sm btn-primary" href="">Dateien hochladen</a>
+                                        <a class="btn btn-sm btn-primary" href="/upload-form">Dateien hochladen</a>
                                         <a class="btn btn-sm btn-primary" href="/user-profil/profil/data">Meine
                                             Dateien</a>
                                         <a class="btn btn-sm btn-primary" href="/pic-maker">Bild Aufnehemen</a>
-                                        <a class="btn btn-sm btn-primary" href="/voice-maker">Audio Aufnehemen</a>
-                                        <form action="/logout" method="post">
+                                        <a class="btn btn-sm btn-primary" href="/voice-maker">Audio Aufnehemen</a> 
+                                        <a class="btn btn-sm btn-primary" href="/faq">F.A.Q</a> 
+                                         
+                                        <!--absichtlich zu Testzwecken auskommentiert!-->
+                                       <!--<form action="/logout" method="post"></form>-->
                                             <button class="btn btn-sm btn-primary" type="submit">Ausloggen</button>
-                                        </form>
-                                        <a class="btn btn-sm btn-primary" href="/faq">F.A.Q</a>
+                                        <!--</form>-->
                                         <div id="profilPicture">
 
                                         </div>
@@ -92,7 +106,7 @@
                                                 <label class="form-control-label" for="input-last-name">Anzahl
                                                     Dateien</label>
                                                 <div class="form-group focused" id="numberFile">
-
+   
 
                                                 </div>
 
@@ -109,8 +123,12 @@
             </div>
         </div>
     </div>
-</div>
-<script src="/js/user-profil.js" type="text/javascript">
-</script>
+</div> 
+ 
+
+<script src="/js/user-profil.js" type="text/javascript"> 
+</script> 
+
+
 </body>
 </html>

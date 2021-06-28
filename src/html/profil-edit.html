@@ -48,31 +48,57 @@
                   </div>
 
               </div>
+              
+          
               <div class="card-body">
-                <form action="/profil-edit/:id_user" method="post">
-                  <h6 class="heading-small text-muted mb-4">Allgemeine Informationen</h6>
+                  <h6 class="heading-small text-muted mb-4">Profildaten bearbeiten</h6> 
+                  <br>
+          
                   <div class="pl-lg-4">
                     <div class="row">
-
+<form action="/profil-edit/username/:id_user" method="post">
+                      
                       <div class="col-lg-6">
-                        <div class="form-group focused">
+                        <div class="form-group focused">    
+                          
                           <label class="form-control-label" for="input-first-name">Neuer Benutzername:</label>
-                          <input type="text" name="username" id="input-first-name" class="form-control form-control-alternative" placeholder="Neuer Benutzername" required>
+                          <input type="text" name="username" id="input-first-name" class="form-control form-control-alternative" placeholder="Neuer Benutzername" minlength="1" maxlength="30" required>  
+                          <br>
+                          <button type="submit" class="btn btn-sm btn-primary">Bestätigen</button> 
                         </div>
-                      </div>
+                      </div> 
+                      </form>
 
+
+ 
+                      <form action="/profil-edit/email/:id_user" method="post">
                       <div class="col-lg-6">
                         <div class="form-group">
                           <label class="form-control-label" for="input-last-name">Neue E-Mail Adresse:</label>
-                          <input type="email" name="e_mail"id="input-last-name" class="form-control form-control-alternative"placeholder="Neue E-Mail Adresse" required>
+                          <input type="email" name="email" id="input-last-name" class="form-control form-control-alternative" placeholder="Neue E-Mail Adresse" maxlength="30"> 
+                          <br> 
+                          <button type="submit" class="btn btn-sm btn-primary">Bestätigen</button> 
+    
                         </div>
-                      </div>
-                    </div>
-                    </div>
-                  <button type="submit" class="btn btn-sm btn-primary">Bestätigen</button> 
-                </form>
-                
+                      </div> 
+                    </form>  
 
+                    <form action="/profil-edit/pass/:id_user" method="post">
+                      <div class="col-lg-6">
+                        <div class="form-group">
+                          <label class="form-control-label" for="input-last-name">Neues Passwort:</label>
+                          <input type="password" name="password"id="input-last-name" class="form-control form-control-alternative"placeholder="Passwort" minlength="8" maxlength="50" required> 
+                          <br> 
+                          <button type="submit" class="btn btn-sm btn-primary">Bestätigen</button> 
+    
+                        </div>
+                      </div>  
+                    </form>
+
+                    </div>
+                    </div>
+        
+            
               </div>
                
             </div>

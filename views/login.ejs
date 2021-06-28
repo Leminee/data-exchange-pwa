@@ -15,10 +15,21 @@
     <link rel="stylesheet" href="/css/login.css"> 
   
     
-    <title>Login&Registration</title>  
+    <title>Login&Registration</title>    
     
-</head> 
-<body> 
+</head>  
+<body>  
+    <span>
+        <% if (typeof succ != 'undefined') { %> <% succ.forEach(error => { %>
+        <p id="succ"><%= error.message %></p>
+        <% }) %> <% } %>
+        </span> 
+<span>
+<% if (typeof errors != 'undefined') { %> <% errors.forEach(error => { %>
+<p id="err"><%= error.message %></p>
+<% }) %> <% } %>
+</span> 
+
     <noscript>You need to enable JavaScript to run this app.</noscript>
      
     <div id="container">
@@ -34,7 +45,7 @@
             <div id="login" class="comm">
                 <h3>Anmelden</h3>
 
-                <input id="se" name="email_login" type="email" placeholder="E-Mail-Adresse" required/>
+                <input id="se" name="email_login" type="email" placeholder="E-Mail-Adresse"  required/>
                 <input id="sp" name="password_login" type="password" placeholder="Passwort" required/>
                 <input name="login" type="submit" value="Anmelden"/>
             </form>
@@ -45,14 +56,15 @@
 
             
 
+
             <form action="/register" method="POST"> 
             <div id="register" class="comm">
                 <h3>Registrieren</h3>
 
                 <input id="re" name="email" type="email" placeholder="E-Mail-Adresse" required/>
-                <input id="rp" name="username" type="username" placeholder="Username" required/>
-                <input id="rpp" name="password" type="password" placeholder="Passwort" required/>  
-                <input name ="register" type="submit" onclick="register()" value="Registrieren"/>
+                <input id="rp" name="username" type="username" placeholder="Username" minlength="2" maxlength="50" required/>
+                <input id="rpp" name="password" type="password" placeholder="Passwort" minlength="8" maxlength="50" required/>  
+                <input name ="register" type="submit"value="Registrieren"/>
             </div > 
             </form> 
             <form action="/forgot-password" method="post">
@@ -66,7 +78,9 @@
             </form>
         </div>
     </div> 
-    </div> 
+    </div>   
+
+
     <script type="text/javascript" src="/js/register-login.js"></script>  
 </body>
 </html>

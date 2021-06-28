@@ -4,7 +4,7 @@
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link rel="stylesheet" type="text/css" href="/css/show_data.css">
+<link rel="stylesheet" type="text/css" href="/css/show-data.css">
 <link rel="icon" href="/images/icons/icon256px.png">
 <link rel="apple-touch-icon" href="/images/icons/icon256px.png">
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
@@ -56,7 +56,7 @@
                 <br>
                 <br>
                 <br>
-                <form action="/show_data" method="post">
+                <form action="/show-data" method="post">
                     <label for="file_nameDownloadSelect">Datei zum downloaden aussuchen:</label>
                     <select name="file_nameDownloadSelect" id="file_nameDownloadSelect">
                     </select>
@@ -72,7 +72,7 @@
 
            
             <div class ="column">
-            <form action="/show_data/file" method="post">
+            <form action="/show-data/file" method="post">
                 <a>Filename:</a>
                 <a id="file_nameDownload"></a>
             </form>
@@ -80,7 +80,7 @@
                 <br>
                 <br>
 
-                <form action="/show_data/file/:file_name/download" method="get">
+                <form action="/show-data/file/:file_name/download" method="get">
                     <button type="submit">Download</button>
                 </form>
 
@@ -94,20 +94,21 @@
                 <br>
                 <form action="/mail" method="post">
                     <a>From:</a>
-                    <input id=xy name="fromInput" type="email" placeholder="Deine E-Mail-Adresse"/>
+                    <input id=xy name="fromInput" type="email" placeholder="Deine E-Mail-Adresse"required/>
                     <br>
                     <a>To:</a>
-                    <input id=xy name="toInput" type="email" placeholder="Empfänger E-Mail-Adresse"/>
+                    <input id=yx name="toInput" type="email" placeholder="Empfänger E-Mail-Adresse"required/>
                     <button>Send as E-mail</button>
                     <br>
                     <a>Downloadlink:</a>
-                    <a name="dLink" id="downloadLink"></a>
+                    <a id="downloadLink"></a>
+                    <input type=text name=dLink id="hiding"/>
                 </form>
             </div>
         </section>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script type="text/javascript" src="/js/show_data.js">
+<script type="text/javascript" src="/js/show-data.js">
 
     
 </script>
