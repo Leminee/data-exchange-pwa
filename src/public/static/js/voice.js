@@ -148,7 +148,7 @@ function stopRecording() {
 }
 
 //Data Transfer
-function MyDataTransfer(file) {
+/*function MyDataTransfer(file) {
     this.dropEffect = 'all';
     this.effectAllowed = 'all';
     this.items = [file];
@@ -157,7 +157,7 @@ function MyDataTransfer(file) {
         return file;
     }
     this.files = [file];
-}
+}*/
 
 function play() {
     var type = (recordedBlobs[0] || {}).type;
@@ -215,12 +215,12 @@ function download() {
     a.href = url;
     a.download = clipName;
 
-    var reader = new FileReader();
+    /*var reader = new FileReader();
     reader.readAsDataURL(blob);
     reader.onloadend = function() {
     var base64data = reader.result;
     console.log(base64data);
-    }
+    }*/
 
     document.body.appendChild(a);
     a.click();

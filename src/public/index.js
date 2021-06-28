@@ -21,7 +21,8 @@ app.use(express.static('/../../server'));
 app.use(express.urlencoded({ extended: false }))
 app.use(bodyParser.urlencoded({ extended: true }))
 
- 
+app.use(upload())
+
 app.use(session( {
   name: sessionID,
   resave: false,
@@ -80,11 +81,11 @@ app.get('/upload-audio', (req, res) => {
 app.post('/upload-audio', (req, res) => {
   if (req.files) {
     console.log(req.files)
-    var file = req.files.file
+    var file = req.files.file 
     filename = file.name
     console.log(filename);
 
-    file.mv('./server/' + filename, function (err) {
+    file.mv('./server/audio/' + filename, function (err) {
       if (err) {
         res.send(err)
       } else {
