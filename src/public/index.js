@@ -22,8 +22,6 @@ const twoHours = 1000 * 60 * 60 * 2
 const sessionID = 'sid'
 
 
-app.use(upload());
-
 
 app.use(express.json());  
 app.use(cors());   
@@ -32,7 +30,6 @@ app.use(express.static('/../../server'));
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.urlencoded({ extended: true }));  
 app.use(upload()); 
-//app.use(fileUpload());
 app.use(session( {
   name: sessionID,
   resave: false,
@@ -49,8 +46,8 @@ app.set('view engine', 'ejs');
  
 var db = mysql.createConnection({
   host     : 'localhost',
-  user     : 'root',
-  password : '',
+  user     : 'mel',
+  password : '36177436',
   database : 'pwa'
 }); 
 
@@ -561,8 +558,7 @@ app.post('/up/:iduser', (req, res) => {
   }  
 
   if (req.files) {
-    console.log(req.files); 
-    
+   
     let upload = req.files.upload;
     let filename = upload.name; 
     let filesize = upload.size;  
