@@ -16,7 +16,13 @@
     <% if (typeof succ != 'undefined') { %> <% succ.forEach(error => { %>
     <p id="succ"><%= error.message %></p>
     <% }) %> <% } %>
-    </span> 
+    </span>   
+     
+    <span>
+      <% if (typeof errors != 'undefined') { %> <% errors.forEach(error => { %>
+      <p id="err"><%= error.message %></p>
+      <% }) %> <% } %>
+      </span>
  
 
 <form action="/up/:iduser" method="POST" enctype="multipart/form-data">

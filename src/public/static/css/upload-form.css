@@ -161,14 +161,29 @@
     font-size: 15pt;
     margin: auto;
     text-align: center;
-  } 
-  #succ {  
-    font-size: 1.2em;
+  }  
+
+  #succ {   
+    padding: 5px;
+    font-size: 1.5em;
     color: black;
     background-color:green; 
     border-radius: 1px;
     z-index:1000;   
-    height: 32px; 
+    height: 40px; 
+    width: 100%;
+    position: relative;  
+
+  } 
+
+  #err {   
+    padding: 5px;
+    font-size: 1.5em;
+    color: black;
+    background-color:red; 
+    border-radius: 1px;
+    z-index:1000;   
+    height: 40px; 
     width: 100%;
     position: relative;  
 
