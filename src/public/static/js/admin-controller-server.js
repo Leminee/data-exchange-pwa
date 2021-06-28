@@ -33,8 +33,8 @@ app.use(session( {
 
 const db = mysql.createConnection({
 host: 'localhost', 
-user: 'root', 
-password: '',
+user: 'mel', 
+password: '36177436',
 database: 'pwa',
 });
 
@@ -171,7 +171,7 @@ app.post('/logout', redirectLogin, (req, res) => {
     res.clearCookie(sessionID)
     res.redirect("/");
     });
-});
+}); 
 
 
 app.post('/deleteFile/:file_name', redirectLogin, (req, res) => {
@@ -179,7 +179,7 @@ app.post('/deleteFile/:file_name', redirectLogin, (req, res) => {
   let sql = `DELETE FROM file WHERE file_name = '${file_name}'`;
   let query = db.query(sql, (err,result) => {
     console.log(result)
-    if(err) throw err;
+    if(err) throw err; 
   });
   res.redirect("/user/show/:user_id")
   res.end()

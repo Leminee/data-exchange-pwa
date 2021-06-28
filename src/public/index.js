@@ -46,9 +46,9 @@ app.set('view engine', 'ejs');
  
 var db = mysql.createConnection({
   host     : 'localhost',
-  user     : 'root',
-  password : '',
-  database : 'pwa'
+  user     : 'mel',
+  password : '36177436',
+  database : 'pwa' 
 }); 
 
 

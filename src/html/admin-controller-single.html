@@ -10,25 +10,21 @@
     <link rel="icon" href="/images/icons/icon256px.png">  
     <link rel="apple-touch-icon" href="/images/icons/icon256px.png">
 
-    <title>Admin Kontroller</title>  
+    <title>Admin Interface</title>  
 </head>
 <body onload="fillInData();">
     
     
     <form action="/user/show/:id_user/update_user" method="post">
-        <label for="upload_limit">Choose the upload limit for this user:</label>
+        <label for="upload_limit">Wähle das Upload-Limit für User aus: </label>
         <select name="upload_limit">
-            <option value="1">1MB</option>
-            <option value="5">5MB</option>
-            <option value="10">10MB</option>
             <option value="20">20MB</option>
             <option value="50">50MB</option>
             <option value="100">100MB</option>
             <option value="200">200MB</option>
             <option value="500">500MB</option>
-            <option value="1000">1GB</option>
         </select><br>
-    <button type="submit">Update user upload limit</button>
+    <button type="submit">Upload-Limit bearbeiten</button>
     </form>
     
     <div class="container">
@@ -36,8 +32,8 @@
           <thead>
              <tr>
                 <th>User ID</th>
-                <th>Email</th>
-                <th>Upload Limit</th>
+                <th>E-Mail</th>
+                <th>Upload-Limit</th>
           </tr>
          </thead>
      <tbody id="users">
@@ -49,7 +45,7 @@
 <hr>
 </div>
 
-    <label>All the files this user has:</label>
+    <label>Alle Dateien des Users:</label>
     <div class="container">
         <table>
              <thead>
@@ -67,17 +63,17 @@
         </tbody>
        </table>
     <form action="/deleteFile/:file_name" method="post">
-        <label>Choose the file you want to delete</label>
+        <label>Wähle die zu löschenden Dateien aus: </label>
         <select name="deleteFiles" id="deleteFiles">
         </select> 
         <br>
-        <button type="submit">Delete the chosen file</button>   
+        <button type="submit">Ausgewählte Datei löschen</button>   
     </form>
    </div>
 
 <hr>
 
-    <button onclick="backToAllUsers();">Go back too all users list</button>
+    <button onclick="backToAllUsers();">Zurück zur Userliste</button>
 
 
 <script type="text/javascript" src="/js/admin-controller.js"></script>
