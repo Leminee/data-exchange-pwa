@@ -1,17 +1,19 @@
 const soundClips = document.querySelector('.sound-clips');
 const canvas = document.querySelector('.visualizer');
 const mainSection = document.querySelector('.main-controls');
+
+
 var mediaSource = new MediaSource();
 mediaSource.addEventListener('sourceopen', handleSourceOpen, false);
+
+
 var mediaRecorder;
 var recordedBlobs;
 var sourceBuffer;
 
 
-
 var playerAudio = document.querySelector('audio#player');
 var recordedAudio = document.querySelector('audio#recorded');
-
 
 
 var recordButton = document.querySelector('button#record');
@@ -19,16 +21,13 @@ var playButton = document.querySelector('button#play');
 var downloadButton = document.querySelector('button#download');
 
 
-
 let audioCtx;
 const canvasCtx = canvas.getContext('2d');
-
 
 
 recordButton.onclick = toggleRecording;
 playButton.onclick = play;
 downloadButton.onclick = download;
-
 
 
 var constraints = {
@@ -125,40 +124,9 @@ function startRecording() {
 }
 
 
-function base64ToFile(data = false, fileName = false) {
-    if (!data || !fileName) {
-        return false;
-    }
-
-    var arr = data.split(','),
-    mime = arr[0].match(/:(.*?);/)[1],
-    bstr = atob(arr[1]),
-    n = bstr.length,
-    u8arr = new Uint8Array(n);
-
-    while (n--) {
-        u8arr[n] = bstr.charCodeAt(n);
-    }
-
-    return new File([u8arr], fileName, {type: mime}) || false;
-}
-
-
 function stopRecording() {
     mediaRecorder.stop();
     recordedAudio.controls = true;
-    
-    let file = base64ToFile(recordedBlobs.src + (new Date().getTime()) + '.webp');
-    if (file) {
-        let evt = new DragEvent('drop');
-        Object.defineProperty(evt, 'dataTransfer', {
-            value: new MyDataTransfer(file)
-        });
-
-        document.getElementById('uploadFile').dispatchEvent(
-            evt
-        );
-    }
 }
 
 
@@ -172,10 +140,8 @@ function play() {
 function download() {
    
     const clipName = prompt('Enter a Name for your Sound Clip?', 'My unnamed Clip');
-
     const clipContainer = document.createElement('article');
     const clipLabel = document.createElement('p');
-    
 
     clipContainer.classList.add('clip');
 
@@ -184,11 +150,9 @@ function download() {
     } else {
         clipLabel.textContent = clipName;
     }
-
-                                    
+                                
     clipContainer.appendChild(clipLabel);
                                     
-   
     var blob = new Blob(recordedBlobs, {type: 'audio/mp3'});
     var url = window.URL.createObjectURL(blob);
     var a = document.createElement('a');
@@ -205,7 +169,7 @@ function download() {
     }, 100);
 }
 
-
+//visualize audio input
 function visualize(stream) {
     if (!audioCtx) {
         audioCtx = new AudioContext();
@@ -258,7 +222,6 @@ function visualize(stream) {
         canvasCtx.stroke();
     }
 }
-
 
 window.onresize = function() {
     canvas.width = mainSection.offsetWidth;
