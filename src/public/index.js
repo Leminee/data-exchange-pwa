@@ -239,6 +239,7 @@ app.post('/upload-audio', (req, res) => {
     filename = file.name
     console.log(filename);
 
+
     file.mv('./server/' + filename, function (err) {
       if (err) {
         res.send(err)
@@ -246,6 +247,7 @@ app.post('/upload-audio', (req, res) => {
         res.send("File uploaded");
       }
     });
+    db.query("INSERT INTO file (id_user, id_folder, id_format, file_name, file_size, file_path) VALUES (NULL,?,?,?,?,?)")
   }
 });
 
