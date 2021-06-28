@@ -244,11 +244,6 @@ app.post('/upload-audio', (req, res) => {
         res.send("File uploaded");
       }
     });
-<<<<<<< HEAD
-    //DB INSERT
-    //db.query("INSERT INTO file (id_user, id_folder, id_format, file_name, file_size, file_path) VALUES (NULL,?,?,?,?,?)")
-=======
->>>>>>> a8e8081dce2be63b2a2b96bb5f91bccd74c133eb
   }
 });
 
