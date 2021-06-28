@@ -162,7 +162,18 @@
     margin: auto;
     text-align: center;
   } 
- 
+  #succ {  
+    font-size: 1.2em;
+    color: black;
+    background-color:green; 
+    border-radius: 1px;
+    z-index:1000;   
+    height: 32px; 
+    width: 100%;
+    position: relative;  
+
+  }
+
   button { 
     position: absolute; 
     z-index: 100;

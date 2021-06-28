@@ -11,11 +11,12 @@ const jwt = require('jsonwebtoken');
 const ejs = require('ejs'); 
 const uuid = require('uuid').v4; 
 const multer = require('multer');
-const nodemailer = require("nodemailer"); 
+const nodemailer = require("nodemailer");  
+const fileUpload = require('express-fileupload'); 
+const exp = require('express-handlebars');
+ 
 
-
-
-
+  
 const saltRounds = 10; 
 const twoHours = 1000 * 60 * 60 * 2
 const sessionID = 'sid'
@@ -26,7 +27,9 @@ app.use(cors());
 app.use(express.static(__dirname + '/static'));
 app.use(express.static('/../../server'));
 app.use(express.urlencoded({ extended: false }));
-app.use(bodyParser.urlencoded({ extended: true })); 
+app.use(bodyParser.urlencoded({ extended: true }));  
+app.use(upload()); 
+//app.use(fileUpload());
 app.use(session( {
   name: sessionID,
   resave: false,
@@ -84,7 +87,6 @@ app.get('/upload-audio', (req, res) => {
   res.render('voice-maker');
 });
 
-
 app.get("/", (req, res) => { 
   const { id_user } = req.session
   res.sendFile(path.join(__dirname, "/../../index.html")); 
@@ -136,8 +138,8 @@ app.get('/file-comment/:file_name', redirectLogin, (req, res) => {
 });
 
 app.get("/voice-maker", redirectLogin, (req, res) => { 
-  //res.sendFile(path.join(__dirname, "/../html/voice-maker.html"));   
-  res.render('voice-maker')
+  
+  res.render('voice-maker');
 });  
 
 app.get("/upload-form", redirectLogin, (req, res) => { 
@@ -148,8 +150,6 @@ app.get("/upload-form", redirectLogin, (req, res) => {
 app.get(`/reset-password/:id_user/:token`,(req, res) => {
   res.sendFile(path.join(__dirname, "/../html/reset-password.html"));
 });
-
-
 
 app.get("/user-profil", redirectLogin, (req, res) => {
   let sql =`SELECT user.e_mail, user.username, user.profil_pic_path, (SELECT COUNT(file.id_file) FROM file WHERE file.id_user = '${req.session.id_user}') AS 'id_file', (SELECT COUNT(folder.id_folder) FROM folder WHERE folder.id_user = '${req.session.id_user}') AS 'id_folder' FROM user WHERE user.id_user = '${req.session.id_user}'`;
@@ -205,7 +205,6 @@ app.get("/file-comment/:file_name/comment", redirectLogin, (req, res) => {
 });
 
 
-
 app.get("/voice-maker", redirectLogin, (req, res) => { 
   audio_url = URL.createObjectURL(req.params.blob);
 });
@@ -231,15 +230,14 @@ app.get('/reset-password/:id_user/:token', (req, res) => {
   })
 })
 
- 
-app.post('/upload-audio', (req, res) => {
+app.post('/upload-audio', (req, res) => { 
   if (req.files) {
     console.log(req.files)
     var file = req.files.file
     filename = file.name
-    console.log(filename);
+    console.log(file.size); 
 
-    file.mv('./server/' + filename, function (err) {
+    file.mv('./server/audio/' + filename, function (err) {
       if (err) {
         res.send(err)
       } else {
@@ -425,6 +423,8 @@ app.post('/reset-password/:id_user/:token', (req, res) => {
 }) 
   
 })
+
+
 app.post('/profil-edit/email/:id_user', (req, res) => { 
   var e_mail = req.body.email;   
   const succ = []; 
@@ -438,7 +438,6 @@ app.post('/profil-edit/email/:id_user', (req, res) => {
         res.render('user-profil', {succ});   
 });
 
-
 app.post('/profil-edit/username/:id_user', (req, res) => {
   var username = req.body.username; 
   const succ = [];
@@ -451,7 +450,6 @@ app.post('/profil-edit/username/:id_user', (req, res) => {
   res.render('user-profil', {succ}); 
 });
 
- 
  
 app.post('/profil-edit/pass/:id_user', async(req, res) => {
   var password = req.body.password;  
@@ -492,7 +490,6 @@ app.post('/file-comment/write', (req, res) => {
 })
 
 
-
 app.post("/voice-maker", (req, res) => {
   id_user = 2;
   id_format = 3; 
@@ -510,7 +507,6 @@ app.post("/voice-maker", (req, res) => {
   res.redirect('/voice-maker');
   res.end();
 });
-
 
 
 //NodeMailer
@@ -550,23 +546,48 @@ app.post('/mail', async (req, res) => {
 })
 
 
+app.post('/up/:iduser', (req, res) => {   
+  const succ = [];
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-      cb(null, 'up/')
-  }, 
-  filename: (req, file, cb) => {
-      const { originalname } = file;
+  if (!req.files) {  
+    return res.status(400).send('Keine Datei ausgewählt!');
+  }  
 
-      cb(null, originalname);
+  if (req.files) {
+    console.log(req.files); 
+    
+    let upload = req.files.upload;
+    let filename = upload.name; 
+    let filesize = upload.size;  
+    let filetype = upload.mimetype;
+    let onlytype = filetype.substr(filetype.length -3); 
+    let filepath = "null";
+    let iduser = req.session.id_user; 
+
+    upload.mv('./server/' + filename, function (err) {
+      if (err) {
+        res.send(err)
+      } 
+      else { 
+
+        db.query( 
+          "INSERT INTO file (id_file, id_user, id_folder,format, file_name, comment, file_size, file_path, uploaded_on) VALUES (NULL, ?, NULL, ?, ?, NULL, ?, ?, CURRENT_TIMESTAMP)",
+          [iduser, onlytype, filename, filesize, filepath],
+          (err, result) => {
+            if (err) {
+            
+              console.log(err);
+            } 
+            succ.push({message: "Datei wurde erfolgreich hochgeladen!"}); 
+            res.render('upload-form', {succ});  
+          }
+        ); 
+      } 
+    });
   }
-})
-const up = multer({ storage });  
-app.use(express.static('public'))
-
-app.post('/up', up.single('upload'), (req, res) => {
-  return res.json({ status: '201'});
 });
+ 
+
 
 app.listen(3001, ()=> {
 

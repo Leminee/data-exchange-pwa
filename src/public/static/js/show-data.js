@@ -1,7 +1,7 @@
 document.getElementById("hiding").style.display = "none";
 
 function insertProfilData(){
-    fetch("http://localhost:3001/show_data").then( response => {
+    fetch("http://localhost:3001/show-data").then( response => {
         response.json().then(
             data => {
                 if (data.length > 0) {

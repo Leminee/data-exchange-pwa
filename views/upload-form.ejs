@@ -10,14 +10,21 @@
 
     <title>Datei-Upload</title>
 </head>
-<body> 
+<body>  
+
+  <span>
+    <% if (typeof succ != 'undefined') { %> <% succ.forEach(error => { %>
+    <p id="succ"><%= error.message %></p>
+    <% }) %> <% } %>
+    </span> 
  
 
-<form action="/up" method="POST">
-<div class="file-container">
-  <div class="file-overlay"></div>
+<form action="/up/:iduser" method="POST" enctype="multipart/form-data">
+  <div class="file-container">
+  <div class="file-overlay">
   <div class="file-wrapper">
-    <input class="file-input" id="js-file-input" type="file" name="upload"/>
+    <input class="file-input" id="js-file-input" type="file" name="upload">
+    <button type="submit">Hochladen</button>
     <div class="file-content">
       <div class="file-infos">
         <p class="file-icon"><i class="fas fa-file-upload fa-7x"></i><span class="icon-shadow"></span><span>Kickle hier<span class="has-drag"> oder drope die Datei</p>
@@ -25,13 +32,12 @@
       <p class="file-name" id="js-file-name">Keine Datei ausgewählt</p>
     </div>
   </div>
-</div>   
+</div>  
 
-<button type="submit">Hochladen</button>
 </form>
 
 <script type="text/javascript" src="/js/upload-form.js"></script> 
-     
+      
 
 </body>
 </html>
