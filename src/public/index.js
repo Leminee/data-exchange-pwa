@@ -46,8 +46,8 @@ app.set('view engine', 'ejs');
  
 var db = mysql.createConnection({
   host     : 'localhost',
-  user     : 'root',
-  password : '',
+  user     : 'mel',
+  password : '36177436',
   database : 'pwa'
 }); 
 
@@ -695,7 +695,9 @@ app.post('/up/:iduser', (req, res) => {
     let filetype = upload.mimetype;
     let onlytype = filetype.substr(filetype.length -3); 
     let filepath = "null";
-    let iduser = req.session.id_user;  
+    let iduser = req.session.id_user;   
+    let filesizeInMB = filesize/1048576; 
+    console.log(filesizeInMB);
 
 
     upload.mv('./server/' + filename, function (err) {
@@ -711,12 +713,13 @@ app.post('/up/:iduser', (req, res) => {
               if (err) {
               
                 console.log(err);
-              }   
-          
+              }    
+           
+            
             let sum = result[0].sum;
             let limit = result[0].upload_limit;  
              
-             if (filesize + sum > limit) { 
+             if (filesizeInMB + sum >= limit) { 
         
             errors.push({message: "Speicherplatzlimit verbraucht!"}); 
             res.render('upload-form', {errors});
@@ -726,7 +729,7 @@ app.post('/up/:iduser', (req, res) => {
           ); 
         db.query( 
           "INSERT INTO file (id_file, id_user, id_folder,format, file_name, comment, file_size, file_path, uploaded_on) VALUES (NULL, ?, NULL, ?, ?, NULL, ?, ?, CURRENT_TIMESTAMP)",
-          [iduser, onlytype, filename, filesize, filepath],
+          [iduser, onlytype, filename, filesizeInMB, filepath],
           (err, result) => {
             if (err) {
             
