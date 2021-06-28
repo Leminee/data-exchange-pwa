@@ -16,10 +16,13 @@ div {
   text-align: center;
 }
 
-
 #form {
   width: 150px; 
-	margin: 0 auto; 
+	margin: 0 auto;
+  
+
+  display: flex;
+  justify-content: center;
 }
 
 #back {
@@ -36,6 +39,8 @@ div {
   border-color: black;
   background-color: #3e789c;
   box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08);
+  display: block;
+  margin: auto;
 }
 
 .btn-primary:hover {
@@ -54,6 +59,8 @@ div {
   line-height: 1.5;
   padding: .25rem .5rem;
   border-radius: .375rem;
+  
+ 
 }
 
 .bg-gradient-default {
@@ -76,7 +83,7 @@ div {
 .button {
     background-color: #3e789c;
     color: white;
- 
+
     text-align: center;
     text-decoration: none;
     font-size: 18px;
@@ -103,13 +110,14 @@ div {
 }
   
 .center{
-  display: block;
+  display: inline-block;;
   margin: auto;
 }
   
 
 .screenshot{
   display: flex;
+  align-items: center;
   justify-content: center;
 }
 
