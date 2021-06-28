@@ -10,9 +10,8 @@ function insertProfilData(){
                     let fileComment ="";
                     data.forEach((u) => {
                         temp += "<tr>";
-                        temp += "<td>"+u.id_file+"</td>";
                         temp += "<td>"+u.file_name+"</td>";
-                        temp += "<td>"+u.id_format+"</td>";
+                        temp += "<td>"+u.format+"</td>";
                         temp += "<td>"+u.comment+"</td>";
                         temp += "</tr>";
                         fileNameSelect += "<option>"+ u.file_name + "</option>";
@@ -37,7 +36,7 @@ function fileNameClicked() {
                     let fileUserForDownload = "";
                     fileNameForDownload = data[0].file_name;
                     fileUserForDownload = data[0].id_user;
-                    fileFormatForDownload = data[0].id_format;
+                    fileFormatForDownload = data[0].format;
                     document.getElementById("file_nameDownload").innerHTML = fileNameForDownload;
                     document.getElementById("downloadLink").innerHTML = "http://localhost:3001/download/"+fileUserForDownload+"/"+fileFormatForDownload+"/"+fileNameForDownload;
                     document.getElementById("hiding").value = "http://localhost:3001/download/"+fileUserForDownload+"/"+fileFormatForDownload+"/"+fileNameForDownload;
