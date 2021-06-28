@@ -646,7 +646,6 @@ app.post('/mail', async (req, res) => {
     var toInput = req.body.toInput;
     var downloadLink = req.body.dLink;
 
-
     console.log(fromInput);
     console.log(toInput);
     console.log(downloadLink);
@@ -661,7 +660,6 @@ app.post('/mail', async (req, res) => {
         pass: 'ABC123!?',
       } 
     }); 
-  
 
     const msg ={
       from: fromInput + '<foo@example.com>', // sender address
@@ -675,7 +673,6 @@ app.post('/mail', async (req, res) => {
 
     res.send('Email sent!');
 })
-
 
 app.post('/up/:iduser', (req, res) => {   
   const succ = []; 
@@ -696,7 +693,6 @@ app.post('/up/:iduser', (req, res) => {
     let filepath = "null";
     let iduser = req.session.id_user;   
     let filesizeInMB = filesize/1048576; 
-    console.log(filesizeInMB);
 
 
     upload.mv('./server/' + filename, function (err) {
@@ -713,7 +709,6 @@ app.post('/up/:iduser', (req, res) => {
               
                 console.log(err);
               }    
-           
             
             let sum = result[0].sum;
             let limit = result[0].upload_limit;  
@@ -743,8 +738,6 @@ app.post('/up/:iduser', (req, res) => {
       );
     }
   });
-
-
 
 app.listen(3001, ()=> {
 

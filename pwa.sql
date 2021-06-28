@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Erstellungszeit: 28. Jun 2021 um 08:02
+-- Erstellungszeit: 28. Jun 2021 um 18:32
 -- Server-Version: 5.7.30
 -- PHP-Version: 7.4.9
 
@@ -47,7 +47,7 @@ CREATE TABLE `file` (
   `format` varchar(50) NOT NULL,
   `file_name` varchar(200) NOT NULL,
   `comment` text,
-  `file_size` int(10) NOT NULL,
+  `file_size` double NOT NULL,
   `file_path` varchar(100) NOT NULL,
   `uploaded_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -94,8 +94,21 @@ INSERT INTO `file` (`id_file`, `id_user`, `id_folder`, `format`, `file_name`, `c
 (45, 187, NULL, 'eet', 'Daten_Zusammenhangshypothese.xlsx', NULL, 9006, 'null', '2021-06-28 07:57:07'),
 (46, 187, NULL, 'png', 'Bildschirmfoto 2021-06-27 um 23.36.32.png', NULL, 278553, 'null', '2021-06-28 07:57:17'),
 (47, 187, NULL, 'png', 'Bildschirmfoto 2021-06-28 um 04.30.03.png', NULL, 125809, 'null', '2021-06-28 07:57:25'),
-(48, 187, NULL, 'png', 'Bildschirmfoto 2021-06-26 um 02.56.35.png', NULL, 357139, 'null', '2021-06-28 07:57:38'),
-(49, 187, NULL, 'png', 'Bildschirmfoto 2021-06-26 um 02.56.35.png', NULL, 357139, 'null', '2021-06-28 07:58:10');
+(48, 187, NULL, 'png', 'Bildschirmfoto 2021-06-26 um 02.56.35.png', 'hbjbjhnm', 357139, 'null', '2021-06-28 08:30:37'),
+(49, 187, NULL, 'png', 'Bildschirmfoto 2021-06-26 um 02.56.35.png', 'hbjbjhnm', 357139, 'null', '2021-06-28 08:30:37'),
+(50, 189, NULL, 'png', 'Bildschirmfoto 2021-06-26 um 02.56.35.png', 'hbjbjhnm', 357139, 'null', '2021-06-28 08:30:37'),
+(51, 190, NULL, 'png', 'Bildschirmfoto 2021-06-28 um 01.21.51.png', NULL, 37583, 'null', '2021-06-28 08:23:54'),
+(52, 191, NULL, 'png', 'Bildschirmfoto 2021-06-26 um 02.56.35.png', 'hbjbjhnm', 357139, 'null', '2021-06-28 08:30:37'),
+(53, 193, NULL, 'png', 'Bildschirmfoto 2021-06-26 um 02.56.35.png', NULL, 357139, 'null', '2021-06-28 17:45:30'),
+(54, 194, NULL, 'png', 'Bildschirmfoto 2021-06-27 um 23.36.32.png', NULL, 278553, 'null', '2021-06-28 18:01:08'),
+(55, 194, NULL, 'png', 'Bildschirmfoto 2021-06-27 um 20.22.48.png', NULL, 113107, 'null', '2021-06-28 18:05:21'),
+(56, 195, NULL, 'png', 'Bildschirmfoto 2021-06-27 um 20.22.48.png', NULL, 113107, 'null', '2021-06-28 18:15:26'),
+(57, 196, NULL, 'png', 'Bildschirmfoto 2021-06-26 um 02.56.35.png', NULL, 0, 'null', '2021-06-28 18:16:41'),
+(58, 196, NULL, 'png', 'Bildschirmfoto 2021-06-27 um 23.36.32.png', NULL, 0, 'null', '2021-06-28 18:17:29'),
+(59, 196, NULL, 'png', 'Bildschirmfoto 2021-06-28 um 11.05.27.png', NULL, 0, 'null', '2021-06-28 18:20:16'),
+(60, 197, NULL, 'png', 'Bildschirmfoto 2021-06-27 um 20.22.48.png', NULL, 0, 'null', '2021-06-28 18:23:52'),
+(61, 197, NULL, 'png', 'Bildschirmfoto 2021-06-27 um 23.36.32.png', NULL, 0.26564884185791016, 'null', '2021-06-28 18:25:13'),
+(62, 198, NULL, 'png', 'Bildschirmfoto 2021-06-27 um 23.36.32.png', NULL, 0.26564884185791016, 'null', '2021-06-28 18:31:20');
 
 -- --------------------------------------------------------
 
@@ -198,7 +211,7 @@ CREATE TABLE `user` (
   `password_hash` varchar(100) NOT NULL,
   `profil_pic_path` varchar(100) DEFAULT NULL,
   `token` longtext,
-  `upload_limit` varchar(10) DEFAULT '50000000',
+  `upload_limit` int(11) DEFAULT '50',
   `registered_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -207,7 +220,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id_user`, `e_mail`, `username`, `password_hash`, `profil_pic_path`, `token`, `upload_limit`, `registered_on`) VALUES
-(1, 'admin@gmail.com', 'admin', '', NULL, NULL, '30000', '2021-06-28 06:28:35'),
+(1, 'admin@gmail.com', 'admin', '', NULL, NULL, 30000, '2021-06-28 06:28:35'),
 (105, 'gg@gmail.comewfwfe', 'efwfweefwef', '$2b$10$ca89l.BZpV.d6.5FVC1ATuUINbTq1P8adQIjA9gAAjvgdxdbp261e', NULL, NULL, NULL, '2021-06-27 20:52:21'),
 (106, 'gg@gmail.com333', '§§§§', '$2b$10$xpru4Vko58Q.IrcOQM9W9.O5ACYESyzMP3QaoWnL6W8Jyc4Pafobe', NULL, NULL, NULL, '2021-06-28 01:06:37'),
 (107, 'gg@gmail.com', 'ferrger', '$2b$10$bmuIEHHbD/pL9TPgvVxQruEnxxQiZKwFakK8DgdCDaU9h7lw09Oxe', NULL, NULL, NULL, '2021-06-28 01:12:21'),
@@ -286,12 +299,22 @@ INSERT INTO `user` (`id_user`, `e_mail`, `username`, `password_hash`, `profil_pi
 (180, 'lemlem@gmail.com', 'ssssgewge', '$2b$10$Vb.6C1bHK2upIw0uQ4SIY.XyG6jbAt8IzjQAAq7tzlfSZ/kjnOS5e', NULL, NULL, NULL, '2021-06-28 07:41:01'),
 (181, 'gg@gmail.comegegw', 'wgewegg', '$2b$10$NKQ6iMMqKl5jPWg8fHW38OcfYgYN7Lewx3VNnOzDLkWM//wY3Y4Cm', NULL, NULL, NULL, '2021-06-28 07:41:44'),
 (182, 'gg@gmail.comafa', 'afssfasf', '$2b$10$p4S6DFuggbMLt/LqEkxRMu268e.n28lRh.gsTdV1j3ZpIAEXKFmsG', NULL, NULL, NULL, '2021-06-28 07:42:37'),
-(183, 'lemlem@gmail.comfsafs', 'afsafsf', '$2b$10$a9dGBD6eqteg5Kg7.yEyFe3pTt0yxwDi.6J31JZd0801HmPNWu5qa', NULL, NULL, '4566554', '2021-06-28 07:45:51'),
+(183, 'lemlem@gmail.comfsafs', 'afsafsf', '$2b$10$a9dGBD6eqteg5Kg7.yEyFe3pTt0yxwDi.6J31JZd0801HmPNWu5qa', NULL, NULL, 4566554, '2021-06-28 07:45:51'),
 (184, 'lemlem@gmail.comwffff', 'affsafs', '$2b$10$rU.93PnOBPLq.0hxHsE/buRj0O.Pu7pQ6XO7wcmG6IjLouyLzma.y', NULL, NULL, NULL, '2021-06-28 07:46:42'),
-(185, 'gg@gmail.comfdsfdsfsd', 'dfsdsfdfds', '$2b$10$E.zhyNm0k6EhZAmB18OBG.k97z3ue7QWcmRfbs7/dk9S2a9Q66rL2', NULL, NULL, '50000', '2021-06-28 07:50:33'),
-(186, 'gg@gmail.comeffwe', 'fefwewfe', '$2b$10$EIquqlsCDwJM4EEcoJnSKeAUSorOx/AlFaImrC1VJoDiSmvuVwnZa', NULL, NULL, '45465857', '2021-06-28 07:52:30'),
-(187, 'lemlem@gmail.comdfsdfs', 'dfsdfsdfs', '$2b$10$rjaROj8mmoIugLn8kgrH7.QiBYI/ozsuIa2KSLTlcf9LbxD.W7rr2', NULL, NULL, '456645', '2021-06-28 07:57:32'),
-(188, 'lemlemdsdsa@gmail.com', 'saasffsa', '$2b$10$hu7mj8Te.jERI8yjuEDoTeotR9gSH7Lxf.LH1c3KWrdQphnaLAYnG', NULL, NULL, '50000000', '2021-06-28 08:01:17');
+(185, 'gg@gmail.comfdsfdsfsd', 'dfsdsfdfds', '$2b$10$E.zhyNm0k6EhZAmB18OBG.k97z3ue7QWcmRfbs7/dk9S2a9Q66rL2', NULL, NULL, 50000, '2021-06-28 07:50:33'),
+(186, 'gg@gmail.comeffwe', 'fefwewfe', '$2b$10$EIquqlsCDwJM4EEcoJnSKeAUSorOx/AlFaImrC1VJoDiSmvuVwnZa', NULL, NULL, 45465857, '2021-06-28 07:52:30'),
+(187, 'lemlem@gmail.comdfsdfs', 'dfsdfsdfs', '$2b$10$rjaROj8mmoIugLn8kgrH7.QiBYI/ozsuIa2KSLTlcf9LbxD.W7rr2', NULL, NULL, 456645, '2021-06-28 07:57:32'),
+(188, 'lemlemdsdsa@gmail.com', 'saasffsa', '$2b$10$hu7mj8Te.jERI8yjuEDoTeotR9gSH7Lxf.LH1c3KWrdQphnaLAYnG', NULL, NULL, 50000000, '2021-06-28 08:01:17'),
+(189, 'lemlem@gmail.comfas', 'fassf', '$2b$10$wyVPbOlYFazWbrnkxOp/ruTk2sHJwOWmi.fKZ3MIbnzTjiL5MckUG', NULL, NULL, 50000000, '2021-06-28 08:19:27'),
+(190, 'gg@gmail.comfwewfe', 'ferrgerfwewfe', '$2b$10$rfz3y4qRg1KuL6xDfCXnWeRl9TdCDUtzkNMZqQJR5pzHvM0S/imVO', NULL, NULL, 50000000, '2021-06-28 08:23:45'),
+(191, 'gg@gmail.comgdssgd', 'ferrgergdsgd', '$2b$10$p7rUIvMa3eFKvNwEvpHn..VFPYmbtYLieuvcHh2vR2JQIB8icbF5W', NULL, NULL, 50000000, '2021-06-28 08:26:37'),
+(192, 'lololo@gmail.com', 'lolo', '$2b$10$jeE2sM0dctmaCOvWCYaxxOEZa8osIevcBzdneFIpCaWUFYAQG7htO', NULL, NULL, 50000000, '2021-06-28 09:17:43'),
+(193, 'lemmfeeg@gmail.com', 'dsgdgsdgs', '$2b$10$6wJD/uhocVgH8d2sB6tHteeUO9CMs/D6cyNknUnrs2jt4hq9fdfgS', NULL, NULL, 50000000, '2021-06-28 17:45:16'),
+(194, 'gg@gmail.comfdgfg', 'dffdgfgdgf', '$2b$10$fqsltPN0gYQRbtQbug5syeo2hE4pPl1eF55UwUgVY3c7amRmvnls6', NULL, NULL, 50000000, '2021-06-28 17:46:35'),
+(195, 'gg@gmail.comdsgsd', 'gdsgdsgsddg', '$2b$10$FLwHwY9HEjYC/CzOidPGHe6z2KNMz0W2soTU8FArxTcoqe5vx/Dmi', NULL, NULL, 50000000, '2021-06-28 18:15:20'),
+(196, 'gg@gmail.comsdggsd', 'dsggdssgddg', '$2b$10$Npz9sUXQywkx/y8mU2OzX.ZBGQKkSu0fmq80Z9Ho6z9bcnLW7chnW', NULL, NULL, 50000000, '2021-06-28 18:16:29'),
+(197, 'gg@gmail.comdsvvsd', 'gdsdggd', '$2b$10$BFHG6ndU6Yd3KREvqbqH8un3yS.ICaVNB0/2GYC/88sPo1SgJsJWS', NULL, NULL, 50000000, '2021-06-28 18:23:36'),
+(198, 'lemlem@gmail.comdsggds', 'dsgsdggds', '$2b$10$5/N5voBoFIwxqFWaaJhIS.dSaIC9sJeTW7whuDQ2S9ilQEWC5wt7m', NULL, NULL, 50, '2021-06-28 18:31:11');
 
 --
 -- Indizes der exportierten Tabellen
@@ -369,7 +392,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT für Tabelle `file`
 --
 ALTER TABLE `file`
-  MODIFY `id_file` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `id_file` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT für Tabelle `file_comment`
@@ -405,7 +428,7 @@ ALTER TABLE `folder_keyword`
 -- AUTO_INCREMENT für Tabelle `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=189;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=199;
 
 --
 -- Constraints der exportierten Tabellen
