@@ -4,6 +4,7 @@ const img = document.querySelector('#screenshot img');
 const video = document.querySelector('#screenshot video');
 const canvas = document.createElement('canvas');
 
+
 //Start Capturing
 captureVideoBtn.onclick = function() {
     navigator.mediaDevices.getUserMedia({ video: true })
@@ -13,6 +14,7 @@ captureVideoBtn.onclick = function() {
             console.log(err);
         });
 };
+
 
 screenshotBtn.onclick = function() {
     canvas.width = video.videoWidth;
@@ -25,7 +27,7 @@ screenshotBtn.onclick = function() {
     let dataUrl = canvas.toDataURL('image/png');
     img.src = dataUrl;
 
-    //download the image#
+    //download the image
     var hrefElement = document.createElement('a');
     hrefElement.href = dataUrl;
     document.body.append(hrefElement);

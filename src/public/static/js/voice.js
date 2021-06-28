@@ -1,5 +1,3 @@
-//'use strict';
-
 const soundClips = document.querySelector('.sound-clips');
 const canvas = document.querySelector('.visualizer');
 const mainSection = document.querySelector('.main-controls');
@@ -9,25 +7,35 @@ var mediaRecorder;
 var recordedBlobs;
 var sourceBuffer;
 
+
+
 var playerAudio = document.querySelector('audio#player');
 var recordedAudio = document.querySelector('audio#recorded');
+
+
 
 var recordButton = document.querySelector('button#record');
 var playButton = document.querySelector('button#play');
 var downloadButton = document.querySelector('button#download');
 
+
+
 let audioCtx;
 const canvasCtx = canvas.getContext('2d');
+
+
 
 recordButton.onclick = toggleRecording;
 playButton.onclick = play;
 downloadButton.onclick = download;
 
 
+
 var constraints = {
     audio: true,
     video: false
 };
+
 
 navigator.mediaDevices.getUserMedia(
     constraints
@@ -36,6 +44,7 @@ navigator.mediaDevices.getUserMedia(
     errrorCallback
 );
 
+
 function successCallback(stream) {
     console.log('getUserMedia() got stream: ', stream);
     visualize(stream);
@@ -43,9 +52,11 @@ function successCallback(stream) {
     playerAudio.srcObject = stream;
 }
 
+
 function errrorCallback(stream) {
     console.log('navigator.getUserMedia error: ', error);
 }
+
 
 function handleSourceOpen(event) {
     console.log('MediaSource opened');
@@ -53,16 +64,19 @@ function handleSourceOpen(event) {
     console.log('Source buffer: ', sourceBuffer);
 }
 
+
 function handleDataAvailable(event) {
     if (event.data && event.data.size > 0) {
         recordedBlobs.push(event.data);
     }
 }
 
+
 function handleStop(event) {
     console.log('Recorder stopped: ', event);
     console.log('Recorded Blobs: ', recordedBlobs);
 }
+
 
 function toggleRecording() {
     if (recordButton.textContent === 'Aufnahme starten') {
@@ -74,6 +88,7 @@ function toggleRecording() {
         downloadButton.disabled = false;
     }
 }
+
 
 function startRecording() {
     var options = {mimeType: 'audio/webm'};
@@ -129,7 +144,6 @@ function base64ToFile(data = false, fileName = false) {
 }
 
 
-
 function stopRecording() {
     mediaRecorder.stop();
     recordedAudio.controls = true;
@@ -180,9 +194,7 @@ function download() {
     var a = document.createElement('a');
     a.style.display = 'none';
     a.href = url;
-    a.download = clipName;
-
-                                    
+    a.download = clipName;                                
 
     document.body.appendChild(a);
     a.click();
@@ -192,7 +204,6 @@ function download() {
         window.URL.revokeObjectURL(url);
     }, 100);
 }
-
 
 
 function visualize(stream) {
@@ -247,9 +258,6 @@ function visualize(stream) {
         canvasCtx.stroke();
     }
 }
-
-
-
 
 
 window.onresize = function() {
