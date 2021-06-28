@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.5
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Erstellungszeit: 28. Jun 2021 um 21:02
--- Server-Version: 5.7.30
--- PHP-Version: 7.4.9
+-- Host: 127.0.0.1
+-- Erstellungszeit: 29. Jun 2021 um 01:31
+-- Server-Version: 10.1.38-MariaDB
+-- PHP-Version: 7.3.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -64,7 +66,6 @@ CREATE TABLE `file` (
 
 INSERT INTO `file` (`id_file`, `id_user`, `id_folder`, `format`, `file_name`, `comment`, `file_size`, `file_path`, `uploaded_on`) VALUES
 (6, 1, NULL, '4', 'Rechnung', NULL, 3, '', '2021-06-06 22:20:08'),
-(9, 1, 3, '1', 'hbnb', NULL, 67, '', '2021-06-15 22:19:47'),
 (15, 1, 4, '5', 'testztgb', NULL, 33, 'dsdsggdgdsdg', '2021-06-28 04:36:31'),
 (16, 144, 4, 'png', 'Bildschirmfoto 2021-06-27 um 23.36.32.png', NULL, 278553, '5', '2021-06-28 04:56:02'),
 (17, 144, NULL, 'png', 'Bildschirmfoto 2021-06-28 um 04.30.03.png', NULL, 125809, '5', '2021-06-28 05:02:17'),
@@ -110,7 +111,9 @@ INSERT INTO `file` (`id_file`, `id_user`, `id_folder`, `format`, `file_name`, `c
 (59, 196, NULL, 'png', 'Bildschirmfoto 2021-06-28 um 11.05.27.png', NULL, 0, 'null', '2021-06-28 18:20:16'),
 (60, 197, NULL, 'png', 'Bildschirmfoto 2021-06-27 um 20.22.48.png', NULL, 0, 'null', '2021-06-28 18:23:52'),
 (61, 197, NULL, 'png', 'Bildschirmfoto 2021-06-27 um 23.36.32.png', NULL, 0.26564884185791016, 'null', '2021-06-28 18:25:13'),
-(62, 198, NULL, 'png', 'Bildschirmfoto 2021-06-27 um 23.36.32.png', NULL, 0.26564884185791016, 'null', '2021-06-28 18:31:20');
+(62, 198, NULL, 'png', 'Bildschirmfoto 2021-06-27 um 23.36.32.png', NULL, 0.26564884185791016, 'null', '2021-06-28 18:31:20'),
+(63, 202, NULL, 'png', 'Screenshot$.png', 'yummy', 0.006064414978027344, 'null', '2021-06-28 23:27:50'),
+(64, 202, NULL, 'peg', 'Test.mp3', 'yummy\r\n', 0.010499954223632812, 'null', '2021-06-28 23:27:41');
 
 -- --------------------------------------------------------
 
@@ -205,7 +208,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id_user`, `e_mail`, `username`, `password_hash`, `profil_pic_path`, `token`, `upload_limit`, `registered_on`) VALUES
-(1, 'admin@gmail.com', 'admin', '', NULL, NULL, 50, '2021-06-28 20:47:58'),
+(1, 'admin@gmail.com', 'admin', '', NULL, NULL, 500, '2021-06-28 21:32:51'),
 (105, 'gg@gmail.comewfwfe', 'efwfweefwef', '$2b$10$ca89l.BZpV.d6.5FVC1ATuUINbTq1P8adQIjA9gAAjvgdxdbp261e', NULL, NULL, 50, '2021-06-28 20:47:58'),
 (106, 'gg@gmail.com333', '§§§§', '$2b$10$xpru4Vko58Q.IrcOQM9W9.O5ACYESyzMP3QaoWnL6W8Jyc4Pafobe', NULL, NULL, 50, '2021-06-28 20:47:58'),
 (107, 'gg@gmail.com', 'ferrger', '$2b$10$bmuIEHHbD/pL9TPgvVxQruEnxxQiZKwFakK8DgdCDaU9h7lw09Oxe', NULL, NULL, 50, '2021-06-28 20:47:58'),
@@ -301,7 +304,9 @@ INSERT INTO `user` (`id_user`, `e_mail`, `username`, `password_hash`, `profil_pi
 (197, 'gg@gmail.comdsvvsd', 'gdsdggd', '$2b$10$BFHG6ndU6Yd3KREvqbqH8un3yS.ICaVNB0/2GYC/88sPo1SgJsJWS', NULL, NULL, 50, '2021-06-28 20:47:58'),
 (198, 'lemlem@gmail.comdsggds', 'dsgsdggds', '$2b$10$5/N5voBoFIwxqFWaaJhIS.dSaIC9sJeTW7whuDQ2S9ilQEWC5wt7m', NULL, NULL, 50, '2021-06-28 20:47:58'),
 (199, 'gg@gmail.comgfdfgfd', 'gfddfgdgf', '$2b$10$jSmzmDlsme3ZfnuxbZv6fu76MUG/TnkJRv2ErzXbnL9eo9VWJimGG', NULL, NULL, 50, '2021-06-28 20:47:58'),
-(200, 'french@gmail.com', 'greegr', '$2b$10$cD.7lqwONddpaHYab3nb9uKOu9QI1V6xcArVVVyfk9nR2Ra0kFq96', NULL, NULL, 50, '2021-06-28 20:47:58');
+(200, 'french@gmail.com', 'greegr', '$2b$10$cD.7lqwONddpaHYab3nb9uKOu9QI1V6xcArVVVyfk9nR2Ra0kFq96', NULL, NULL, 50, '2021-06-28 20:47:58'),
+(201, 'oku81103@eoopy.com', 'giergje', '$2b$10$b5EeuYG0AE7hkz54T9536ux5zNWVTHJgHj4ZKUsk/rpLunvguT2Gu', NULL, NULL, 50, '2021-06-28 22:32:58'),
+(202, 'ProjectG6Test@gmail.com', 'DieSiedler', '$2b$10$PVsBiu8Y8AFQcbVWG.D9bueKh4d.1SnrWBsJskcqsz90nJAD9xcvG', NULL, NULL, 50, '2021-06-28 23:12:04');
 
 --
 -- Indizes der exportierten Tabellen
@@ -379,19 +384,19 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT für Tabelle `file`
 --
 ALTER TABLE `file`
-  MODIFY `id_file` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `id_file` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT für Tabelle `file_comment`
 --
 ALTER TABLE `file_comment`
-  MODIFY `id_file_comment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_file_comment` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT für Tabelle `file_keyword`
 --
 ALTER TABLE `file_keyword`
-  MODIFY `id_file_keyword` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_file_keyword` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT für Tabelle `folder`
@@ -415,7 +420,7 @@ ALTER TABLE `folder_keyword`
 -- AUTO_INCREMENT für Tabelle `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=201;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=203;
 
 --
 -- Constraints der exportierten Tabellen
@@ -457,6 +462,7 @@ ALTER TABLE `folder_comment`
 --
 ALTER TABLE `folder_keyword`
   ADD CONSTRAINT `folder_keyword_ibfk_1` FOREIGN KEY (`id_folder`) REFERENCES `folder` (`id_folder`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
