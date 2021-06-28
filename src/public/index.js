@@ -495,8 +495,6 @@ app.post('/file-comment', (req, res) => {
 
 app.post('/file-comment/write', (req, res) => {
   const comment = req.body.comment;
-  console.log(comment);
-  console.log(file_name);
   let sql = `UPDATE file SET comment = '${comment}' WHERE file_name = '${file_name}'`;
   let query = db.query(sql, (err,result) => {
     if(err) throw err;
@@ -567,5 +565,5 @@ app.post('/mail', async (req, res) => {
 
 
 app.listen(3001, ()=> {
-
+  console.log('🚀to the moon http://localhost:3001/  ')
 });
