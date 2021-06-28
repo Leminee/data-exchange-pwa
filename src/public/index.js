@@ -87,6 +87,12 @@ app.get('/upload-audio', (req, res) => {
   res.render('voice-maker');
 });
 
+app.get('/upload-screenshot', (req, res) => {
+  res.render('pic-maker');
+});
+
+
+
 app.get("/", (req, res) => { 
   const { id_user } = req.session
   res.sendFile(path.join(__dirname, "/../../index.html")); 
@@ -203,11 +209,11 @@ app.get("/file-comment/:file_name/comment", redirectLogin, (req, res) => {
   })
 });
 
-
+/*
 app.get("/voice-maker", redirectLogin, (req, res) => { 
   audio_url = URL.createObjectURL(req.params.blob);
 });
-
+*/
 
 app.get('/reset-password/:id_user/:token', (req, res) => {
   const id_user = req.params.id_user;
@@ -295,6 +301,75 @@ app.post('/upload-audio', (req, res) => {
   });
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+//Screenshot Upload ---------------------------------------------------------------------------------------------------------------------------------------------------
+app.post('/upload-screenshot', (req, res) => {   
+  const succ = []; 
+  const errors = []
+
+  if (!req.files) {  
+    errors.push({message: "Keine Datei ausgewählt!"}); 
+    res.render('upload-form', {errors});
+  }  
+
+  if (req.files) {
+   
+    let upload = req.files.upload;
+    let filename = upload.name; 
+    let filesize = upload.size;  
+    let filetype = upload.mimetype;
+    let onlytype = filetype.substr(filetype.length -3); 
+    let filepath = "null";
+    let iduser = req.session.id_user;  
+
+
+    upload.mv('./server/' + filename, function (err) {
+
+      if (err) {
+        res.send(err)
+      }  
+ 
+          db.query( 
+            "SELECT SUM(file_size) AS 'sum', upload_limit FROM file INNER JOIN user ON user.id_user = file.id_user WHERE user.id_user = ?",
+            [iduser],
+            (err, result) => {
+              if (err) {
+              
+                console.log(err);
+              }   
+          
+            let sum = result[0].sum;
+            let limit = result[0].upload_limit;  
+             
+             if (filesize + sum > limit) { 
+        
+            errors.push({message: "Speicherplatzlimit verbraucht!"}); 
+            res.render('upload-form', {errors});
+            return;
+          }
+          } 
+          ); 
+        db.query( 
+          "INSERT INTO file (id_file, id_user, id_folder,format, file_name, comment, file_size, file_path, uploaded_on) VALUES (NULL, ?, NULL, ?, ?, NULL, ?, ?, CURRENT_TIMESTAMP)",
+          [iduser, onlytype, filename, filesize, filepath],
+          (err, result) => {
+            if (err) {
+            
+              console.log(err);
+            } 
+            succ.push({message: "Datei wurde erfolgreich hochgeladen!"}); 
+            res.render('upload-form', {succ});  
+          }
+          ); 
+        } 
+
+      );
+    }
+  });
+
+// ---------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 
 app.post("/register", redirectUser, async (req, res) => {
