@@ -109,7 +109,7 @@ function startRecording() {
     console.log('MediaRecorder started', mediaRecorder);
 }
 
-/*
+
 function base64ToFile(data = false, fileName = false) {
     if (!data || !fileName) {
         return false;
@@ -127,14 +127,14 @@ function base64ToFile(data = false, fileName = false) {
 
     return new File([u8arr], fileName, {type: mime}) || false;
 }
-*/
+
 
 
 function stopRecording() {
     mediaRecorder.stop();
     recordedAudio.controls = true;
-    //base64ToFile
-    /*let file = base64ToFile(recordedBlobs.src + (new Date().getTime()) + '.webp');
+    
+    let file = base64ToFile(recordedBlobs.src + (new Date().getTime()) + '.webp');
     if (file) {
         let evt = new DragEvent('drop');
         Object.defineProperty(evt, 'dataTransfer', {
@@ -144,20 +144,9 @@ function stopRecording() {
         document.getElementById('uploadFile').dispatchEvent(
             evt
         );
-    }*/
+    }
 }
 
-//Data Transfer
-function MyDataTransfer(file) {
-    this.dropEffect = 'all';
-    this.effectAllowed = 'all';
-    this.items = [file];
-    this.types = ['Files'];
-    this.getData = function() {
-        return file;
-    }
-    this.files = [file];
-}
 
 function play() {
     var type = (recordedBlobs[0] || {}).type;
@@ -172,13 +161,9 @@ function download() {
 
     const clipContainer = document.createElement('article');
     const clipLabel = document.createElement('p');
-    //const audio = document.createElement('audio')
-    //const deleteButton = document.createElement('button');
+    
 
     clipContainer.classList.add('clip');
-    //audio.setAttribute('controls', '');
-    //deleteButton.textContent = 'Delete';
-    //deleteButton.className = 'delete';
 
     if (clipName === null) {
         clipLabel.textContent = 'My unnamed clip';
@@ -186,27 +171,9 @@ function download() {
         clipLabel.textContent = clipName;
     }
 
-    //clipContainer.appendChild(audio);
+                                    
     clipContainer.appendChild(clipLabel);
-    //clipContainer.appendChild(deleteButton);
-    //soundClips.appendChild(clipContainer);
-
-    //audio.controls = true;
-
-    /*clipLabel.onclick = function() {
-        const existingName = clipLabel.textContent;
-        const newClipName = prompt('Enter a new Name for your Sound Clip?');
-        if (newClipName === null) {
-            clipLabel.textContent = existingName;
-        } else {
-            clipLabel.textContent = newClipName;
-        }
-    }*/
-
-    //deleteButton.onclick = function(e) {
-    //    let evtTgt = e.target;
-    //    evtTgt.parentNode.parentNode.removeChild(evtTgt.parentNode);
-    //}
+                                    
    
     var blob = new Blob(recordedBlobs, {type: 'audio/mp3'});
     var url = window.URL.createObjectURL(blob);
@@ -215,12 +182,7 @@ function download() {
     a.href = url;
     a.download = clipName;
 
-    var reader = new FileReader();
-    reader.readAsDataURL(blob);
-    reader.onloadend = function() {
-    var base64data = reader.result;
-    console.log(base64data);
-    }
+                                    
 
     document.body.appendChild(a);
     a.click();
@@ -297,44 +259,3 @@ window.onresize = function() {
 window.onresize();
 
 
-/*
-let mediaRecorder = false;
-const constraints = { audi: true, video: false};
-
-record.onclick = () =>{
-    navigator.mediaDevices.getUserMedia({audio:true})
-    .then(stream => {
-
-        mediaRecorder = new MediaRecorder(stream)
-        mediaRecorder.start()
-        chunk = [] 
-
-
-        mediaRecorder.addEventListener("dataavailable", e =>{
-            chunk.push(e.data)
-        })
-
-        mediaRecorder.addEventListener('stop', e =>{
-            blob = new Blob(chunk, {type : 'audio/mp3'})
-            audio_url = URL.createObjectURL(blob)
-            audio = new Audio(audio_url)
-            audio.setAttribute("controls",1)
-
-            if (mp3.firstChild) {
-                mp3.removeChild(mp3.firstChild);
-              }
-
-            mp3.appendChild(audio);
-            audio.load();
-            var aElement = document.createElement("a");
-            aElement.href = audio.src;
-            aElement.download = audio_url;
-            document.body.appendChild(aElement);
-            aElement.click();
-        })
-    })
-}
-
-stopRecord.onclick = () =>{
-    mediaRecorder.stop()
-}*/

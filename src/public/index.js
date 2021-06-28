@@ -22,6 +22,9 @@ const twoHours = 1000 * 60 * 60 * 2
 const sessionID = 'sid'
 
 
+app.use(upload());
+
+
 app.use(express.json());  
 app.use(cors());   
 app.use(express.static(__dirname + '/static'));
@@ -46,8 +49,8 @@ app.set('view engine', 'ejs');
  
 var db = mysql.createConnection({
   host     : 'localhost',
-  user     : 'mel',
-  password : '36177436',
+  user     : 'root',
+  password : '',
   database : 'pwa'
 }); 
 
@@ -235,7 +238,10 @@ app.post('/upload-audio', (req, res) => {
     console.log(req.files)
     var file = req.files.file
     filename = file.name
-    console.log(file.size); 
+    //dataSize = file.size
+    console.log(filename);
+    //console.log(dataSize);
+
 
     file.mv('./server/audio/' + filename, function (err) {
       if (err) {
@@ -244,6 +250,7 @@ app.post('/upload-audio', (req, res) => {
         res.send("File uploaded");
       }
     });
+    //db.query("INSERT INTO file (id_user, id_folder, id_format, file_name, file_size, file_path) VALUES (NULL,?,?,?,?,?)")
   }
 });
 
