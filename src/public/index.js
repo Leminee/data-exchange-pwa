@@ -588,8 +588,6 @@ app.post('/up/:iduser', (req, res) => {
           
             let sum = result[0].sum;
             let limit = result[0].upload_limit;  
-            console.log(limit);  
-            console.log(sum);
              
              if (filesize + sum > limit) { 
         
