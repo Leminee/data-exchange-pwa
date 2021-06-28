@@ -179,17 +179,16 @@ app.get("/show-data/file/:file_name/download", (req, res) => {
     id_userString = result[0].id_user.toString();
     formatString = result[0].format.toString();
     file_nameString = result[0].file_name.toString();
-  res.download(path.join(__dirname, '/../../server/', id_userString, "/",  formatString,"/", file_nameString));
+  res.download(path.join(__dirname, '/../../server/', file_nameString));
   
   })
 }); 
 
 //Sharelink
-app.get("/download/:a/:b/:c", (req, res) => {
-  let id_user = req.params.a;
-  let format = req.params.b;
-  let file_name = req.params.c;
-  res.download(path.join(__dirname, '/../../server/', id_user, "/",  format,"/", file_name));
+app.get("/download/:a", (req, res) => {
+
+  let file_name = req.params.a;
+  res.download(path.join(__dirname, '/../../server/', file_name));
   }); 
 
 
