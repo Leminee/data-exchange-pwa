@@ -7,7 +7,7 @@ const path = require('path');
 const saltRounds = 10;
 const session = require('express-session');
 
-
+ 
 const app = express();    
 const twoHours = 1000 * 60 * 60 * 2
 const sessionID = 'sid'
@@ -114,7 +114,7 @@ app.get('/user/:id_user/files', redirectLogin, (req, res) => {
 app.post('/user', (req, res) => {
     id_user = req.body.id_user;
     res.redirect('/user/show/' + id_user);
-});
+}); 
 
 
 //update user Upload limit for all user
