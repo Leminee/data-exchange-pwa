@@ -106,9 +106,6 @@ app.get("/about-us", (req, res) => {
   res.sendFile(path.join(__dirname, "/../html/about-us.html"));  
 }); 
 
-app.get("/download/:id_file", (req, res) => {   
-  res.render('download');
-}); 
 
 app.get("/faq", (req, res) => { 
   res.sendFile(path.join(__dirname, "/../html/faq.html"));  
