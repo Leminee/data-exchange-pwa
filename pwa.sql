@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Erstellungszeit: 28. Jun 2021 um 05:49
+-- Erstellungszeit: 28. Jun 2021 um 08:02
 -- Server-Version: 5.7.30
 -- PHP-Version: 7.4.9
 
@@ -70,7 +70,32 @@ INSERT INTO `file` (`id_file`, `id_user`, `id_folder`, `format`, `file_name`, `c
 (21, 154, NULL, 'ation/pdf', 'FlipCoin-ID SW-Entwurf.pdf', NULL, 512474, 'null', '2021-06-28 05:28:01'),
 (22, 155, NULL, 'peg', 'My unnamed Clip.mp3', NULL, 16196, 'null', '2021-06-28 05:32:23'),
 (23, 155, NULL, 'pdf', 'BT_-_flip_coin_Eventstorming.pdf', NULL, 153407, 'null', '2021-06-28 05:33:00'),
-(24, 157, NULL, 'eet', 'Daten_Zusammenhangshypothese.xlsx', NULL, 9006, 'null', '2021-06-28 05:38:54');
+(24, 157, NULL, 'eet', 'Daten_Zusammenhangshypothese.xlsx', NULL, 9006, 'null', '2021-06-28 05:38:54'),
+(25, 167, NULL, '', 'sdgsgddsgg', 'sgdssgd', 453446, 'dsggdgdgsd', '2021-06-28 06:41:19'),
+(26, 168, NULL, 'eet', 'Daten_Zusammenhangshypothese.xlsx', NULL, 9006, 'null', '2021-06-28 06:44:21'),
+(27, 169, NULL, 'eet', 'Daten_Zusammenhangshypothese.xlsx', NULL, 9006, 'null', '2021-06-28 06:46:04'),
+(28, 170, NULL, 'eet', 'Daten_Zusammenhangshypothese.xlsx', NULL, 9006, 'null', '2021-06-28 06:47:51'),
+(29, 171, NULL, 'pdf', 'FlipCoin-ID SW-Entwurf.pdf', NULL, 512474, 'null', '2021-06-28 06:49:21'),
+(30, 172, 3, 'gff', 'fwwege', 'eweewg', 45543, 'fs', '2021-06-28 06:50:43'),
+(31, 172, NULL, 'peg', 'My unnamed Clip.mp3', NULL, 16196, 'null', '2021-06-28 06:50:53'),
+(32, 173, NULL, 'eet', 'Daten_Zusammenhangshypothese.xlsx', NULL, 9006, 'null', '2021-06-28 06:51:53'),
+(33, 172, NULL, 'pdf', 'FlipCoin-ID SW-Entwurf.pdf', NULL, 512474, 'null', '2021-06-28 06:53:11'),
+(34, 179, NULL, 'pdf', 'FlipCoin-ID SW-Entwurf.pdf', NULL, 512474, 'null', '2021-06-28 07:35:59'),
+(35, 179, NULL, 'pdf', 'FlipCoin-ID SW-Entwurf.pdf', NULL, 512474, 'null', '2021-06-28 07:38:02'),
+(36, 183, NULL, 'eet', 'Daten_Unterschiedshypothese.xlsx', NULL, 9417, 'null', '2021-06-28 07:44:25'),
+(37, 183, NULL, 'pdf', 'pwa.pdf', NULL, 133308, 'null', '2021-06-28 07:45:23'),
+(38, 183, NULL, 'peg', 'My unnamed Clip.mp3', NULL, 16196, 'null', '2021-06-28 07:46:02'),
+(39, 184, NULL, 'eet', 'Daten_Zusammenhangshypothese.xlsx', NULL, 9006, 'null', '2021-06-28 07:46:48'),
+(40, 185, NULL, 'eet', 'Daten_Zusammenhangshypothese.xlsx', NULL, 9006, 'null', '2021-06-28 07:50:09'),
+(41, 186, NULL, 'eet', 'Daten_Zusammenhangshypothese.xlsx', NULL, 9006, 'null', '2021-06-28 07:52:42'),
+(42, 187, NULL, 'eet', 'Daten_Zusammenhangshypothese.xlsx', NULL, 9006, 'null', '2021-06-28 07:53:53'),
+(43, 187, NULL, 'pdf', 'FlipCoin-ID SW-Entwurf.pdf', NULL, 512474, 'null', '2021-06-28 07:56:37'),
+(44, 187, NULL, 'pdf', 'BT_-_flip_coin_Eventstorming.pdf', NULL, 153407, 'null', '2021-06-28 07:56:59'),
+(45, 187, NULL, 'eet', 'Daten_Zusammenhangshypothese.xlsx', NULL, 9006, 'null', '2021-06-28 07:57:07'),
+(46, 187, NULL, 'png', 'Bildschirmfoto 2021-06-27 um 23.36.32.png', NULL, 278553, 'null', '2021-06-28 07:57:17'),
+(47, 187, NULL, 'png', 'Bildschirmfoto 2021-06-28 um 04.30.03.png', NULL, 125809, 'null', '2021-06-28 07:57:25'),
+(48, 187, NULL, 'png', 'Bildschirmfoto 2021-06-26 um 02.56.35.png', NULL, 357139, 'null', '2021-06-28 07:57:38'),
+(49, 187, NULL, 'png', 'Bildschirmfoto 2021-06-26 um 02.56.35.png', NULL, 357139, 'null', '2021-06-28 07:58:10');
 
 -- --------------------------------------------------------
 
@@ -173,7 +198,7 @@ CREATE TABLE `user` (
   `password_hash` varchar(100) NOT NULL,
   `profil_pic_path` varchar(100) DEFAULT NULL,
   `token` longtext,
-  `upload_limit` varchar(10) DEFAULT NULL,
+  `upload_limit` varchar(10) DEFAULT '50000000',
   `registered_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -182,7 +207,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id_user`, `e_mail`, `username`, `password_hash`, `profil_pic_path`, `token`, `upload_limit`, `registered_on`) VALUES
-(1, 'admin@gmail.com', 'admin', '', NULL, NULL, '20', '2021-06-13 00:13:02'),
+(1, 'admin@gmail.com', 'admin', '', NULL, NULL, '30000', '2021-06-28 06:28:35'),
 (105, 'gg@gmail.comewfwfe', 'efwfweefwef', '$2b$10$ca89l.BZpV.d6.5FVC1ATuUINbTq1P8adQIjA9gAAjvgdxdbp261e', NULL, NULL, NULL, '2021-06-27 20:52:21'),
 (106, 'gg@gmail.com333', '§§§§', '$2b$10$xpru4Vko58Q.IrcOQM9W9.O5ACYESyzMP3QaoWnL6W8Jyc4Pafobe', NULL, NULL, NULL, '2021-06-28 01:06:37'),
 (107, 'gg@gmail.com', 'ferrger', '$2b$10$bmuIEHHbD/pL9TPgvVxQruEnxxQiZKwFakK8DgdCDaU9h7lw09Oxe', NULL, NULL, NULL, '2021-06-28 01:12:21'),
@@ -237,7 +262,36 @@ INSERT INTO `user` (`id_user`, `e_mail`, `username`, `password_hash`, `profil_pi
 (156, 'gg@gmail.comefwfwefw', 'efwfwfw', '$2b$10$1D7x06XTFxNy1xBiLYmzNu3G3qw1hRxKKVHLXEWZegUROvVqNfEhS', NULL, NULL, NULL, '2021-06-28 05:36:27'),
 (157, 'gg@gmail.comfwqfqw', 'fwqfwqqf', '$2b$10$soyr1g1v.sgxqvn.gq5bLe8NjqK0jn8tXcMWqeHPTJlPOiI.mM3hi', NULL, NULL, NULL, '2021-06-28 05:38:49'),
 (158, 'gg@gmail.comeffewwf', 'efwfewfwe', '$2b$10$M6NoKYNIMTvVMOGK6LRXd.TZiOs4Gf4DlWnQHcreJcG8O26MsdWYG', NULL, NULL, NULL, '2021-06-28 05:46:18'),
-(159, 'lemlem@gmail.comrrwewfsd', 'asffasaf', '$2b$10$gRK2apvW8QGmk4nonCrViOpitB8jyQitjHztRlN0X8m3WwhUQoiy6', NULL, NULL, NULL, '2021-06-28 05:47:27');
+(159, 'lemlem@gmail.comrrwewfsd', 'asffasaf', '$2b$10$gRK2apvW8QGmk4nonCrViOpitB8jyQitjHztRlN0X8m3WwhUQoiy6', NULL, NULL, NULL, '2021-06-28 05:47:27'),
+(160, 'gg@gmail.comgdga', 'gdsgsdsga', '$2b$10$tHj8ZQF09mIKAr3.8DV.xePJnzLVyaUJRCBTE1vysJNC1qohD1yNy', NULL, NULL, NULL, '2021-06-28 05:54:02'),
+(161, 'gg@gmail.comrewr', 'wrwrrweer', '$2b$10$JL4pof/HO6I/VO9owYphOOV3EvgM1BcOlMBDGgx459GUAl58MpSqy', NULL, NULL, NULL, '2021-06-28 06:07:46'),
+(162, 'lemlem@gmail.comreww', 'rwerwere', '$2b$10$WllVRUil/vY1sjJQgqkL6uU/STDTqxq7/8zNUKDrdUZVY8JjubknS', NULL, NULL, NULL, '2021-06-28 06:33:29'),
+(163, 'gg@gmail.comffsa', 'affaaf', '$2b$10$f1OSSQ5ND7sMq6yMYcozYOUtrYERWQNFrDUKiqKlW3FqzCD6VpP3G', NULL, NULL, NULL, '2021-06-28 06:36:24'),
+(164, 'lemlem@gmail.comfqwfqw', 'fqfwqqfwfq', '$2b$10$Mu8vJvqAB.icFFXe8bxgOeT1/HFQxSeLrQg0Va9/syykXKVSk/gQO', NULL, NULL, NULL, '2021-06-28 06:37:13'),
+(165, 'lemlem@gmail.comsddgs', 'gdssdg', '$2b$10$zetggOdT1EMdVL9tu1BhyuqNRTY5fqw/4A1nGrxdF143LAFyu5gsC', NULL, NULL, NULL, '2021-06-28 06:37:58'),
+(166, 'lemlem@gmail.comafssfasf', 'fafasassf', '$2b$10$6f5ZRIPCnpRVAn9JX8CKJOfgW/FQuDGaPDZ7tROUwak05ZUT0JytC', NULL, NULL, NULL, '2021-06-28 06:38:51'),
+(167, 'gg@gmail.comqwffqw', 'qqfwfwq', '$2b$10$tz7teCDNUkBS47NcRd3Na.FV.0pn/WenuPL0O/xnPs9HKDyjmN6mS', NULL, NULL, NULL, '2021-06-28 06:40:47'),
+(168, 'gg@gmail.comgegwe', 'gwgweg', '$2b$10$mglIkgcAi8eutb6d8EnzveXCk.50P32Hn/jhmnhHLX7T1GEvzkzRu', NULL, NULL, NULL, '2021-06-28 06:44:00'),
+(169, 'lemlem@gmail.comfwewfe', 'fwewfefeew', '$2b$10$xfCBEZCgQp4lgwg.KZI26ean7pndtM1GsKcCS0SYNAE6.jURZAXSK', NULL, NULL, NULL, '2021-06-28 06:45:58'),
+(170, 'lemlem@gmail.comfdssdffd', 'fsdsfddfs', '$2b$10$huz6KPLFPnf9a4gE8VgB8O1D9fhP4/rMzp4kZVcv6lGxQgtGkIGu.', NULL, NULL, NULL, '2021-06-28 06:47:45'),
+(171, 'lemlem@gmail.comfewwfe', 'fwefwewfe', '$2b$10$O3tF9PY8TFFAWBUxr1I9X.pdrj6hNo0vm/qcM9f1wa2Ta7FSKDwOi', NULL, NULL, NULL, '2021-06-28 06:49:16'),
+(172, 'shipp@gmail.com', 'gdsdgsgsd', '$2b$10$mDq9pEYNSalqMumaeQGz2.znZKOfAqObnVzDZb0JF8891tlqmJlSy', NULL, NULL, NULL, '2021-06-28 06:50:07'),
+(173, 'gg@gmail.comfsaaf', 'afsafsfaf', '$2b$10$0YJDiNm.K8b0ohkEHuBdSeMerLeJUNvxJNvAnKbgeZ8piGiN.MGBe', NULL, NULL, NULL, '2021-06-28 06:51:49'),
+(174, 'lemlem@gmail.comefwfeefw', 'efwewffewewf', '$2b$10$Zw/sEEJe8qPPd3uSt8GrguCw0SqWihj.SHwm2ZhKzprfpnFvRvZFG', NULL, NULL, NULL, '2021-06-28 07:22:08'),
+(175, 'gg@gmail.comfewfew', 'fewfef', '$2b$10$PLYBqcnh8VvazdOEelcKd.DwrVhpAUTfKIuzL4Uxyn.5Is.kx.zLa', NULL, NULL, NULL, '2021-06-28 07:23:51'),
+(176, 'gg@gmail.comewrer', 'wrewreewer', '$2b$10$eA7XE3eRT2Lg0ho2mLCN8OUViyIL3l5TCUgCZ0CJARFoOQs/iPgBu', NULL, NULL, NULL, '2021-06-28 07:30:13'),
+(177, 'gg@gmail.comfweweef', 'feweffew', '$2b$10$pOA8McU8TRp/x17XRuX2geZ5s/NYjRG50lVagff7ijVb2UbNYmyVO', NULL, NULL, NULL, '2021-06-28 07:31:38'),
+(178, 'gg@gmail.comefewf', 'fwewfeef', '$2b$10$mIuwKzIyjyqfFwVQj6oApeas/woN6GXxYHa/mypSIv8HaFoppoF0m', NULL, NULL, NULL, '2021-06-28 07:34:22'),
+(179, 'lemlem@gmail.comfewwf', 'fwefwf', '$2b$10$ESRfLEoiDfJW4JcCCdwoSumxBdInayG1qkckSnfYo2YSdVzRjFK96', NULL, NULL, NULL, '2021-06-28 07:35:53'),
+(180, 'lemlem@gmail.com', 'ssssgewge', '$2b$10$Vb.6C1bHK2upIw0uQ4SIY.XyG6jbAt8IzjQAAq7tzlfSZ/kjnOS5e', NULL, NULL, NULL, '2021-06-28 07:41:01'),
+(181, 'gg@gmail.comegegw', 'wgewegg', '$2b$10$NKQ6iMMqKl5jPWg8fHW38OcfYgYN7Lewx3VNnOzDLkWM//wY3Y4Cm', NULL, NULL, NULL, '2021-06-28 07:41:44'),
+(182, 'gg@gmail.comafa', 'afssfasf', '$2b$10$p4S6DFuggbMLt/LqEkxRMu268e.n28lRh.gsTdV1j3ZpIAEXKFmsG', NULL, NULL, NULL, '2021-06-28 07:42:37'),
+(183, 'lemlem@gmail.comfsafs', 'afsafsf', '$2b$10$a9dGBD6eqteg5Kg7.yEyFe3pTt0yxwDi.6J31JZd0801HmPNWu5qa', NULL, NULL, '4566554', '2021-06-28 07:45:51'),
+(184, 'lemlem@gmail.comwffff', 'affsafs', '$2b$10$rU.93PnOBPLq.0hxHsE/buRj0O.Pu7pQ6XO7wcmG6IjLouyLzma.y', NULL, NULL, NULL, '2021-06-28 07:46:42'),
+(185, 'gg@gmail.comfdsfdsfsd', 'dfsdsfdfds', '$2b$10$E.zhyNm0k6EhZAmB18OBG.k97z3ue7QWcmRfbs7/dk9S2a9Q66rL2', NULL, NULL, '50000', '2021-06-28 07:50:33'),
+(186, 'gg@gmail.comeffwe', 'fefwewfe', '$2b$10$EIquqlsCDwJM4EEcoJnSKeAUSorOx/AlFaImrC1VJoDiSmvuVwnZa', NULL, NULL, '45465857', '2021-06-28 07:52:30'),
+(187, 'lemlem@gmail.comdfsdfs', 'dfsdfsdfs', '$2b$10$rjaROj8mmoIugLn8kgrH7.QiBYI/ozsuIa2KSLTlcf9LbxD.W7rr2', NULL, NULL, '456645', '2021-06-28 07:57:32'),
+(188, 'lemlemdsdsa@gmail.com', 'saasffsa', '$2b$10$hu7mj8Te.jERI8yjuEDoTeotR9gSH7Lxf.LH1c3KWrdQphnaLAYnG', NULL, NULL, '50000000', '2021-06-28 08:01:17');
 
 --
 -- Indizes der exportierten Tabellen
@@ -315,7 +369,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT für Tabelle `file`
 --
 ALTER TABLE `file`
-  MODIFY `id_file` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id_file` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT für Tabelle `file_comment`
@@ -351,7 +405,7 @@ ALTER TABLE `folder_keyword`
 -- AUTO_INCREMENT für Tabelle `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=160;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=189;
 
 --
 -- Constraints der exportierten Tabellen

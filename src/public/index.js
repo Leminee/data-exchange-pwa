@@ -159,7 +159,7 @@ app.get("/user-profil", redirectLogin, (req, res) => {
 });
 
 app.get("/show-data/file/:file_name", (req, res) => {
-  let sql =`SELECT id_file, id_format, file_name, file_size, id_folder, id_user, file_path FROM file WHERE file_name = '${file_name}'`;
+  let sql =`SELECT id_file, format, file_name, file_size, id_folder, id_user, file_path FROM file WHERE file_name = '${file_name}'`;
   let query = db.query(sql, (err,result) => {
     if(err) throw err;
     res.send(result);
@@ -167,13 +167,13 @@ app.get("/show-data/file/:file_name", (req, res) => {
 }); 
 
 app.get("/show-data/file/:file_name/download", (req, res) => { 
-  let sql = `SELECT id_format, file_name, id_user FROM file WHERE file_name = '${file_name}'`;
+  let sql = `SELECT format, file_name, id_user FROM file WHERE file_name = '${file_name}'`;
   let query = db.query(sql, (err,result) => {
     if(err) throw err;
     id_userString = result[0].id_user.toString();
-    id_formatString = result[0].id_format.toString();
+    formatString = result[0].format.toString();
     file_nameString = result[0].file_name.toString();
-  res.download(path.join(__dirname, '/../../server/', id_userString, "/",  id_formatString,"/", file_nameString));
+  res.download(path.join(__dirname, '/../../server/', id_userString, "/",  formatString,"/", file_nameString));
   
   })
 }); 
@@ -181,14 +181,14 @@ app.get("/show-data/file/:file_name/download", (req, res) => {
 //Sharelink
 app.get("/download/:a/:b/:c", (req, res) => {
   let id_user = req.params.a;
-  let id_format = req.params.b;
+  let format = req.params.b;
   let file_name = req.params.c;
-  res.download(path.join(__dirname, '/../../server/', id_user, "/",  id_format,"/", file_name));
+  res.download(path.join(__dirname, '/../../server/', id_user, "/",  format,"/", file_name));
   }); 
 
 
 app.get("/show-data", redirectLogin, (req, res) => {
-  let sql =`SELECT file.id_file, file.file_name, file.id_format, file.file_size, file.id_folder, file.comment FROM file WHERE id_user = '${req.session.id_user}'`;
+  let sql =`SELECT file.id_file, file.file_name, file.format, file.file_size, file.id_folder, file.comment FROM file WHERE id_user = '${req.session.id_user}'`;
   let query = db.query(sql, (err,result) => {
     if(err) throw err;
     res.send(result);
@@ -492,12 +492,12 @@ app.post('/file-comment/write', (req, res) => {
 
 app.post("/voice-maker", (req, res) => {
   id_user = 2;
-  id_format = 3; 
+  format = 3; 
   file_name = req.body.file_name;
   file_size = req.body.file_size;
   file_path = req.body.file_path;
 
-  let sql = `INSERT INTO file (id_user, id_format, file_name, file_size, file_path) VALUES ('${id_user}', '${id_format}', '${file_name}', '${file_size}', '${file_path}')`;
+  let sql = `INSERT INTO file (id_user, format, file_name, file_size, file_path) VALUES ('${id_user}', '${format}', '${file_name}', '${file_size}', '${file_path}')`;
   let query = db.query(sql, (err, res) => {
     if (err) throw err;
     console.log(file_name);
@@ -551,10 +551,8 @@ app.post('/up/:iduser', (req, res) => {
   const errors = []
 
   if (!req.files) {  
-     
-    errors.push({message:  "Keine Datei ausgewählt!"}); 
+    errors.push({message: "Keine Datei ausgewählt!"}); 
     res.render('upload-form', {errors});
-
   }  
 
   if (req.files) {
@@ -565,14 +563,37 @@ app.post('/up/:iduser', (req, res) => {
     let filetype = upload.mimetype;
     let onlytype = filetype.substr(filetype.length -3); 
     let filepath = "null";
-    let iduser = req.session.id_user; 
+    let iduser = req.session.id_user;  
+
 
     upload.mv('./server/' + filename, function (err) {
+
       if (err) {
         res.send(err)
-      } 
-      else { 
-
+      }  
+ 
+          db.query( 
+            "SELECT SUM(file_size) AS 'sum', upload_limit FROM file INNER JOIN user ON user.id_user = file.id_user WHERE user.id_user = ?",
+            [iduser],
+            (err, result) => {
+              if (err) {
+              
+                console.log(err);
+              }   
+          
+            let sum = result[0].sum;
+            let limit = result[0].upload_limit;  
+            console.log(limit);  
+            console.log(sum);
+             
+             if (filesize + sum > limit) { 
+        
+            errors.push({message: "Speicherplatzlimit verbraucht!"}); 
+            res.render('upload-form', {errors});
+            return;
+          }
+          } 
+          ); 
         db.query( 
           "INSERT INTO file (id_file, id_user, id_folder,format, file_name, comment, file_size, file_path, uploaded_on) VALUES (NULL, ?, NULL, ?, ?, NULL, ?, ?, CURRENT_TIMESTAMP)",
           [iduser, onlytype, filename, filesize, filepath],
@@ -584,15 +605,17 @@ app.post('/up/:iduser', (req, res) => {
             succ.push({message: "Datei wurde erfolgreich hochgeladen!"}); 
             res.render('upload-form', {succ});  
           }
-        ); 
-      } 
-    });
-  }
-});
- 
+          ); 
+        } 
+
+      );
+    }
+  });
 
 
 
 app.listen(3001, ()=> {
 
-});
+}); 
+
+
