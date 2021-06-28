@@ -339,4 +339,5 @@ window.onresize();
 
                                                 stopRecord.onclick = () =>{
                                                     mediaRecorder.stop();
-                                                });
+                                                }
+                                            }
