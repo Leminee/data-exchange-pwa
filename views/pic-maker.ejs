@@ -15,8 +15,8 @@
         <video class= "border center" id="video" width="640" height="480" autoplay></video>
         <button class="btn btn-sm btn-primary" id="capture-button">Kamera Starten</button>
         <button class="btn btn-sm btn-primary" id="screenshot-button">Foto machen</button>
-        <img src=""><!-- resulting screenshot-->
-        <canvas class="border center" style="display: none;"></canvas>
+        <img id="imgCVS" src=""><!-- resulting screenshot-->
+        <canvas class="border center" width="640" height="480" style="display: none;"></canvas>
     </div>
     <div id="form">
         <form method = "post" action="/upload-screenshot" enctype="multipart/form-data"> 

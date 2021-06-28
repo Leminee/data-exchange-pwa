@@ -39,6 +39,16 @@
 }
 */
 
+* {
+  box-sizing: border-box;
+}
+
+video {
+  width: 100%;
+  height: auto;
+}
+
+
 html {
   font-family: sans-serif;
   line-height: 1.15;
@@ -63,12 +73,6 @@ div {
   text-align: center;
 }
 
-button {
-  margin: 0 3px 10px 0;
-  padding-left: 2px;
-  padding-right: 2px;
-  width: 150px;
-}
 
 #ctrls {
   width: 150px; 

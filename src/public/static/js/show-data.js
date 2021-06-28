@@ -27,7 +27,7 @@ function insertProfilData(){
 };
 
 function fileNameClicked() {
-    fetch("http://localhost:3001/show_data/file/:file_name").then(response => {
+    fetch("http://localhost:3001/show-data/file/:file_name").then(response => {
         response.json().then(
             data => {
                 if (data.length > 0) {
