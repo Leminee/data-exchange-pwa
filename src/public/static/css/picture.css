@@ -1,3 +1,8 @@
+* {
+  box-sizing: border-box;
+}
+
+
 html {
   font-family: sans-serif;
   line-height: 1.15;
@@ -12,18 +17,39 @@ body {
 }
 
 
-div {
-  text-align: center;
-}
-
 #form {
   width: 150px; 
-	margin: 0 auto;
-  
-
+	margin-top: 0px;
+  margin-bottom: 100px;
+  margin-right: 0px;
+  margin-left: 900px;
+  position: absolute;
   display: flex;
   justify-content: center;
 }
+
+#capture-button {
+  width: 150px; 
+	margin-top: 0px;
+  margin-bottom: 100px;
+  margin-right: 0px;
+  margin-left: 150px;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+}
+
+#screenshot-button {
+  width: 150px; 
+	margin-top: 0px;
+  margin-bottom: 100px;
+  margin-right: 0px;
+  margin-left: 305px;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+}
+
 
 #back {
   position: absolute;
@@ -35,12 +61,12 @@ div {
 
 
 .btn-primary {
+  width: 150px; 
   color: #fff;
   border-color: black;
   background-color: #3e789c;
   box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08);
-  display: block;
-  margin: auto;
+  
 }
 
 .btn-primary:hover {
@@ -87,11 +113,6 @@ div {
     text-align: center;
     text-decoration: none;
     font-size: 18px;
-    margin-right: 20px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    width:150px;
-    height:50px; 
   }
 
 .button:hover{ 
@@ -110,14 +131,13 @@ div {
 }
   
 .center{
-  display: inline-block;;
+  display: inline-block;
   margin: auto;
 }
   
 
 .screenshot{
   display: flex;
-  align-items: center;
   justify-content: center;
 }
 
