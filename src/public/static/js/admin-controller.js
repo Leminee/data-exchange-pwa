@@ -49,7 +49,7 @@ function showUserFiles() {
                         tempFile += "<tr>";
                         tempFile += "<td>"+f.id_file+"</td>";
                         tempFile += "<td>"+f.id_folder+"</td>";
-                        tempFile += "<td>"+f.id_format+"</td>";
+                        tempFile += "<td>"+f.format+"</td>";
                         tempFile += "<td>"+f.file_name+"</td>";
                         tempFile += "<td>"+f.file_size+"</td>";
                         tempFile += "<td>"+f.uploaded_on+"</td></tr>";
@@ -72,4 +72,4 @@ function backToAllUsers() {
 function fillInData() {
     showSingleUser();
     showUserFiles();
-} 
+}   

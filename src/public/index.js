@@ -11,20 +11,25 @@ const jwt = require('jsonwebtoken');
 const ejs = require('ejs'); 
 const uuid = require('uuid').v4; 
 const multer = require('multer');
-const nodemailer = require("nodemailer");
+const nodemailer = require("nodemailer");  
+const fileUpload = require('express-fileupload'); 
+const exp = require('express-handlebars');
+ 
 
+  
 const saltRounds = 10; 
 const twoHours = 1000 * 60 * 60 * 2
 const sessionID = 'sid'
+
+
+
 app.use(express.json());  
 app.use(cors());   
 app.use(express.static(__dirname + '/static'));
 app.use(express.static('/../../server'));
 app.use(express.urlencoded({ extended: false }));
-app.use(bodyParser.urlencoded({ extended: true })); 
-app.set('view engine', 'ejs'); 
-
- 
+app.use(bodyParser.urlencoded({ extended: true }));  
+app.use(upload()); 
 app.use(session( {
   name: sessionID,
   resave: false,
@@ -36,14 +41,16 @@ app.use(session( {
   },
 }),
 );
-
+ 
+app.set('view engine', 'ejs'); 
  
 var db = mysql.createConnection({
   host     : 'localhost',
-  user     : 'root',
-  password : '',
-  database : 'pwa'
+  user     : 'mel',
+  password : '36177436',
+  database : 'pwa' 
 }); 
+
 
 const JWT_SECRET = 'LemineWebToken'
 
@@ -75,44 +82,15 @@ db.connect(function(error) {
 })
  
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-      cb(null, 'up')
-  },
-  filename: (req, file, cb) => {
-      const { originalname } = file;
-
-      cb(null, originalname);
-  }
-})
-const up = multer({ storage }); 
-app.use(express.static('public'))
-
-app.post('/up', up.array('upload'), (req, res) => {
-  return res.json({ status: 'OK', uploaded: req.files.length });
-});
-
 //Upload MP3 File to Server Folder
 app.get('/upload-audio', (req, res) => {
-  res.sendFile(__dirname + '/../html/voice-maker.html')
+  res.render('voice-maker');
 });
 
-app.post('/upload-audio', (req, res) => {
-  if (req.files) {
-    console.log(req.files)
-    var file = req.files.file
-    filename = file.name
-    console.log(filename);
-
-    file.mv('./server/' + filename, function (err) {
-      if (err) {
-        res.send(err)
-      } else {
-        res.send("File uploaded");
-      }
-    });
-  }
+app.get('/upload-screenshot', (req, res) => {
+  res.render('pic-maker');
 });
+
 
 
 app.get("/", (req, res) => { 
@@ -120,8 +98,7 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "/../../index.html")); 
 }); 
 
-app.get("/login", redirectUser, (req, res) => { 
-  //res.sendFile(path.join(__dirname, "/../html/login.ejs"));   
+app.get("/login", redirectUser, (req, res) => {  
   res.render('login');
 }); 
 
@@ -129,28 +106,27 @@ app.get("/about-us", (req, res) => {
   res.sendFile(path.join(__dirname, "/../html/about-us.html"));  
 }); 
 
-app.get("/download/:id_file", (req, res) => { 
-  res.sendFile(path.join(__dirname, "/../html/download.html"));  
+app.get("/download/:id_file", (req, res) => {   
+  res.render('download');
 }); 
 
 app.get("/faq", (req, res) => { 
   res.sendFile(path.join(__dirname, "/../html/faq.html"));  
 }); 
 
-app.get("/pic-maker", redirectLogin, (req, res) => { 
-  res.sendFile(path.join(__dirname, "/../html/pic-maker.html"));  
+app.get("/pic-maker", redirectLogin, (req, res) => {  
+  res.render('pic-maker');
 }); 
 
 app.get("/upload-form", redirectLogin, (req, res) => { 
-  res.sendFile(path.join(__dirname, "/../html/upload-form.html"));  
+      res.render('upload-form'); 
 });
 
 app.get("/user-profil/profil/data", (req, res) => {
-  res.sendFile(path.join(__dirname, "/../html/show_data.html"));
+  res.sendFile(path.join(__dirname, "/../html/show-data.html"));
 });
 
-app.get("/user-profil/profil", redirectLogin, (req, res) => {
-  //res.sendFile(path.join(__dirname, "/../html/user-profil.html"));  
+app.get("/user-profil/profil", redirectLogin, (req, res) => { 
   res.render('user-profil');
        
 });   
@@ -168,18 +144,17 @@ app.get('/file-comment/:file_name', redirectLogin, (req, res) => {
 });
 
 app.get("/voice-maker", redirectLogin, (req, res) => { 
-  res.sendFile(path.join(__dirname, "/../html/voice-maker.html"));  
+  
+  res.render('voice-maker');
 });  
 
 app.get("/upload-form", redirectLogin, (req, res) => { 
-  res.sendFile(path.join(__dirname, "/../html/upload-form.html"));  
+  res.render('upload-form');
 });
 
 app.get(`/reset-password/:id_user/:token`,(req, res) => {
   res.sendFile(path.join(__dirname, "/../html/reset-password.html"));
 });
-
-
 
 app.get("/user-profil", redirectLogin, (req, res) => {
   let sql =`SELECT user.e_mail, user.username, user.profil_pic_path, (SELECT COUNT(file.id_file) FROM file WHERE file.id_user = '${req.session.id_user}') AS 'id_file', (SELECT COUNT(folder.id_folder) FROM folder WHERE folder.id_user = '${req.session.id_user}') AS 'id_folder' FROM user WHERE user.id_user = '${req.session.id_user}'`;
@@ -189,37 +164,36 @@ app.get("/user-profil", redirectLogin, (req, res) => {
   });  
 });
 
-app.get("/show_data/file/:file_name", (req, res) => {
-  let sql =`SELECT id_file, id_format, file_name, file_size, id_folder, id_user, file_path FROM file WHERE file_name = '${file_name}'`;
+app.get("/show-data/file/:file_name", (req, res) => {
+  let sql =`SELECT id_file, format, file_name, file_size, id_folder, id_user, file_path FROM file WHERE file_name = '${file_name}'`;
   let query = db.query(sql, (err,result) => {
     if(err) throw err;
     res.send(result);
   })
 }); 
 
-app.get("/show_data/file/:file_name/download", (req, res) => { 
-  let sql = `SELECT id_format, file_name, id_user FROM file WHERE file_name = '${file_name}'`;
+app.get("/show-data/file/:file_name/download", (req, res) => { 
+  let sql = `SELECT format, file_name, id_user FROM file WHERE file_name = '${file_name}'`;
   let query = db.query(sql, (err,result) => {
     if(err) throw err;
     id_userString = result[0].id_user.toString();
-    id_formatString = result[0].id_format.toString();
+    formatString = result[0].format.toString();
     file_nameString = result[0].file_name.toString();
-  res.download(path.join(__dirname, '/../../server/', id_userString, "/",  id_formatString,"/", file_nameString));
+  res.download(path.join(__dirname, '/../../server/', file_nameString));
   
   })
 }); 
 
 //Sharelink
-app.get("/download/:a/:b/:c", (req, res) => {
-  let id_user = req.params.a;
-  let id_format = req.params.b;
-  let file_name = req.params.c;
-  res.download(path.join(__dirname, '/../../server/', id_user, "/",  id_format,"/", file_name));
+app.get("/download/:a", (req, res) => {
+
+  let file_name = req.params.a;
+  res.download(path.join(__dirname, '/../../server/', file_name));
   }); 
 
 
-app.get("/show_data", redirectLogin, (req, res) => {
-  let sql =`SELECT file.id_file, file.file_name, file.id_format, file.file_size, file.id_folder, file.comment FROM file WHERE id_user = '${req.session.id_user}'`;
+app.get("/show-data", redirectLogin, (req, res) => {
+  let sql =`SELECT file.id_file, file.file_name, file.format, file.file_size, file.id_folder, file.comment FROM file WHERE id_user = '${req.session.id_user}'`;
   let query = db.query(sql, (err,result) => {
     if(err) throw err;
     res.send(result);
@@ -234,12 +208,11 @@ app.get("/file-comment/:file_name/comment", redirectLogin, (req, res) => {
   })
 });
 
-
-
+/*
 app.get("/voice-maker", redirectLogin, (req, res) => { 
   audio_url = URL.createObjectURL(req.params.blob);
 });
-
+*/
 
 app.get('/reset-password/:id_user/:token', (req, res) => {
   const id_user = req.params.id_user;
@@ -260,6 +233,141 @@ app.get('/reset-password/:id_user/:token', (req, res) => {
     }
   })
 })
+
+//Audio Upload ---------------------------------------------------------------------------------------------------------------------------------------------------
+app.post('/upload-audio', (req, res) => {   
+  const succ = []; 
+  const errors = []
+
+  if (!req.files) {  
+    errors.push({message: "Keine Datei ausgewählt!"}); 
+    res.render('upload-form', {errors});
+  }  
+
+  if (req.files) {
+   
+    let upload = req.files.upload;
+    let filename = upload.name; 
+    let filesize = upload.size;  
+    let filetype = upload.mimetype;
+    let onlytype = filetype.substr(filetype.length -3); 
+    let filepath = "null";
+    let iduser = req.session.id_user;  
+
+
+    upload.mv('./server/' + filename, function (err) {
+
+      if (err) {
+        res.send(err)
+      }  
+ 
+          db.query( 
+            "SELECT SUM(file_size) AS 'sum', upload_limit FROM file INNER JOIN user ON user.id_user = file.id_user WHERE user.id_user = ?",
+            [iduser],
+            (err, result) => {
+              if (err) {
+              
+                console.log(err);
+              }   
+          
+            let sum = result[0].sum;
+            let limit = result[0].upload_limit;  
+             
+             if (filesize + sum > limit) { 
+        
+            errors.push({message: "Speicherplatzlimit verbraucht!"}); 
+            res.render('upload-form', {errors});
+            return;
+          }
+          } 
+          ); 
+        db.query( 
+          "INSERT INTO file (id_file, id_user, id_folder,format, file_name, comment, file_size, file_path, uploaded_on) VALUES (NULL, ?, NULL, ?, ?, NULL, ?, ?, CURRENT_TIMESTAMP)",
+          [iduser, onlytype, filename, filesize, filepath],
+          (err, result) => {
+            if (err) {
+            
+              console.log(err);
+            } 
+            succ.push({message: "Datei wurde erfolgreich hochgeladen!"}); 
+            res.render('upload-form', {succ});  
+          }
+          ); 
+        } 
+
+      );
+    }
+  });
+
+// ---------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+//Screenshot Upload ---------------------------------------------------------------------------------------------------------------------------------------------------
+app.post('/upload-screenshot', (req, res) => {   
+  const succ = []; 
+  const errors = []
+
+  if (!req.files) {  
+    errors.push({message: "Keine Datei ausgewählt!"}); 
+    res.render('upload-form', {errors});
+  }  
+
+  if (req.files) {
+   
+    let upload = req.files.upload;
+    let filename = upload.name; 
+    let filesize = upload.size;  
+    let filetype = upload.mimetype;
+    let onlytype = filetype.substr(filetype.length -3); 
+    let filepath = "null";
+    let iduser = req.session.id_user;  
+
+
+    upload.mv('./server/' + filename, function (err) {
+
+      if (err) {
+        res.send(err)
+      }  
+ 
+          db.query( 
+            "SELECT SUM(file_size) AS 'sum', upload_limit FROM file INNER JOIN user ON user.id_user = file.id_user WHERE user.id_user = ?",
+            [iduser],
+            (err, result) => {
+              if (err) {
+              
+                console.log(err);
+              }   
+          
+            let sum = result[0].sum;
+            let limit = result[0].upload_limit;  
+             
+             if (filesize + sum > limit) { 
+        
+            errors.push({message: "Speicherplatzlimit verbraucht!"}); 
+            res.render('upload-form', {errors});
+            return;
+          }
+          } 
+          ); 
+        db.query( 
+          "INSERT INTO file (id_file, id_user, id_folder,format, file_name, comment, file_size, file_path, uploaded_on) VALUES (NULL, ?, NULL, ?, ?, NULL, ?, ?, CURRENT_TIMESTAMP)",
+          [iduser, onlytype, filename, filesize, filepath],
+          (err, result) => {
+            if (err) {
+            
+              console.log(err);
+            } 
+            succ.push({message: "Datei wurde erfolgreich hochgeladen!"}); 
+            res.render('upload-form', {succ});  
+          }
+          ); 
+        } 
+
+      );
+    }
+  });
+
+// ---------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
@@ -311,11 +419,19 @@ app.post('/login', async (req, res)=> {
   const password = req.body.password_login; 
   const errors = [];
 //Take the password from the typed in e-mail
-  var queryPassword = db.query('SELECT password_hash FROM user WHERE e_mail = ?', [email], (error, result3) => {
-  hashDBPassword = result3[0].password_hash
+  var queryPassword = db.query('SELECT password_hash FROM user WHERE e_mail = ?', [email], (error, result3) => { 
+
+    if(result3.length < 1 || result3 === null || result3 === undefined) { 
+      errors.push({message: "Leider ist dein eingegebenes Passwort falsch. Bitte überprüfe es noch einmal."}); 
+      res.render('login', {errors});
+    }
+ 
+  var hashDBPassword = result3[0].password_hash;
+
+ 
 //compare the hashed password from the db and the password the user typed in
   const dcryptPassword =  bcrypt.compareSync(password, hashDBPassword); 
-
+ 
 
   if (email && dcryptPassword) {
 //if there is an e-mail and the password fits, give the information
@@ -328,7 +444,7 @@ app.post('/login', async (req, res)=> {
           } 
                    
       
-      });
+      });  
   } else {
 
     errors.push({message: "Leider ist dein eingegebenes Passwort falsch. Bitte überprüfe es noch einmal."}); 
@@ -438,6 +554,8 @@ app.post('/reset-password/:id_user/:token', (req, res) => {
 }) 
   
 })
+
+
 app.post('/profil-edit/email/:id_user', (req, res) => { 
   var e_mail = req.body.email;   
   const succ = []; 
@@ -451,7 +569,6 @@ app.post('/profil-edit/email/:id_user', (req, res) => {
         res.render('user-profil', {succ});   
 });
 
-
 app.post('/profil-edit/username/:id_user', (req, res) => {
   var username = req.body.username; 
   const succ = [];
@@ -464,7 +581,6 @@ app.post('/profil-edit/username/:id_user', (req, res) => {
   res.render('user-profil', {succ}); 
 });
 
- 
  
 app.post('/profil-edit/pass/:id_user', async(req, res) => {
   var password = req.body.password;  
@@ -484,7 +600,7 @@ app.post('/profil-edit/pass/:id_user', async(req, res) => {
   res.render('user-profil', {succ}); 
 }); 
 
-app.post('/show_data', (req, res) => {
+app.post('/show-data', (req, res) => {
   file_name = req.body.file_nameDownloadSelect;
 });
 
@@ -503,15 +619,14 @@ app.post('/file-comment/write', (req, res) => {
 })
 
 
-
 app.post("/voice-maker", (req, res) => {
   id_user = 2;
-  id_format = 3; 
+  format = 3; 
   file_name = req.body.file_name;
   file_size = req.body.file_size;
   file_path = req.body.file_path;
 
-  let sql = `INSERT INTO file (id_user, id_format, file_name, file_size, file_path) VALUES ('${id_user}', '${id_format}', '${file_name}', '${file_size}', '${file_path}')`;
+  let sql = `INSERT INTO file (id_user, format, file_name, file_size, file_path) VALUES ('${id_user}', '${format}', '${file_name}', '${file_size}', '${file_path}')`;
   let query = db.query(sql, (err, res) => {
     if (err) throw err;
     console.log(file_name);
@@ -523,14 +638,11 @@ app.post("/voice-maker", (req, res) => {
 });
 
 
-
-
 //NodeMailer
 app.post('/mail', async (req, res) => {
     var fromInput = req.body.fromInput;
     var toInput = req.body.toInput;
     var downloadLink = req.body.dLink;
-
 
     console.log(fromInput);
     console.log(toInput);
@@ -544,9 +656,8 @@ app.post('/mail', async (req, res) => {
       auth: {
         user: 'ProjectG6.2021@gmail.com',
         pass: 'ABC123!?',
-      }
-    });
-  
+      } 
+    }); 
 
     const msg ={
       from: fromInput + '<foo@example.com>', // sender address
@@ -561,9 +672,73 @@ app.post('/mail', async (req, res) => {
     res.send('Email sent!');
 })
 
+app.post('/up/:iduser', (req, res) => {   
+  const succ = []; 
+  const errors = []
+
+  if (!req.files) {  
+    errors.push({message: "Keine Datei ausgewählt!"}); 
+    res.render('upload-form', {errors});
+  }  
+
+  if (req.files) {
+   
+    let upload = req.files.upload;
+    let filename = upload.name; 
+    let filesize = upload.size;  
+    let filetype = upload.mimetype;
+    let onlytype = filetype.substr(filetype.length -3); 
+    let filepath = "null";
+    let iduser = req.session.id_user;   
+    let filesizeInMB = filesize/1048576; 
 
 
+    upload.mv('./server/' + filename, function (err) {
+
+      if (err) {
+        res.send(err)
+      }  
+ 
+          db.query( 
+            "SELECT SUM(file_size) AS 'sum', upload_limit FROM file INNER JOIN user ON user.id_user = file.id_user WHERE user.id_user = ?",
+            [iduser],
+            (err, result) => {
+              if (err) {
+              
+                console.log(err);
+              }    
+            
+            let sum = result[0].sum;
+            let limit = result[0].upload_limit;  
+             
+             if (filesizeInMB + sum >= limit) { 
+        
+            errors.push({message: "Speicherplatzlimit verbraucht!"}); 
+            res.render('upload-form', {errors});
+            return;
+          }
+          } 
+          ); 
+        db.query( 
+          "INSERT INTO file (id_file, id_user, id_folder,format, file_name, comment, file_size, file_path, uploaded_on) VALUES (NULL, ?, NULL, ?, ?, NULL, ?, ?, CURRENT_TIMESTAMP)",
+          [iduser, onlytype, filename, filesizeInMB, filepath],
+          (err, result) => {
+            if (err) {
+            
+              console.log(err);
+            } 
+            succ.push({message: "Datei wurde erfolgreich hochgeladen!"}); 
+            res.render('upload-form', {succ});  
+          }
+          ); 
+        } 
+
+      );
+    }
+  });
 
 app.listen(3001, ()=> {
-  console.log('🚀to the moon http://localhost:3001/  ')
-});
+
+}); 
+
+

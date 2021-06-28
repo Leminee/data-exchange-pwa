@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/voice.css">
+    <link rel="icon" href="/images/icons/icon256px.png">  
+    <link rel="apple-touch-icon" href="/images/icons/icon256px.png">
+    <title>Audioaufnahme</title>
+</head>
+<body>
+    <div id="container">
+        <audio id="player" autoplay muted playsinline></audio>
+        <audio class="recAudio" id="recorded" autoplay controls></audio>
+
+        <div>
+            <section class="main-controls">
+                <canvas class="visualizer" height="60px"></canvas>
+                <div id="ctrls">
+                    <button class="btn btn-sm btn-primary"  id="record">Aufnahme starten</button>
+                    <button class="btn btn-sm btn-primary"  id="play" disabled>Play</button>
+                    <button class="btn btn-sm btn-primary"  id="download" disabled>Download</button>
+                </div>
+             </section>
+        </div>
+        <div id="form">
+            <form method = "post" action="/upload-audio" enctype="multipart/form-data"> 
+                <button class="btn btn-sm btn-primary" type="submit" id="uploadFile" value="Upload">Upload</button>
+            </form>
+        </div>
+        
+        <div id="back">
+            <a class="btn btn-sm btn-primary" href="/user-profil/profil">Mein Profil</a>
+        </div>
+        <script src="/js/voice.js"></script>
+</div>      
+</body>
+</html>

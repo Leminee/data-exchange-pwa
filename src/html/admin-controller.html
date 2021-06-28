@@ -16,22 +16,18 @@
 
     
     <form action="/user" method="post">
-    <input type="text" placeholder="Search user by ID" name="id_user">
-    <button type="submit">Seach user by ID</button>
+    <input type="text" placeholder="ID User" name="id_user">
+    <button type="submit">Suchen</button>
     </form>
 <br>
     <form action="/update_user" method="post">
-    <label for="upload_limit">Wähle das Upload Limit aus:</label>
+    <label for="upload_limit">Wähle das Upload-Limit aus:</label>
     <select name="upload_limit">
-        <option value="1">1MB</option>
-        <option value="5">5MB</option>
-        <option value="10">10MB</option>
         <option value="20">20MB</option>
         <option value="50">50MB</option>
         <option value="100">100MB</option>
         <option value="200">200MB</option>
         <option value="500">500MB</option>
-        <option value="1000">1GB</option>
     </select><br>
     <button type="submit">Bestätigen</button>
     </form>
