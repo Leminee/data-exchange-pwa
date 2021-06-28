@@ -419,11 +419,19 @@ app.post('/login', async (req, res)=> {
   const password = req.body.password_login; 
   const errors = [];
 //Take the password from the typed in e-mail
-  var queryPassword = db.query('SELECT password_hash FROM user WHERE e_mail = ?', [email], (error, result3) => {
-  hashDBPassword = result3[0].password_hash
+  var queryPassword = db.query('SELECT password_hash FROM user WHERE e_mail = ?', [email], (error, result3) => { 
+
+    if(result3.length < 1 || result3 === null || result3 === undefined) { 
+      errors.push({message: "Leider ist dein eingegebenes Passwort falsch. Bitte überprüfe es noch einmal."}); 
+      res.render('login', {errors});
+    }
+ 
+  var hashDBPassword = result3[0].password_hash;
+
+ 
 //compare the hashed password from the db and the password the user typed in
   const dcryptPassword =  bcrypt.compareSync(password, hashDBPassword); 
-
+ 
 
   if (email && dcryptPassword) {
 //if there is an e-mail and the password fits, give the information
@@ -436,7 +444,7 @@ app.post('/login', async (req, res)=> {
           } 
                    
       
-      });
+      });  
   } else {
 
     errors.push({message: "Leider ist dein eingegebenes Passwort falsch. Bitte überprüfe es noch einmal."}); 
@@ -651,8 +659,8 @@ app.post('/mail', async (req, res) => {
       auth: {
         user: 'ProjectG6.2021@gmail.com',
         pass: 'ABC123!?',
-      }
-    });
+      } 
+    }); 
   
 
     const msg ={
