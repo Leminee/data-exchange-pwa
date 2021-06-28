@@ -11,20 +11,23 @@
 </head>
 <body>
     
+     <div id="screenshot">
         <video class= "border center" id="video" width="640" height="480" autoplay></video>
-
-     <div class="hermann">
-        <button class="button border"  id="snap">Foto machen</button>
-        <button type="submit" class="button border"  id="send">Foto hochladen</button>
-        <a href="/user-profil/profil"><button class="button border" type="button">Zurück zum Profil</button></a>
+        <button class="btn btn-sm btn-primary" id="capture-button">Kamera Starten</button>
+        <button class="btn btn-sm btn-primary" id="screenshot-button">Foto machen</button>
+        <img src=""><!-- resulting screenshot-->
+        <canvas class="border center" style="display: none;"></canvas>
     </div>
-    
-
-        <canvas class= "d-none" id="canvas"></canvas>
-        <img class="screenshot-image hidden">
-
+    <div id="form">
+        <form method = "post" action="/upload-screenshot" enctype="multipart/form-data"> 
+            <button class="btn btn-sm btn-primary" type="submit" id="uploadFile" value="Upload">Upload</button>
+        </form>
+    </div>
+    <div id="back">
+        <a class="btn btn-sm btn-primary" href="/user-profil/profil">Mein Profil</a>
+    </div>   
+        
         <script src="/js/picture.js"></script>
-
 
 </body>
 </html>
