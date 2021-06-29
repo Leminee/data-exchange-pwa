@@ -7,7 +7,9 @@ function insertProfilData(){
                 if (data.length > 0) {
                     let temp = "";
                     let fileNameSelect ="";
-                    let fileComment ="";
+                    let fileComment =""; 
+                    let moveFile = ""; 
+                    let moveIn="";
                     data.forEach((u) => {
                         temp += "<tr>";
                         temp += "<td>"+u.file_name+"</td>";
@@ -15,11 +17,16 @@ function insertProfilData(){
                         temp += "<td>"+u.comment+"</td>";
                         temp += "</tr>";
                         fileNameSelect += "<option>"+ u.file_name + "</option>";
-                        fileComment += "<option>" + u.file_name + "</option>";
+                        fileComment += "<option>" + u.file_name + "</option>";  
+                        moveFile += "<option>" + u.file_name + "</option>";  
+                        moveIn += "<option>" + u.folder + "</option>";  
+
                     })
                     document.getElementById("data").innerHTML = temp;
                     document.getElementById("file_nameDownloadSelect").innerHTML = fileNameSelect;
-                    document.getElementById("file_comment").innerHTML = fileComment;
+                    document.getElementById("file_comment").innerHTML = fileComment; 
+                    document.getElementById("movefile").innerHTML = moveFile; 
+                    document.getElementById("movein").innerHTML = moveIn;
                 };
             }
         )

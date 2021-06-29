@@ -190,7 +190,7 @@ app.get("/download/:a", (req, res) => {
 
 
 app.get("/show-data", redirectLogin, (req, res) => {
-  let sql =`SELECT file.id_file, file.file_name, file.format, file.file_size, file.id_folder, file.comment FROM file WHERE id_user = '${req.session.id_user}'`;
+  let sql =`SELECT (SELECT id_folder FROM folder WHERE id_user = '${req.session.id_user}' LIMIT 1) AS 'folder', file.id_file, file.file_name, file.format, file.file_size, file.id_folder, file.comment FROM file WHERE id_user= '${req.session.id_user}'`;
   let query = db.query(sql, (err,result) => {
     if(err) throw err;
     res.send(result);
@@ -685,7 +685,7 @@ app.post("/move", (req, res) => {
   let folder = req.body.movein;
   let sql =`UPDATE file SET id_folder = '${folder}' WHERE file.id_file = '${file}';`;
   let query = db.query(sql, (err,result) => {
-    if(err) throw err;
+    if(err) throw err; 
     res.redirect('/user-profil/profil/data'); 
   })
 }); 
