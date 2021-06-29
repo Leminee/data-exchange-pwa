@@ -9,12 +9,15 @@ function insertProfilData(){
                     let tempUsername = "";
                     let tempProfilePicture = ""; 
                     let tempAmountFiles = ""; 
-                    let tempAmountFolders = "";
+                    let tempAmountFolders = ""; 
+                    let tempSize= "";
                     data.forEach((u) => {
                         tempEmail += "<p>" + u.e_mail + "</p>";
                         tempUsername += "<p>" + u.username + "</p>"; 
                         tempAmountFiles += "<p>" + u.id_file + "</p>";  
-                        tempAmountFolders += "<p>" + u.id_folder + "</p>"; 
+                        tempAmountFolders += "<p>" + u.id_folder + "</p>";  
+                        tempSize += "<p>" + u.size + "</p>";   
+
 
                         if (u.profil_pic_path == null) {
                             console.log("Using default Profil Picture")
@@ -22,13 +25,16 @@ function insertProfilData(){
                         } else {
                             console.log("Using profil picture the user chose")
                             tempProfilePicture += "<img src=" + u.profil_pic_path + "height='100' width='100' algin='right' hspace='30' vspace='30'></img>";
-                        }
-                    })
+                        } 
+                    }) 
+
+                    let rNumber = tempSize.substr(3,4);
                     document.getElementById("tempEmail").innerHTML = tempEmail;
                     document.getElementById("tempUsername").innerHTML = tempUsername;
                     document.getElementById("profilPicture").innerHTML = tempProfilePicture;  
                     document.getElementById("numberFile").innerHTML = tempAmountFiles;  
-                    document.getElementById("numberFolder").innerHTML = tempAmountFolders; 
+                    document.getElementById("numberFolder").innerHTML = tempAmountFolders;  
+                    document.getElementById("limit").innerHTML = rNumber;
 
                 };
             }

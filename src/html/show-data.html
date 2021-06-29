@@ -45,7 +45,7 @@
                     </tbody>
                 </table>
                 <form action="/file-comment" method="post">
-                    <label>Datei Auswählen zum Kommentar einfügen:</label>
+                    <label>Datei zum Kommentieren:</label>
                     <select name="file_comment" id="file_comment"></select>
                     <br>
                     <button type="submit">Kommentar schreiben</button>
@@ -56,11 +56,11 @@
                 <br>
                 <br>
                 <form action="/show-data" method="post">
-                    <label for="file_nameDownloadSelect">Datei zum downloaden aussuchen:</label>
+                    <label for="file_nameDownloadSelect">Datei zum Downloaden aussuchen:</label>
                     <select name="file_nameDownloadSelect" id="file_nameDownloadSelect">
                     </select>
                     <br>
-                <button type="submit">speichere auswahl</button>
+                <button type="submit">Auswahl speichern</button>
                 <button type="submit" onclick="fileNameClicked();">Datei anzeigen</button>
                 </form>
 
@@ -72,7 +72,7 @@
            
             <div class ="column">
             <form action="/show-data/file" method="post">
-                <a>Filename:</a>
+                <a>Dateiname:</a>
                 <a id="file_nameDownload"></a>
             </form>
 
@@ -80,7 +80,7 @@
                 <br>
 
                 <form action="/show-data/file/:file_name/download" method="get">
-                    <button type="submit">Download</button>
+                    <button type="submit">Herunterladen</button>
                 </form>
 
             
@@ -91,14 +91,14 @@
                 <br>
                 <br>
                 <form action="/mail" method="post">
-                    <a>From:</a>
+                    <a>Von:</a>
                     <input id=xy name="fromInput" type="email" placeholder="Deine E-Mail-Adresse"required/>
-                    <br>
-                    <a>To:</a>
+                    <a>An:</a>
                     <input id=yx name="toInput" type="email" placeholder="Empfänger E-Mail-Adresse"required/>
-                    <button>Send as E-mail</button>
-                    <br>
-                    <a>Downloadlink:</a>
+                    <button>Als E-Mail senden</button>
+                    <br> 
+                    <br> 
+                    <a>Link zum Herunterladen:</a>
                     <a id="downloadLink"></a>
                     <input type=text name=dLink id="hiding"/>
                 </form>
