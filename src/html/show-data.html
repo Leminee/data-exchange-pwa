@@ -51,9 +51,7 @@
                     <button type="submit">Kommentar schreiben</button>
                 </form>
                 <br>
-                <br>
-                <br>
-                <br>
+                <br> 
                 <br>
                 <form action="/show-data" method="post">
                     <label for="file_nameDownloadSelect">Datei zum Downloaden aussuchen:</label>
@@ -63,8 +61,28 @@
                 <button type="submit">Auswahl speichern</button>
                 <button type="submit" onclick="fileNameClicked();">Datei anzeigen</button>
                 </form>
+                <br>
+                <br> 
+                <br>
+                <form action="/new-folder" method="post">
+                    <label>Ordnername eingeben</label>
+                    <input name="folder" id="folder"></input>
+                    <br>
+                    <button type="submit">Erstellen</button>
+                </form>  
+                <br>
+                <br> 
+                <br>
 
-
+                <form action="/move" method="post">
+                    <label>Datei zum Verschieben auswählen</label>
+                    <select name="movefile" id="movefile"></select>  
+                    <br> 
+                    <label>Verschieben in: </label>
+                    <select name="movein" id="movein"></select> 
+                    <br>
+                    <button type="submit">Verschieben</button>
+                </form>
 
 
             </div>
@@ -76,7 +94,6 @@
                 <a id="file_nameDownload"></a>
             </form>
 
-                <br>
                 <br>
 
                 <form action="/show-data/file/:file_name/download" method="get">
@@ -101,7 +118,8 @@
                     <a>Link zum Herunterladen:</a>
                     <a id="downloadLink"></a>
                     <input type=text name=dLink id="hiding"/>
-                </form>
+                </form>  
+
             </div>
         </section>
     </div>

@@ -667,7 +667,28 @@ app.post('/mail', async (req, res) => {
     let info = await transporter.sendMail(msg);
 
     res.send('Email sent!');
-})
+}) 
+
+
+app.post("/new-folder", (req, res) => { 
+  let id_user = req.session.id_user; 
+  let folder = req.body.folder;
+  let sql =`INSERT INTO folder (id_folder, id_user, folder_name, number_file, folder_size, created_on) VALUES (NULL, '${id_user}', '${folder}', '0', '0', CURRENT_TIMESTAMP)`;
+  let query = db.query(sql, (err,result) => {
+    if(err) throw err;
+    res.redirect('/user-profil/profil/data'); 
+  })
+});  
+
+app.post("/move", (req, res) => {  
+  let file = req.body.movefile
+  let folder = req.body.movein;
+  let sql =`UPDATE file SET id_folder = '${folder}' WHERE file.id_file = '${file}';`;
+  let query = db.query(sql, (err,result) => {
+    if(err) throw err;
+    res.redirect('/user-profil/profil/data'); 
+  })
+}); 
 
 app.post('/up/:iduser', (req, res) => {   
   const succ = []; 
