@@ -21,4 +21,6 @@ cd pwa/src/public
 
 </article>
         </div>
-    </div>
+    </div> 
+    
+    <p>Important: In order to use the program, a MYSQL server must be started on (default) port 3306 and the database <i>pwa</i>, which can be found in the folder, must be imported.</p>
