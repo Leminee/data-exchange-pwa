@@ -18,8 +18,10 @@ cd pwa/src/public
 <div class="snippet-clipboard-content position-relative" data-snippet-clipboard-copy-content="mvn clean package -Dboot
 java -jar target/spring-covid19-tracker-0.0.1-SNAPSHOT.jar
 "><pre><code>node index.js
-</code></pre></div>
+</code></pre></div> 
 
+
+<p>Test </p>
 <a href="http://localhost:3000/" rel="nofollow">http://localhost:3000/</a></p>
 
 </article>
